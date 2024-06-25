@@ -7,6 +7,7 @@ public partial class main : Node
 	public override void _Ready()
 	{
 		GD.Print("Start");
+		GD.Print("Mr max man");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
