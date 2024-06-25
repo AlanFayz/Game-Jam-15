@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Godot Projects", "Godot Projects.csproj", "{4B6AD972-D645-4123-9604-8723A1651AA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game Jam 15", "Game Jam 15.csproj", "{4B6AD972-D645-4123-9604-8723A1651AA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
