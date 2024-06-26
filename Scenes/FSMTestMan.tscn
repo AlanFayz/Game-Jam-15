@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://duhs6s6aqw5yl"]
+
+[ext_resource type="Script" path="res://Scenes/FSMTestMan.cs" id="1_bxbmk"]
+[ext_resource type="Script" path="res://Scripts/FSMs/TestFSM.cs" id="2_jlwx4"]
+[ext_resource type="Texture2D" uid="uid://d3b06vjlkx4nn" path="res://icon.svg" id="3_x0t6d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kf02l"]
+
+[node name="FSMTestMan" type="CharacterBody2D"]
+script = ExtResource("1_bxbmk")
+
+[node name="TestFSM" type="Node" parent="."]
+script = ExtResource("2_jlwx4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(399, 190)
+texture = ExtResource("3_x0t6d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kf02l")
