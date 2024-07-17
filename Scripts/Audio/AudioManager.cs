@@ -29,38 +29,38 @@ public partial class AudioManager : Node
 	private List<AudioStreamPlayer2D> m_AudioStreamPlayer2DList;
 	private Stack<UpdateAudioInfo> m_UpdateAudioStack;
 	
-	public void PlayAudioStream(string Name)
+	public void PlayAudioStream(string name)
 	{
-		if (m_AudioMap.ContainsKey(Name))
+		if (m_AudioMap.ContainsKey(name))
 		{
-			AudioInfo Info = m_AudioMap[Name];
-			m_AudioStreamPlayer2DList[Info.p_StreamerIndex].Stream = Info.p_Stream;
-			m_AudioStreamPlayer2DList[Info.p_StreamerIndex].Position = Info.p_Position;
-			m_AudioStreamPlayer2DList[Info.p_StreamerIndex].Play();
+			AudioInfo info = m_AudioMap[name];
+			m_AudioStreamPlayer2DList[info.p_StreamerIndex].Stream = info.p_Stream;
+			m_AudioStreamPlayer2DList[info.p_StreamerIndex].Position = info.p_Position;
+			m_AudioStreamPlayer2DList[info.p_StreamerIndex].Play();
 			return;
 		}
 
-		GD.PrintErr("stream name ", Name, " not found");
+		GD.PrintErr("stream name ", name, " not found");
 	}
 
 	public void AddAudio(string Path, string Name)
 	{
-		AudioStream Stream = ResourceLoader.Load<AudioStream>(Path);
+		AudioStream stream = ResourceLoader.Load<AudioStream>(Path);
 		
-		if (Stream == null)
+		if (stream == null)
 		{
 			GD.PrintErr("Invalid path ", Path);
 			return;
 		}
 
-		AudioStreamPlayer2D StreamPlayer2D = new AudioStreamPlayer2D();
-		AddChild(StreamPlayer2D);
-		m_AudioStreamPlayer2DList.Add(StreamPlayer2D);
+		AudioStreamPlayer2D streamPlayer2D = new AudioStreamPlayer2D();
+		AddChild(streamPlayer2D);
+		m_AudioStreamPlayer2DList.Add(streamPlayer2D);
 
 		m_AudioMap[Name] = new AudioInfo(new Vector2(0.0f, 0.0f)); //changeable
 
 		AudioInfo Info = m_AudioMap[Name];
-		Info.p_Stream = Stream;
+		Info.p_Stream = stream;
 		Info.p_StreamerIndex = m_AudioStreamPlayer2DList.Count - 1;
 
 		m_AudioMap[Name] = Info;
@@ -68,11 +68,11 @@ public partial class AudioManager : Node
 
 	public void UpdatePosition(string Name, Vector2 Position)
 	{
-		UpdateAudioInfo Info = new UpdateAudioInfo();
-		Info.p_Name = Name;
-		Info.p_Position = Position;
+		UpdateAudioInfo info = new UpdateAudioInfo();
+		info.p_Name = Name;
+		info.p_Position = Position;
 
-		m_UpdateAudioStack.Push(Info);
+		m_UpdateAudioStack.Push(info);
 	}
 
 	public override void _Ready()
@@ -85,12 +85,12 @@ public partial class AudioManager : Node
 	{
 		while (m_UpdateAudioStack.Count != 0)
 		{
-			UpdateAudioInfo Info = m_UpdateAudioStack.Pop();
+			UpdateAudioInfo info = m_UpdateAudioStack.Pop();
 
-			AudioInfo AudioInfo = m_AudioMap[Info.p_Name];
-			AudioInfo.p_Position = Info.p_Position;
+			AudioInfo audioInfo = m_AudioMap[info.p_Name];
+			audioInfo.p_Position = info.p_Position;
 
-			m_AudioMap[Info.p_Name] = AudioInfo;
+			m_AudioMap[info.p_Name] = audioInfo;
 		}
 	}
 }
