@@ -11,10 +11,23 @@ config_version=5
 [application]
 
 config/name="Game Jam 15"
-run/main_scene="res://Scenes/main.tscn"
+run/main_scene="res://Scenes/Tests/main.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
 
 project/assembly_name="Game Jam 15"
+
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Enemy"
+2d_physics/layer_3="Player_Projectile"
+2d_physics/layer_4="Enemy_Projectile"
+2d_physics/layer_5="Barrier"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
