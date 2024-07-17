@@ -7,22 +7,22 @@ public partial class AudioManager : Node
 {
 	private struct AudioInfo
 	{
-		public AudioStream p_Stream { get; set; }
-		public Vector2 p_Position   { get; set; }
-		public int p_StreamerIndex { get; set; } 
+		public AudioStream Stream { get; set; }
+		public Vector2 Position { get; set; }
+		public int StreamerIndex { get; set; } 
 
-		public AudioInfo(Vector2 Position)
+		public AudioInfo(Vector2 position)
 		{
-			p_Stream = null;
-			p_Position = Position;
+			Stream = null;
+			Position = position;
 
-			p_StreamerIndex = 0; //0 is default and will play error audio for debugging
+			StreamerIndex = 0; //0 is default and will play error audio for debugging
 		}
 	}
 	private struct UpdateAudioInfo
 	{
-		public Vector2 p_Position { get; set; }
-		public string p_Name { get; set; }
+		public Vector2 Position { get; set; }
+		public string Name { get; set; }
 	}
 	
 	private Dictionary<string, AudioInfo> m_AudioMap;
@@ -34,9 +34,9 @@ public partial class AudioManager : Node
 		if (m_AudioMap.ContainsKey(name))
 		{
 			AudioInfo info = m_AudioMap[name];
-			m_AudioStreamPlayer2DList[info.p_StreamerIndex].Stream = info.p_Stream;
-			m_AudioStreamPlayer2DList[info.p_StreamerIndex].Position = info.p_Position;
-			m_AudioStreamPlayer2DList[info.p_StreamerIndex].Play();
+			m_AudioStreamPlayer2DList[info.StreamerIndex].Stream = info.Stream;
+			m_AudioStreamPlayer2DList[info.StreamerIndex].Position = info.Position;
+			m_AudioStreamPlayer2DList[info.StreamerIndex].Play();
 			return;
 		}
 
@@ -60,8 +60,8 @@ public partial class AudioManager : Node
 		m_AudioMap[Name] = new AudioInfo(new Vector2(0.0f, 0.0f)); //changeable
 
 		AudioInfo Info = m_AudioMap[Name];
-		Info.p_Stream = stream;
-		Info.p_StreamerIndex = m_AudioStreamPlayer2DList.Count - 1;
+		Info.Stream = stream;
+		Info.StreamerIndex = m_AudioStreamPlayer2DList.Count - 1;
 
 		m_AudioMap[Name] = Info;
 	}
@@ -69,8 +69,8 @@ public partial class AudioManager : Node
 	public void UpdatePosition(string Name, Vector2 Position)
 	{
 		UpdateAudioInfo info = new UpdateAudioInfo();
-		info.p_Name = Name;
-		info.p_Position = Position;
+		info.Name = Name;
+		info.Position = Position;
 
 		m_UpdateAudioStack.Push(info);
 	}
@@ -87,10 +87,10 @@ public partial class AudioManager : Node
 		{
 			UpdateAudioInfo info = m_UpdateAudioStack.Pop();
 
-			AudioInfo audioInfo = m_AudioMap[info.p_Name];
-			audioInfo.p_Position = info.p_Position;
+			AudioInfo audioInfo = m_AudioMap[info.Name];
+			audioInfo.Position = info.Position;
 
-			m_AudioMap[info.p_Name] = audioInfo;
+			m_AudioMap[info.Name] = audioInfo;
 		}
 	}
 }
