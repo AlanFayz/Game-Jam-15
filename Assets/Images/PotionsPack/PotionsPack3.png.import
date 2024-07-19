@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cko3r5ke3cm36"
-path="res://.godot/imported/tileset.png-b67bcc1345b5b01f765c075a002d2f2e.ctex"
+uid="uid://b5sidmsjaeyih"
+path="res://.godot/imported/PotionsPack3.png-8ef8ef7f64d383d651e41245028a0b92.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/tileset.png"
-dest_files=["res://.godot/imported/tileset.png-b67bcc1345b5b01f765c075a002d2f2e.ctex"]
+source_file="res://Assets/Images/PotionsPack/PotionsPack3.png"
+dest_files=["res://.godot/imported/PotionsPack3.png-8ef8ef7f64d383d651e41245028a0b92.ctex"]
 
 [params]
 

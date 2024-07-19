@@ -1,0 +1,71 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxno1pxe1mxqr"]
+
+[ext_resource type="Script" path="res://Scenes/Projectiles/Potion.cs" id="1_f2vdf"]
+[ext_resource type="Texture2D" uid="uid://bc2sixvewt0ja" path="res://Assets/Images/PotionsPack/PotionsPack1.png" id="1_flr0r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xsolj"]
+radius = 8.06226
+
+[sub_resource type="Animation" id="Animation_ku6e6"]
+resource_name = "Rotate"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpinPivot:rotation")
+tracks/0/interp = 3
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.523599, 1.0472, 1.5708, 2.0944, 2.61799, 3.14159, 3.66519, 4.18879, 4.71239, 5.23599, 5.75959]
+}
+
+[sub_resource type="Animation" id="Animation_66nxa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpinPivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.69471]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r4ghe"]
+_data = {
+"RESET": SubResource("Animation_66nxa"),
+"Rotate": SubResource("Animation_ku6e6")
+}
+
+[node name="Potion" type="Area2D"]
+script = ExtResource("1_f2vdf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xsolj")
+
+[node name="SpinPivot" type="Node2D" parent="."]
+rotation = -1.69471
+
+[node name="PotionSprite" type="Sprite2D" parent="SpinPivot"]
+position = Vector2(0, -2)
+texture = ExtResource("1_flr0r")
+hframes = 11
+vframes = 22
+frame = 66
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_r4ghe")
+}
+autoplay = "Rotate"
+
+[node name="BreakTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="BreakTimer" to="." method="OnBreakTimerTimeout"]

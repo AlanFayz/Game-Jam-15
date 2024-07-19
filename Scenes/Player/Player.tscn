@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://bactn7u40to0h"]
 
-[ext_resource type="Texture2D" uid="uid://c4up0rxlo8o0x" path="res://Assets/Images/Hooded Protag/AnimationSheet_Character.png" id="1_83dca"]
+[ext_resource type="Texture2D" uid="uid://c4up0rxlo8o0x" path="res://Assets/Images/Hooded protag/AnimationSheet_Character.png" id="1_83dca"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.cs" id="1_ulukk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ynfhk"]
