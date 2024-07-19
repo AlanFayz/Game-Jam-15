@@ -1,10 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://m1itshtgk0rs"]
+[gd_scene load_steps=5 format=3 uid="uid://m1itshtgk0rs"]
 
 [ext_resource type="Script" path="res://Scenes/Tests/main.cs" id="1_wboer"]
 [ext_resource type="PackedScene" uid="uid://crvlq7eqk44r7" path="res://Scenes/Map/Map.tscn" id="2_kpgsd"]
+[ext_resource type="PackedScene" uid="uid://bactn7u40to0h" path="res://Scenes/Player/Player.tscn" id="3_0dvgx"]
+
+[sub_resource type="Environment" id="Environment_yuhxu"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_wboer")
 
 [node name="Map" parent="." instance=ExtResource("2_kpgsd")]
 position = Vector2(364, 212)
+
+[node name="Player" parent="." instance=ExtResource("3_0dvgx")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_yuhxu")
