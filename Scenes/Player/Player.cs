@@ -4,6 +4,7 @@ using System;
 public partial class Player : CharacterBody2D
 {
 	float PlayerSpeed = 5000f;
+	bool IsWalking = false;
 
 	
 
@@ -14,12 +15,18 @@ public partial class Player : CharacterBody2D
     public override void _Process(double delta)
     {
         Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down").Normalized();
-		if (inputDir.X<0)
+		if (inputDir == Vector2.Zero)
 		{
-			Transform = Transform * Transform2D.FlipX;
+			IsWalking = false;
+		}
+		else
+		{
+			IsWalking = true;
 		}
 		Velocity = inputDir*PlayerSpeed*(float)delta;
 		MoveAndSlide();
+
+		
 
 		
     }
