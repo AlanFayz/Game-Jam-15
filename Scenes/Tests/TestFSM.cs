@@ -19,14 +19,14 @@ public partial class TestFSM : Node
 		CurrentState = States.Enter;
 	}
 	public override void _Process(double delta)
-    {
-        States newState = GetTransition();
+	{
+		States newState = GetTransition();
 		if (newState != CurrentState)
 		{
 			ChangeState(newState);
 		}
 		StateLogic(delta);
-    }
+	}
 	private void ChangeState(States NewState)
 	{
 		PreviousState = CurrentState;
@@ -35,9 +35,9 @@ public partial class TestFSM : Node
 		CurrentState = NewState;
 	}
 
-    public void StateLogic(double delta)
-    {
-      switch (CurrentState)
+	public void StateLogic(double delta)
+	{
+	  switch (CurrentState)
 	  {
 		case States.Enter:
 			Parent.Enter();
@@ -66,7 +66,7 @@ public partial class TestFSM : Node
 		}
 		return CurrentState;
 	}
-    private void EnterState(States State) 
+	private void EnterState(States State) 
 	{
 		switch (CurrentState)
 	  {

@@ -25,10 +25,6 @@ public partial class Player : CharacterBody2D
 		}
 		Velocity = inputDir*PlayerSpeed*(float)delta;
 		MoveAndSlide();
-
-		
-
-		
     }
 
 }

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bactn7u40to0h" path="res://Scenes/Player/Player.tscn" id="3_0dvgx"]
 
 [sub_resource type="Environment" id="Environment_yuhxu"]
+glow_enabled = true
 
 [node name="Main" type="Node"]
 script = ExtResource("1_wboer")
