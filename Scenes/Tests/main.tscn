@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://m1itshtgk0rs"]
+[gd_scene load_steps=6 format=3 uid="uid://m1itshtgk0rs"]
 
 [ext_resource type="Script" path="res://Scenes/Tests/main.cs" id="1_wboer"]
 [ext_resource type="PackedScene" uid="uid://crvlq7eqk44r7" path="res://Scenes/Map/Map.tscn" id="2_kpgsd"]
 [ext_resource type="PackedScene" uid="uid://bactn7u40to0h" path="res://Scenes/Player/Player.tscn" id="3_0dvgx"]
+[ext_resource type="PackedScene" uid="uid://cxno1pxe1mxqr" path="res://Scenes/Projectiles/Potion.tscn" id="4_23pot"]
 
 [sub_resource type="Environment" id="Environment_yuhxu"]
 
@@ -16,3 +17,9 @@ position = Vector2(364, 212)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_yuhxu")
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Potion" parent="Projectiles" instance=ExtResource("4_23pot")]
+
+[connection signal="PotionThrow" from="Player" to="." method="OnPlayerPotionThrow"]
