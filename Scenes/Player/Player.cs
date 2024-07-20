@@ -3,15 +3,12 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-<<<<<<< HEAD
 		[Signal]
 	public delegate void PotionThrowEventHandler(Vector2 Pos, Vector2 Dir, float Speed);
 	
 
-	float PlayerSpeed = 5000f;
-=======
 	float PlayerSpeed = 50000f;
->>>>>>> 71faee58549e88e48402fe296b381a53545e17f2
+
 	bool IsWalking = false;
 
 	bool CanThrow = true;
@@ -29,9 +26,9 @@ public partial class Player : CharacterBody2D
 		ThrowCooldown = GetNode<Timer>("ThrowCooldown");
 	}
 
-    public override void _Process(double delta)
-    {
-        Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down").Normalized();
+	public override void _Process(double delta)
+	{
+		Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down").Normalized();
 		
 		if (inputDir == Vector2.Zero)
 		{
@@ -48,7 +45,7 @@ public partial class Player : CharacterBody2D
 		{
 			ThrowPotion();
 		}
-    }
+	}
 
 	public void ThrowPotion()
 	{

@@ -10,7 +10,7 @@ public partial class MapGeneration : Node
 {
 	private enum Cell
 	{
-		Tundra = 0, Taiga, Forest, Swamp, Desert, None
+		Tundra = 0, Taiga, Forest, Desert, Swamp, None
 	}
 
 	private enum Tier
@@ -28,7 +28,7 @@ public partial class MapGeneration : Node
 	{
 		public List<Vector2I> AtlastCoordinates; 
 		public List<Vector2I> AtlasSizes;
-		public TileMap TileMap;
+		public int TileSetSource;
 	}
 
 	private struct CellInfo
@@ -42,6 +42,7 @@ public partial class MapGeneration : Node
 		public List<CellInfo> Cells;
 		public Dictionary<Cell, Biome> Biomes;
 		public HashSet<Vector2I> OccupiedLootCoords;
+		public TileMap TileMap;
 		public Vector2I MapSize;
 		public List<bool> TileSet;
 	}
@@ -60,19 +61,19 @@ public partial class MapGeneration : Node
 		m_NoiseGeneration.NoiseGenerationAlgorithm = new FastNoiseLite();
 
 		m_NoiseGeneration.NoiseGenerationAlgorithm.Seed = (int)m_NoiseGeneration.RandomNumberGenerator.Randi();
+		GD.Print("Seed: ", m_NoiseGeneration.NoiseGenerationAlgorithm.Seed);
 
 		m_MapData.OccupiedLootCoords = new HashSet<Vector2I>();
-		m_MapData.MapSize = new Vector2I(100, 100);
+		m_MapData.MapSize = new Vector2I(1000, 1000);
 		m_MapData.Cells = new List<CellInfo>();
 		m_MapData.TileSet = new List<bool>();
+		m_MapData.TileMap = GetNode<TileMap>("MainTileMap");
 
 		for (int i = 0; i < m_MapData.MapSize.X * m_MapData.MapSize.Y; i++)
 		{
 			m_MapData.Cells.Add(new CellInfo());
 			m_MapData.TileSet.Add(false);
 		}
-
-
 
 		InitalizeBiomes();
 		GenerateWorld();
@@ -85,8 +86,8 @@ public partial class MapGeneration : Node
 
 	public void GenerateWorld()
 	{
-		 for (int y = 0; y < m_MapData.MapSize.Y; y++)
-		 {
+		for (int y = 0; y < m_MapData.MapSize.Y; y++)
+		{
 			for (int x = 0; x < m_MapData.MapSize.X; x++)
 			{
 				int index = x + y * m_MapData.MapSize.X;
@@ -100,27 +101,23 @@ public partial class MapGeneration : Node
 				Cell cell = (Cell)Mathf.FloorToInt(noiseValue * (float)m_MapData.Biomes.Count);
 				Biome biome = m_MapData.Biomes[cell];
 
-				m_MapData.Cells[index] = ConstructCellFromBiome(cell, x, y);  
+				m_MapData.Cells[index] = ConstructCellFromBiome(cell, x, y);
 
 				Vector2I atlasSize = biome.AtlasSizes[m_MapData.Cells[index].AtlasIndex];
 
-				for(int dy = 0; dy < atlasSize.Y; dy++)
+				for (int dy = 0; dy < atlasSize.Y; dy++)
 				{
-					for(int dx = 0; dx < atlasSize.X; dx++)
+					for (int dx = 0; dx < atlasSize.X; dx++)
 					{
-						m_MapData.TileSet[(dx + x) + (dy + y) * m_MapData.MapSize.X] = true;
+						int maxIndex = Math.Min((dx + x) + (dy + y) * m_MapData.MapSize.X, m_MapData.TileSet.Count);
+
+						m_MapData.TileSet[maxIndex] = true;
 					}
 				}
-					
 
-				if(atlasSize.X > 1)
+				if (atlasSize.X > 1 || atlasSize.Y > 1)
 				{
-					m_NoiseGeneration.NoiseGenerationAlgorithm.Seed = (int)m_NoiseGeneration.RandomNumberGenerator.Randi();
-				}
-
-				if(atlasSize.Y > 1)
-				{
-					m_NoiseGeneration.NoiseGenerationAlgorithm.Seed = (int)m_NoiseGeneration.RandomNumberGenerator.Randi();
+					m_NoiseGeneration.NoiseGenerationAlgorithm.Seed = (int)noiseValue;
 				}
 			}
 		}
@@ -159,7 +156,7 @@ public partial class MapGeneration : Node
 				Vector2I atlasCoords = biome.AtlastCoordinates[cellInfo.AtlasIndex];
 				Vector2I atlasSize   = biome.AtlasSizes[cellInfo.AtlasIndex];
 
-
+				
 				for (int dy = 0; dy < atlasSize.Y; dy++)
 				{
 					for (int dx = 0; dx < atlasSize.X; dx++)
@@ -168,32 +165,27 @@ public partial class MapGeneration : Node
 					}
 				}
 
-				biome.TileMap.SetCell(m_LayerIndex, new Vector2I(coordinate.X, coordinate.Y), 0, atlasCoords);
+				int xOffset = (atlasSize.X - 1) / 2;
+				int yOffset = (atlasSize.Y - 1) / 2;
+
+				Vector2I tileCoordinate = new Vector2I(coordinate.X + xOffset, coordinate.Y + yOffset);
+
+				m_MapData.TileMap.SetCell(m_LayerIndex, tileCoordinate, biome.TileSetSource, atlasCoords);
 
 			}
 		}
 	}
 	private void InitalizeBiomes()
 	{
-		m_MapData.Biomes = new Dictionary<Cell, Biome>();
+		TileSet tileSet = m_MapData.TileMap.TileSet;
 
-		Biome tundraBiome = new Biome();
+		m_MapData.Biomes = new Dictionary<Cell, Biome>(12);
 
-		tundraBiome.AtlastCoordinates = new List<Vector2I>();
-		tundraBiome.TileMap			  = GetNode<TileMap>("TundraTileMap");
-
-		TileSet tileSet = tundraBiome.TileMap.TileSet;
-
-		//only have one source per tile set
-		TileSetSource source = tileSet.GetSource(0);
-
-		if(source != null && source is TileSetAtlasSource atlasSource)
-		{
-			tundraBiome.AtlastCoordinates.AddRange(GetAtlasCoordinatesFromSource(atlasSource));
-			tundraBiome.AtlasSizes = GetAtlasSizesFromCoordinates(ref tundraBiome.AtlastCoordinates, ref atlasSource);
-		}
-
-		m_MapData.Biomes.Add(Cell.Tundra, tundraBiome);
+		m_MapData.Biomes.Add(Cell.Tundra, CreateBiome(tileSet, 0));
+		m_MapData.Biomes.Add(Cell.Taiga,  CreateBiome(tileSet, 1));
+		m_MapData.Biomes.Add(Cell.Forest, CreateBiome(tileSet, 2));
+		m_MapData.Biomes.Add(Cell.Desert, CreateBiome(tileSet, 3));
+		m_MapData.Biomes.Add(Cell.Swamp,  CreateBiome(tileSet, 4));
 	}
 
 	private void SpawnLoot(int x, int y, Cell cell)
@@ -232,15 +224,36 @@ public partial class MapGeneration : Node
 		return cellInfo;
 	}
 
+	private Biome CreateBiome(TileSet tileSet, int tileSetSourceIndex)
+	{
+		Biome biome = new Biome();
+
+		biome.AtlastCoordinates = new List<Vector2I>();
+		biome.TileSetSource = tileSetSourceIndex;
+
+		TileSetSource source = tileSet.GetSource(biome.TileSetSource);
+
+		if (source != null && source is TileSetAtlasSource)
+		{
+			TileSetAtlasSource atlasSource = (TileSetAtlasSource)source;
+
+			biome.AtlastCoordinates.AddRange(GetAtlasCoordinatesFromSource(atlasSource));
+			biome.AtlasSizes = GetAtlasSizesFromCoordinates(ref biome.AtlastCoordinates, ref atlasSource);
+		}
+
+		return biome;
+	}
+
 	static private Tier GetTierFromCell(Cell cell)
 	{
 		switch (cell)
 		{
+			case Cell.Taiga:   return Tier.High;
 			case Cell.Tundra:  return Tier.Medium;
-			case Cell.Desert: return Tier.Low;
+			case Cell.Desert:  return Tier.Low;
 			case Cell.Swamp:
 			case Cell.None:
-			default: return Tier.None;
+			default:		   return Tier.None;
 		}
 	}
 
@@ -259,7 +272,6 @@ public partial class MapGeneration : Node
 				if(source.HasTile(tileCoordinate))
 				{
 					atlasCoords.Add(tileCoordinate);
-					GD.Print(tileCoordinate);
 				}
 			}
 		}
@@ -278,4 +290,5 @@ public partial class MapGeneration : Node
 		
 		return atlasSizes;
 	}
+
 }

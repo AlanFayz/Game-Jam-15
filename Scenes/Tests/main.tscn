@@ -16,5 +16,3 @@ position = Vector2(364, 212)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_yuhxu")
-
-[connection signal="PotionThrow" from="Player" to="." method="OnPlayerPotionThrow"]
