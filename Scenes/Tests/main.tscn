@@ -21,3 +21,5 @@ environment = SubResource("Environment_yuhxu")
 [node name="Projectiles" type="Node2D" parent="."]
 
 [node name="Potion" parent="Projectiles" instance=ExtResource("4_23pot")]
+
+[connection signal="PotionThrow" from="Player" to="." method="OnPlayerPotionThrow"]
