@@ -45,6 +45,7 @@ public partial class MapGeneration : Node
 		public TileMap TileMap;
 		public Vector2I MapSize;
 		public List<bool> TileSet;
+		public List<Cell> SparseSet;
 	}
 
 	private NoiseGeneration m_NoiseGeneration;
@@ -57,7 +58,7 @@ public partial class MapGeneration : Node
 		m_NoiseGeneration = new NoiseGeneration();
 		m_MapData = new MapData();
 
-		m_NoiseGeneration.RandomNumberGenerator = new RandomNumberGenerator();
+		m_NoiseGeneration.RandomNumberGenerator    = new RandomNumberGenerator();
 		m_NoiseGeneration.NoiseGenerationAlgorithm = new FastNoiseLite();
 
 		m_NoiseGeneration.NoiseGenerationAlgorithm.Seed = (int)m_NoiseGeneration.RandomNumberGenerator.Randi();
@@ -65,15 +66,21 @@ public partial class MapGeneration : Node
 
 		m_MapData.OccupiedLootCoords = new HashSet<Vector2I>();
 		m_MapData.MapSize = new Vector2I(1000, 1000);
-		m_MapData.Cells = new List<CellInfo>();
+		m_MapData.Cells   = new List<CellInfo>();
 		m_MapData.TileSet = new List<bool>();
 		m_MapData.TileMap = GetNode<TileMap>("MainTileMap");
+		m_MapData.SparseSet = new List<Cell>();
 
 		for (int i = 0; i < m_MapData.MapSize.X * m_MapData.MapSize.Y; i++)
 		{
 			m_MapData.Cells.Add(new CellInfo());
 			m_MapData.TileSet.Add(false);
 		}
+
+		for (int i = 0; i < 5; i++)
+			m_MapData.SparseSet.Add((Cell)i);
+
+		m_MapData.SparseSet = m_MapData.SparseSet.OrderBy(_ => m_NoiseGeneration.RandomNumberGenerator.Randi()).ToList();
 
 		InitalizeBiomes();
 		GenerateWorld();
@@ -86,10 +93,16 @@ public partial class MapGeneration : Node
 
 	public void GenerateWorld()
 	{
+		int yCount = 0;
+		int xCount = 0;
+
 		for (int y = 0; y < m_MapData.MapSize.Y; y++)
 		{
+			yCount++;
+
 			for (int x = 0; x < m_MapData.MapSize.X; x++)
 			{
+				xCount++;
 				int index = x + y * m_MapData.MapSize.X;
 
 				if (m_MapData.TileSet[index])
@@ -98,7 +111,7 @@ public partial class MapGeneration : Node
 				float noiseValue = m_NoiseGeneration.NoiseGenerationAlgorithm.GetNoise2D((float)x, (float)y);
 				noiseValue = noiseValue * 0.5f + 0.5f;
 
-				Cell cell = (Cell)Mathf.FloorToInt(noiseValue * (float)m_MapData.Biomes.Count);
+				Cell cell = m_MapData.SparseSet[Mathf.FloorToInt(noiseValue * (float)m_MapData.SparseSet.Count)];
 				Biome biome = m_MapData.Biomes[cell];
 
 				m_MapData.Cells[index] = ConstructCellFromBiome(cell, x, y);
@@ -109,7 +122,7 @@ public partial class MapGeneration : Node
 				{
 					for (int dx = 0; dx < atlasSize.X; dx++)
 					{
-						int maxIndex = Math.Min((dx + x) + (dy + y) * m_MapData.MapSize.X, m_MapData.TileSet.Count);
+						int maxIndex = Math.Min((dx + x) + (dy + y) * m_MapData.MapSize.X, m_MapData.TileSet.Count - 1);
 
 						m_MapData.TileSet[maxIndex] = true;
 					}
