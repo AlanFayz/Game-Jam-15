@@ -13,4 +13,9 @@ public partial class main : Node
 	public override void _Process(double delta)
 	{
 	}
+
+	public void OnPlayerPotionThrow(Vector2 Pos, Vector2 Dir, float Speed)
+	{
+
+	}
 }

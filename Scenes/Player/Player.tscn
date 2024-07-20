@@ -168,3 +168,8 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/IsMoving = false
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="ThrowCooldown" type="Timer" parent="."]
+wait_time = 3.0
+
+[connection signal="timeout" from="ThrowCooldown" to="." method="OnThrowCooldownTimeout"]

@@ -3,13 +3,26 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+		[Signal]
+	public delegate void PotionThrowEventHandler(Vector2 Pos, Vector2 Dir, float Speed);
+	
+
 	float PlayerSpeed = 5000f;
 	bool IsWalking = false;
+
+	bool CanThrow = true;
+	float ThrowSpeed = 10000f;
+
+
+
+	//Node references
+	Timer ThrowCooldown;
 
 	
 
 	public override void _Ready()
 	{
+		ThrowCooldown = GetNode<Timer>("ThrowCooldown");
 	}
 
     public override void _Process(double delta)
@@ -25,7 +38,25 @@ public partial class Player : CharacterBody2D
 		}
 		Velocity = inputDir*PlayerSpeed*(float)delta;
 		MoveAndSlide();
+
+		if (CanThrow & Input.IsActionPressed("throw_potion"))
+		{
+			ThrowPotion();
+		}
     }
+
+	public void ThrowPotion()
+	{
+		CanThrow = false;
+		GD.Print("Throw");
+		ThrowCooldown.Start();
+	}
+
+	public void OnThrowCooldownTimeout()
+	{
+		CanThrow = true;
+		GD.Print("Can Throw");
+	}
 
 }
 
