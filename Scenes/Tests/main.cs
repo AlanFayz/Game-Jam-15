@@ -4,6 +4,7 @@ using System;
 public partial class main : Node
 {
 	public AudioManager audioManager;
+	
 
 	public override void _Ready()
 	{
@@ -16,6 +17,7 @@ public partial class main : Node
 
 	public void OnPlayerPotionThrow(Vector2 Pos, Vector2 Dir, float Speed)
 	{
-
+		var PotionScene = ResourceLoader.Load<PackedScene>("res://Scenes/Projectiles/Potion.cs").Instantiate();
+		
 	}
 }

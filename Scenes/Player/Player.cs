@@ -52,6 +52,7 @@ public partial class Player : CharacterBody2D
 		CanThrow = false;
 		GD.Print("Throw");
 		ThrowCooldown.Start();
+		EmitSignal(SignalName.PotionThrow, GlobalPosition, GetLocalMousePosition(),ThrowSpeed);
 	}
 
 	public void OnThrowCooldownTimeout()
