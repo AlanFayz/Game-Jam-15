@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-public partial class Player : CharacterBody2D
+public partial class Player : CharacterBody2D, IHittable
 {
-		[Signal]
+	[Signal]
 	public delegate void PotionThrowEventHandler(Vector2 Pos, Vector2 Dir, float Speed);
 	
 
@@ -12,7 +12,7 @@ public partial class Player : CharacterBody2D
 	bool IsWalking = false;
 
 	bool CanThrow = true;
-	float ThrowSpeed = 10000f;
+	float ThrowSpeed = 400f;
 
 
 
@@ -50,16 +50,20 @@ public partial class Player : CharacterBody2D
 	public void ThrowPotion()
 	{
 		CanThrow = false;
-		GD.Print("Throw");
 		ThrowCooldown.Start();
-		EmitSignal(SignalName.PotionThrow, GlobalPosition, GetLocalMousePosition(),ThrowSpeed);
+		EmitSignal(SignalName.PotionThrow, GlobalPosition, GetLocalMousePosition().Normalized(),ThrowSpeed);
 	}
 
 	public void OnThrowCooldownTimeout()
 	{
 		CanThrow = true;
-		GD.Print("Can Throw");
 	}
+
+	public void Hit(Node Origin)
+	{
+		GD.Print($"Hit by {Origin}");
+	}
+
 
 }
 
