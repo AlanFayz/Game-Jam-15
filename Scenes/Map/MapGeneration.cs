@@ -93,16 +93,10 @@ public partial class MapGeneration : Node
 
 	public void GenerateWorld()
 	{
-		int yCount = 0;
-		int xCount = 0;
-
 		for (int y = 0; y < m_MapData.MapSize.Y; y++)
 		{
-			yCount++;
-
 			for (int x = 0; x < m_MapData.MapSize.X; x++)
 			{
-				xCount++;
 				int index = x + y * m_MapData.MapSize.X;
 
 				if (m_MapData.TileSet[index])
@@ -128,7 +122,7 @@ public partial class MapGeneration : Node
 					}
 				}
 
-				if (atlasSize.X > 1 || atlasSize.Y > 1)
+				if (atlasSize.X > 1 || atlasSize.Y > 1) //make sure its very unlikley they repeat
 				{
 					m_NoiseGeneration.NoiseGenerationAlgorithm.Seed = (int)noiseValue;
 				}

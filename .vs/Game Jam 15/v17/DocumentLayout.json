@@ -3,35 +3,35 @@
   "WorkspaceRootPath": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|c:\\users\\alan\\desktop\\dev\\godot projects\\game jam 15\\scenes\\map\\mapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\map\\mapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alan\\AppData\\Local\\Temp\\.vsdbgsrc\\e02c6d47bcf93dc176fd92dbe50e48b6346bd905c9638f8cf9ab6f4e860123e7\\CSharpInstanceBridge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|c:\\users\\alan\\desktop\\dev\\godot projects\\game jam 15\\scenes\\projectiles\\potion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\projectiles\\potion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|c:\\users\\alan\\desktop\\dev\\godot projects\\game jam 15\\scenes\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|c:\\users\\alan\\desktop\\dev\\godot projects\\game jam 15\\scenes\\tests\\fsm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\tests\\fsm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|c:\\users\\alan\\desktop\\dev\\godot projects\\game jam 15\\scenes\\tests\\testfsm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\tests\\testfsm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|c:\\users\\alan\\desktop\\dev\\godot projects\\game jam 15\\scenes\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|c:\\users\\alan\\desktop\\dev\\godot projects\\game jam 15\\scenes\\map\\mapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\map\\mapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|c:\\users\\alan\\desktop\\dev\\godot projects\\game jam 15\\scripts\\audio\\audiomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scripts\\audio\\audiomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|c:\\users\\alan\\desktop\\dev\\godot projects\\game jam 15\\scenes\\tests\\fsmtestman.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\tests\\fsmtestman.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|c:\\users\\alan\\desktop\\dev\\godot projects\\game jam 15\\scripts\\audio\\audiomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scripts\\audio\\audiomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alan\\AppData\\Local\\Temp\\.vsdbgsrc\\e02c6d47bcf93dc176fd92dbe50e48b6346bd905c9638f8cf9ab6f4e860123e7\\CSharpInstanceBridge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|c:\\users\\alan\\desktop\\dev\\godot projects\\game jam 15\\scenes\\tests\\testfsm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\tests\\testfsm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|c:\\users\\alan\\desktop\\dev\\godot projects\\game jam 15\\scenes\\tests\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -65,7 +65,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -73,7 +73,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "CSharpInstanceBridge.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\AppData\\Local\\Temp\\.vsdbgsrc\\e02c6d47bcf93dc176fd92dbe50e48b6346bd905c9638f8cf9ab6f4e860123e7\\CSharpInstanceBridge.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\e02c6d47bcf93dc176fd92dbe50e48b6346bd905c9638f8cf9ab6f4e860123e7\\CSharpInstanceBridge.cs",
@@ -86,31 +86,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Potion.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scenes\\Projectiles\\Potion.cs",
               "RelativeDocumentMoniker": "Scenes\\Projectiles\\Potion.cs",
               "ToolTip": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scenes\\Projectiles\\Potion.cs",
               "RelativeToolTip": "Scenes\\Projectiles\\Potion.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAbAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-20T16:42:42.834Z"
+              "WhenOpened": "2024-07-20T16:42:42.834Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "FSM.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scenes\\Tests\\FSM.cs",
               "RelativeDocumentMoniker": "Scenes\\Tests\\FSM.cs",
               "ToolTip": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scenes\\Tests\\FSM.cs",
               "RelativeToolTip": "Scenes\\Tests\\FSM.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAABMAAAAAAAAAAAA1wBAAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-19T19:53:07.958Z"
+              "WhenOpened": "2024-07-19T19:53:07.958Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Player.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scenes\\Player\\Player.cs",
               "RelativeDocumentMoniker": "Scenes\\Player\\Player.cs",
@@ -118,11 +120,12 @@
               "RelativeToolTip": "Scenes\\Player\\Player.cs",
               "ViewState": "AQIAACcAAAAAAAAAAAAowAoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-19T19:53:01.061Z"
+              "WhenOpened": "2024-07-19T19:53:01.061Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "TestFSM.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scenes\\Tests\\TestFSM.cs",
               "RelativeDocumentMoniker": "Scenes\\Tests\\TestFSM.cs",
@@ -134,7 +137,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "FSMTestMan.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scenes\\Tests\\FSMTestMan.cs",
               "RelativeDocumentMoniker": "Scenes\\Tests\\FSMTestMan.cs",
@@ -158,13 +161,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "MapGeneration.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scenes\\Map\\MapGeneration.cs",
               "RelativeDocumentMoniker": "Scenes\\Map\\MapGeneration.cs",
               "ToolTip": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scenes\\Map\\MapGeneration.cs",
               "RelativeToolTip": "Scenes\\Map\\MapGeneration.cs",
-              "ViewState": "AQIAAOsAAAAAAAAAAAAIwMQAAAA9AAAA",
+              "ViewState": "AQIAAHMAAAAAAAAAAAAQwIwAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-17T21:23:06.109Z",
               "EditorCaption": ""
@@ -206,13 +209,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "AudioManager.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scripts\\Audio\\AudioManager.cs",
               "RelativeDocumentMoniker": "Scripts\\Audio\\AudioManager.cs",
               "ToolTip": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scripts\\Audio\\AudioManager.cs",
               "RelativeToolTip": "Scripts\\Audio\\AudioManager.cs",
-              "ViewState": "AQIAAFAAAAAAAAAAAADwv0cAAAATAAAA",
+              "ViewState": "AQIAAC0AAAAAAAAAAAA3wEcAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-26T19:19:40.773Z"
             },
