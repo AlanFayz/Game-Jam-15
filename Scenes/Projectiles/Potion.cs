@@ -4,17 +4,6 @@ using System.ComponentModel;
 
 public partial class Potion : Area2D
 {
-<<<<<<< HEAD
-	Vector2 Direction;
-	float Speed;
-	public override void _Ready()
-	{
-	}
-
-	public override void _Process(double delta)
-	{
-
-=======
 	[Signal]
 	public delegate void PotionBreakEventHandler(Vector2 Pos);
 
@@ -22,14 +11,13 @@ public partial class Potion : Area2D
 	public Vector2 Direction;
 	public float Speed;
 
-    public override void _Ready()
-    {
-    }
+	public override void _Ready()
+	{
+	}
 
-    public override void _Process(double delta)
+	public override void _Process(double delta)
 	{
 		Position += Direction*Speed*(float)delta;
->>>>>>> d84358063c1fa8087d523b6a8643016da3b49dd4
 	}
 
 	public void OnBreakTimerTimeout()
