@@ -18,12 +18,14 @@ public partial class Player : CharacterBody2D, IHittable
 
 	//Node references
 	Timer ThrowCooldown;
+	AnimationPlayer Animation;
 
 	
 
 	public override void _Ready()
 	{
 		ThrowCooldown = GetNode<Timer>("ThrowCooldown");
+		Animation = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 
 	public override void _Process(double delta)
@@ -32,12 +34,21 @@ public partial class Player : CharacterBody2D, IHittable
 		
 		if (inputDir == Vector2.Zero)
 		{
-			IsWalking = false;
+			Animation.Play("idle");
+		}
+		else if (inputDir.X>0)
+		{
+			Animation.Play("walk_right");
+		}
+		else if (inputDir.X < 0)
+		{
+			Animation.Play("walk_left");
 		}
 		else
 		{
-			IsWalking = true;
+			Animation.Play("walk_vertical");
 		}
+		
 		Velocity = inputDir*PlayerSpeed*(float)delta;
 		MoveAndSlide();
 
