@@ -11,11 +11,11 @@ public partial class Potion : Area2D
 	public Vector2 Direction;
 	public float Speed;
 
-    public override void _Ready()
-    {
-    }
+	public override void _Ready()
+	{
+	}
 
-    public override void _Process(double delta)
+	public override void _Process(double delta)
 	{
 		Position += Direction*Speed*(float)delta;
 	}

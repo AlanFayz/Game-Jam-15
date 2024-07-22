@@ -5,7 +5,6 @@ public partial class main : Node
 {
 	public AudioManager audioManager;
 	
-
 	public override void _Ready()
 	{
 		GD.Print("Start");
@@ -30,6 +29,6 @@ public partial class main : Node
 	{
 		PotionPool potionPool = ResourceLoader.Load<PackedScene>("res://Scenes/Projectiles/PotionPool.tscn").Instantiate() as PotionPool;
 		potionPool.Position = Pos;
-		GetNode<Node2D>("Projectiles").AddChild(potionPool);
+		GetNode<Node2D>("Projectiles").CallDeferred("add_child", potionPool);
 	}
 }
