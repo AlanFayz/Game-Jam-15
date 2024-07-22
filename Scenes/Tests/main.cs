@@ -23,6 +23,7 @@ public partial class main : Node
 		potion.Direction = Dir;
 		GetNode<Node2D>("Projectiles").AddChild(potion);
 		potion.Connect("PotionBreak", new Callable(this, MethodName.OnPotionPotionBreak));
+		
 	}
 
 	public void OnPotionPotionBreak(Vector2 Pos)
