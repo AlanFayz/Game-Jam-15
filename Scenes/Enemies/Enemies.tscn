@@ -1,3 +1,103 @@
-[gd_scene format=3 uid="uid://b3pisw0cqu0ag"]
+[gd_scene load_steps=9 format=3 uid="uid://b3pisw0cqu0ag"]
+
+[ext_resource type="Script" path="res://Scenes/Enemies/Enemy.cs" id="1_0dftj"]
+[ext_resource type="Texture2D" uid="uid://dqnoguj6bjtqn" path="res://Assets/Images/Enemies/Necromancer_creativekind-Sheet.png" id="2_5xpow"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k650b"]
+height = 40.0
+
+[sub_resource type="Animation" id="Animation_u81d3"]
+resource_name = "Idle"
+length = 0.6
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_wt555"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ous6j"]
+resource_name = "Moving"
+length = 0.7
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [17, 18, 19, 20, 21, 22, 23, 24]
+}
+
+[sub_resource type="Animation" id="Animation_1i6ob"]
+resource_name = "Attacking"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_khove"]
+_data = {
+"Attacking": SubResource("Animation_1i6ob"),
+"Idle": SubResource("Animation_u81d3"),
+"Moving": SubResource("Animation_ous6j"),
+"RESET": SubResource("Animation_wt555")
+}
 
 [node name="Enemies" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_0dftj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CapsuleShape2D_k650b")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(0, -22)
+texture = ExtResource("2_5xpow")
+hframes = 17
+vframes = 7
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
+libraries = {
+"": SubResource("AnimationLibrary_khove")
+}
+
+[node name="Timer" type="Timer" parent="CharacterBody2D"]
+wait_time = 3.197
+one_shot = true

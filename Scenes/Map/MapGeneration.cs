@@ -168,7 +168,9 @@ public partial class MapGeneration : Node
 				{
 					for (int dx = 0; dx < atlasSize.X; dx++)
 					{
-						m_MapData.TileSet[(dx + x) + (dy + y) * m_MapData.MapSize.X] = true;
+						int maxIndex = Math.Min((dx + x) + (dy + y) * m_MapData.MapSize.X, m_MapData.TileSet.Count - 1);
+						
+						m_MapData.TileSet[maxIndex] = true;
 					}
 				}
 

@@ -6,7 +6,6 @@ public partial class Player : CharacterBody2D, IHittable
 	[Signal]
 	public delegate void PotionThrowEventHandler(Vector2 Pos, Vector2 Dir, float Speed);
 	
-
 	float PlayerSpeed = 50000f;
 
 	bool IsWalking = false;
@@ -14,12 +13,8 @@ public partial class Player : CharacterBody2D, IHittable
 	bool CanThrow = true;
 	float ThrowSpeed = 400f;
 
-
-
 	//Node references
 	Timer ThrowCooldown;
-
-	
 
 	public override void _Ready()
 	{
