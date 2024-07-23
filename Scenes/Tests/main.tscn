@@ -1,28 +1,39 @@
 [gd_scene load_steps=6 format=3 uid="uid://m1itshtgk0rs"]
 
+<<<<<<< HEAD
 [ext_resource type="Script" path="res://Scenes/Tests/Main.cs" id="1_wboer"]
 [ext_resource type="PackedScene" uid="uid://crvlq7eqk44r7" path="res://Scenes/Map/Map.tscn" id="2_kpgsd"]
 [ext_resource type="PackedScene" uid="uid://bactn7u40to0h" path="res://Scenes/Player/Player.tscn" id="3_0dvgx"]
 [ext_resource type="PackedScene" uid="uid://b3pisw0cqu0ag" path="res://Scenes/Enemies/Enemy.tscn" id="4_ct5at"]
+=======
+[ext_resource type="Script" path="res://Scenes/Tests/Main.cs" id="1_w1g5d"]
+[ext_resource type="PackedScene" uid="uid://crvlq7eqk44r7" path="res://Scenes/Map/Map.tscn" id="2_e18kw"]
+[ext_resource type="PackedScene" uid="uid://bactn7u40to0h" path="res://Scenes/Player/Player.tscn" id="3_1byu1"]
+[ext_resource type="PackedScene" uid="uid://b3pisw0cqu0ag" path="res://Scenes/Enemies/Enemies.tscn" id="4_k0sak"]
+>>>>>>> 7a37d862432fd2ba53bb597bdbc6446da6012e30
 
 [sub_resource type="Environment" id="Environment_yuhxu"]
 
 [node name="Main" type="Node"]
-script = ExtResource("1_wboer")
+script = ExtResource("1_w1g5d")
 
-[node name="Map" parent="." instance=ExtResource("2_kpgsd")]
+[node name="Map" parent="." instance=ExtResource("2_e18kw")]
 position = Vector2(364, 212)
 
-[node name="Player" parent="." instance=ExtResource("3_0dvgx")]
+[node name="Player" parent="." instance=ExtResource("3_1byu1")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_yuhxu")
 
 [node name="Projectiles" type="Node2D" parent="."]
 
+<<<<<<< HEAD
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("4_ct5at")]
+=======
+[node name="Enemies" parent="." instance=ExtResource("4_k0sak")]
+>>>>>>> 7a37d862432fd2ba53bb597bdbc6446da6012e30
 position = Vector2(332, 105)
 
 [node name="Timer" type="Timer" parent="Enemies"]
@@ -30,3 +41,4 @@ wait_time = 10.0
 one_shot = true
 
 [connection signal="PotionThrow" from="Player" to="." method="OnPlayerPotionThrow"]
+[connection signal="Slash" from="Player" to="." method="OnPlayerSlash"]

@@ -66,7 +66,6 @@ public partial class Main : Node
 		potionPool.Position = Pos;
 		m_GameComponents.Projectiles.CallDeferred("add_child", potionPool);
 	}
-
 	public void SpawnEnemy()
 	{
 		Enemy enemy      = ResourceLoader.Load<PackedScene>("res://Scenes/Enemies/Enemy.tscn").Instantiate() as Enemy;
@@ -77,11 +76,18 @@ public partial class Main : Node
 	private Vector2 GetNextPosition()
 	{
 		Vector2 start = m_SpawnZone.Position;
-		Vector2 end   = m_SpawnZone.End;
+		Vector2 end = m_SpawnZone.End;
 
 		Vector2 position = new Vector2(m_GameComponents.RandomNumberGenerator.RandfRange(start.X, end.X),
 									   m_GameComponents.RandomNumberGenerator.RandfRange(start.Y, end.Y));
 
 		return position;
+	}
+	public void OnPlayerSlash(Vector2 SlashPos, Vector2 SlashDir)
+	{
+		Slash1 slash = ResourceLoader.Load<PackedScene>("res://Scenes/Melee/Slashes/Slash1.tscn").Instantiate() as Slash1;
+		slash.Position = SlashPos;
+		slash.AttackDir = SlashDir;
+		AddChild(slash);
 	}
 }

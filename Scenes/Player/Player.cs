@@ -5,21 +5,33 @@ public partial class Player : CharacterBody2D, IHittable
 {
 	[Signal]
 	public delegate void PotionThrowEventHandler(Vector2 Pos, Vector2 Dir, float Speed);
+	[Signal]
+	public delegate void SlashEventHandler(Vector2 Pos, Vector2 Dir);
 	
 	float PlayerSpeed = 50000f;
 
 	bool IsWalking = false;
 
+
+
 	bool CanThrow = true;
 	float ThrowSpeed = 400f;
 
+
+	float SlashDistance = 15f;
+	bool CanSlash = true;
+
+
+
 	//Node references
 	Timer ThrowCooldown;
+	Timer SlashCooldown;
 	AnimationPlayer Animation;
 
 	public override void _Ready()
 	{
 		ThrowCooldown = GetNode<Timer>("ThrowCooldown");
+		SlashCooldown = GetNode<Timer>("SlashCooldown");
 		Animation = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 
@@ -51,6 +63,16 @@ public partial class Player : CharacterBody2D, IHittable
 		{
 			ThrowPotion();
 		}
+		if (CanSlash && Input.IsActionPressed("primary_attack"))
+		{
+			SlashAttack();
+		}
+
+	}
+
+	public void OnSlashCooldownTimeout()
+	{
+		CanSlash = true;
 	}
 
 	public void ThrowPotion()
@@ -68,6 +90,15 @@ public partial class Player : CharacterBody2D, IHittable
 	public void Hit(Node Origin)
 	{
 		GD.Print($"Hit by {Origin}");
+	}
+
+	public void SlashAttack()
+	{
+		CanSlash = false;
+		SlashCooldown.Start();
+		Vector2 mouseDir = GetLocalMousePosition().Normalized();
+		Vector2 LocalSlashLocation = mouseDir*SlashDistance;
+		EmitSignal(SignalName.Slash, GlobalPosition+LocalSlashLocation, mouseDir);
 	}
 
 
