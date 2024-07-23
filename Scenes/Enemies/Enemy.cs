@@ -38,8 +38,35 @@ public partial class Enemy : CharacterBody2D
 	private EnemyState m_EnemyState;
 	private Nodes m_Nodes;
 
+    public void Kill()
+    {
+        m_EnemyState.State = State.Death;
+        m_IsAnimationPlaying = false;
+        m_Nodes.AnimationPlayer.Stop();
+    }
+	
+    // will return true if health is equal to or below 0.
+    public bool Damage(float damage)
+	{
+		m_EnemyState.Health -= damage;
 
-	public override void _Ready()
+		if (m_EnemyState.Health <= 0)
+			return true;
+
+		return false;
+	}
+
+	public void SetHealth(float newHealth)
+	{
+		m_EnemyState.Health = newHealth;
+	}
+
+	public float GetHealth()
+	{
+		return m_EnemyState.Health;
+	}
+
+    public override void _Ready()
 	{
 		m_Nodes					= new Nodes();
 		m_States				= new Dictionary<State, ProcessStateDelegate>();
@@ -52,18 +79,25 @@ public partial class Enemy : CharacterBody2D
 
 		m_EnemyState.State     = State.Idle;
 		m_EnemyState.Velocity  = Vector2.Zero;
+		m_EnemyState.Health	   = 100.0f;
 		Position			   = GenerateRandomPosition();
 
 		InitalizeStates();
 
+		m_States[State.Idle](m_Speed);
 	}
 
-	public override void _Process(double delta)
+    public override void _Process(double delta)
 	{
-		if (m_Nodes.Timer.TimeLeft == 0)
+		if (m_Nodes.Timer.TimeLeft == 0 && m_EnemyState.State != State.Death)
 		{
 			m_EnemyState.State = ChooseState();
 			m_IsAnimationPlaying = false;
+		}
+		else if(m_Nodes.Timer.TimeLeft == 0 && m_EnemyState.State == State.Death)
+		{
+			QueueFree();
+			return;
 		}
 
 		if (Position.DistanceTo(GetPlayerPosition()) <= m_ViewRadius)
@@ -135,10 +169,23 @@ public partial class Enemy : CharacterBody2D
 			}
 		};
 
+		ProcessStateDelegate ProcessDeathState = (double delta) =>
+		{
+			if(!m_IsAnimationPlaying)
+			{
+				m_Nodes.AnimationPlayer.Play("Death");
+				m_Nodes.Timer.Start(5);
+
+				m_IsAnimationPlaying = true;
+			}
+		};
+
 		m_States.Add(State.Idle,   ProcessIdleState);
 		m_States.Add(State.Attack, ProcessAttackState);
 		m_States.Add(State.Move,   ProcessMoveState);
+		m_States.Add(State.Death,  ProcessDeathState);
 	}
+
 	private Vector2 ChooseDirection()
 	{
 		return new Vector2(m_RandomNumberGenerator.RandfRange(-1.0f, 1.0f),

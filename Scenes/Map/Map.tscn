@@ -29,8 +29,6 @@ texture = ExtResource("2_cklqu")
 9:7/0 = 0
 14:7/0 = 0
 19:7/0 = 0
-1:1/size_in_atlas = Vector2i(5, 4)
-1:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3f4pt"]
 texture = ExtResource("3_ldm2k")
@@ -46,12 +44,6 @@ texture = ExtResource("3_ldm2k")
 9:7/0 = 0
 14:7/0 = 0
 19:7/0 = 0
-1:1/size_in_atlas = Vector2i(5, 4)
-1:1/0 = 0
-6:1/size_in_atlas = Vector2i(2, 2)
-6:1/0 = 0
-4:5/size_in_atlas = Vector2i(2, 2)
-4:5/0 = 0
 10:1/0 = 0
 11:1/0 = 0
 10:2/0 = 0
