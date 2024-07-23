@@ -25,10 +25,13 @@ public partial class Enemy : CharacterBody2D
 		public Timer Timer;
 		public AnimationPlayer AnimationPlayer;
 		public Sprite2D Sprite;
+		public CollisionShape2D CollisionShape;
+		public Node   Parent;
+		public Player Player;
 	};
 
 	private const float  m_Speed = 10.0f;
-	private const float  m_ViewRadius = 1.0f;
+	private const float  m_ViewRadius = 100.0f;
 	private const double m_TimeBetweenStates = 10.0;
 	private bool m_IsAnimationPlaying = false;
 
@@ -43,27 +46,7 @@ public partial class Enemy : CharacterBody2D
 		m_EnemyState.State = State.Death;
 		m_IsAnimationPlaying = false;
 		m_Nodes.AnimationPlayer.Stop();
-	}
-	
-	// will return true if health is equal to or below 0.
-	public bool Damage(float damage)
-	{
-		m_EnemyState.Health -= damage;
-
-		if (m_EnemyState.Health <= 0)
-			return true;
-
-		return false;
-	}
-
-	public void SetHealth(float newHealth)
-	{
-		m_EnemyState.Health = newHealth;
-	}
-
-	public float GetHealth()
-	{
-		return m_EnemyState.Health;
+		m_Nodes.CollisionShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
 	}
 
 	public override void _Ready()
@@ -76,6 +59,9 @@ public partial class Enemy : CharacterBody2D
 		m_Nodes.Timer			= GetNode<Timer>("Timer");
 		m_Nodes.AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		m_Nodes.Sprite			= GetNode<Sprite2D>("Sprite2D");
+		m_Nodes.CollisionShape  = GetNode<CollisionShape2D>("CollisionShape2D");
+		m_Nodes.Parent			= GetParent().GetParent();
+		m_Nodes.Player			= m_Nodes.Parent.GetNode<Player>("Player");
 
 		m_EnemyState.State     = State.Idle;
 		m_EnemyState.Velocity  = Vector2.Zero;
@@ -99,8 +85,10 @@ public partial class Enemy : CharacterBody2D
 			return;
 		}
 
-		if (Position.DistanceTo(GetPlayerPosition()) <= m_ViewRadius)
+		if (GlobalPosition.DistanceTo(GetPlayerPosition()) <= m_ViewRadius)
+		{
 			m_EnemyState.State = State.Attack;
+		}
 
 		m_States[m_EnemyState.State](m_Speed);
 
@@ -181,7 +169,7 @@ public partial class Enemy : CharacterBody2D
 
 		m_States.Add(State.Idle,   ProcessIdleState);
 		m_States.Add(State.Attack, ProcessAttackState);
-		m_States.Add(State.Move,   ProcessMoveState);
+		m_States.Add(State.Move,   ProcessMoveState);	
 		m_States.Add(State.Death,  ProcessDeathState);
 	}
 
@@ -206,6 +194,6 @@ public partial class Enemy : CharacterBody2D
 
 	private Vector2 GetPlayerPosition()
 	{
-		return new Vector2(100.0f, 0.0f); //TODO: max implement this when player is finished
+		return m_Nodes.Player.GlobalPosition; 
 	}
 }
