@@ -7,9 +7,9 @@ public partial class AudioManager : Node
 {
 	private struct AudioInfo
 	{
-		public AudioStream Stream { get; set; }
-		public Vector2 Position { get; set; }
-		public int StreamerIndex { get; set; } 
+		public AudioStream Stream;
+		public Vector2 Position;
+		public int StreamerIndex;
 
 		public AudioInfo(Vector2 position)
 		{
@@ -21,8 +21,8 @@ public partial class AudioManager : Node
 	}
 	private struct UpdateAudioInfo
 	{
-		public Vector2 Position { get; set; }
-		public string Name { get; set; }
+		public Vector2 Position;
+		public string Name;
 	}
 	
 	private Dictionary<string, AudioInfo> m_AudioMap;

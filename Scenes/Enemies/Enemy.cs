@@ -38,15 +38,15 @@ public partial class Enemy : CharacterBody2D
 	private EnemyState m_EnemyState;
 	private Nodes m_Nodes;
 
-    public void Kill()
-    {
-        m_EnemyState.State = State.Death;
-        m_IsAnimationPlaying = false;
-        m_Nodes.AnimationPlayer.Stop();
-    }
+	public void Kill()
+	{
+		m_EnemyState.State = State.Death;
+		m_IsAnimationPlaying = false;
+		m_Nodes.AnimationPlayer.Stop();
+	}
 	
-    // will return true if health is equal to or below 0.
-    public bool Damage(float damage)
+	// will return true if health is equal to or below 0.
+	public bool Damage(float damage)
 	{
 		m_EnemyState.Health -= damage;
 
@@ -66,7 +66,7 @@ public partial class Enemy : CharacterBody2D
 		return m_EnemyState.Health;
 	}
 
-    public override void _Ready()
+	public override void _Ready()
 	{
 		m_Nodes					= new Nodes();
 		m_States				= new Dictionary<State, ProcessStateDelegate>();
@@ -80,14 +80,13 @@ public partial class Enemy : CharacterBody2D
 		m_EnemyState.State     = State.Idle;
 		m_EnemyState.Velocity  = Vector2.Zero;
 		m_EnemyState.Health	   = 100.0f;
-		Position			   = GenerateRandomPosition();
 
 		InitalizeStates();
 
 		m_States[State.Idle](m_Speed);
 	}
 
-    public override void _Process(double delta)
+	public override void _Process(double delta)
 	{
 		if (m_Nodes.Timer.TimeLeft == 0 && m_EnemyState.State != State.Death)
 		{
@@ -194,7 +193,7 @@ public partial class Enemy : CharacterBody2D
 
 	private void FlipSpriteIfNeeded()
 	{
-		if (m_EnemyState.Direction.X <= 0|| m_EnemyState.Direction.Y >= 0)
+		if (m_EnemyState.Direction.X < 0)
 			m_Nodes.Sprite.FlipH = true;
 		else
 			m_Nodes.Sprite.FlipH = false;
@@ -208,11 +207,5 @@ public partial class Enemy : CharacterBody2D
 	private Vector2 GetPlayerPosition()
 	{
 		return new Vector2(100.0f, 0.0f); //TODO: max implement this when player is finished
-	}
-
-	private Vector2 GenerateRandomPosition()
-	{
-		return new Vector2(m_RandomNumberGenerator.RandfRange(-5.0f, 5.0f), //TODO: get the width and height from map node
-						   m_RandomNumberGenerator.RandfRange(-5.0f, 5.0f));
 	}
 }

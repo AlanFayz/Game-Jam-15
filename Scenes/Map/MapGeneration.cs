@@ -53,6 +53,16 @@ public partial class MapGeneration : Node
 
 	private const int m_LayerIndex = 0;
 
+	public Vector2I GetMapPosition()
+	{
+		return new Vector2I(-m_MapData.MapSize.X / 2, -m_MapData.MapSize.Y / 2);
+	}
+
+	public Vector2I GetMapSize()
+	{
+		return m_MapData.MapSize;
+	}
+
 	public override void _Ready()
 	{
 		m_NoiseGeneration = new NoiseGeneration();
