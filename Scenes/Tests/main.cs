@@ -5,28 +5,28 @@ public partial class Main : Node
 {
 	private struct GameComponents
 	{
-		public AudioManager	AudioManager;
+		public AudioManager AudioManager;
 		public Node2D Enemies;
 		public Node2D Projectiles;
 		public MapGeneration Map;
-		public RandomNumberGenerator  RandomNumberGenerator;
-		public Timer  EnemySpawnerTimer;
+		public RandomNumberGenerator RandomNumberGenerator;
+		public Timer EnemySpawnerTimer;
 	}
 
 	private GameComponents m_GameComponents;
-	private Rect2 m_SpawnZone; 
-	
+	private Rect2 m_SpawnZone;
+
 	public override void _Ready()
 	{
-		m_GameComponents.AudioManager		   = new AudioManager();
+		m_GameComponents.AudioManager = new AudioManager();
 		m_GameComponents.RandomNumberGenerator = new RandomNumberGenerator();
-		m_GameComponents.Enemies			   = GetNode<Node2D>("Enemies");
-		m_GameComponents.Map				   = GetNode<MapGeneration>("Map");
-		m_GameComponents.Projectiles		   = GetNode<Node2D>("Projectiles");
-		m_GameComponents.EnemySpawnerTimer	   = GetNode<Timer>("Enemies/Timer");
+		m_GameComponents.Enemies = GetNode<Node2D>("Enemies");
+		m_GameComponents.Map = GetNode<MapGeneration>("Map");
+		m_GameComponents.Projectiles = GetNode<Node2D>("Projectiles");
+		m_GameComponents.EnemySpawnerTimer = GetNode<Timer>("Enemies/Timer");
 
-		if (m_GameComponents.Projectiles  == null ||
-			m_GameComponents.Map		  == null ||
+		if (m_GameComponents.Projectiles == null ||
+			m_GameComponents.Map == null ||
 			m_GameComponents.Enemies == null)
 		{
 			GD.PrintErr("Failed to load nodes");
@@ -34,14 +34,14 @@ public partial class Main : Node
 		}
 
 
-		Vector2I mapSize     = m_GameComponents.Map.GetMapSize();
+		Vector2I mapSize = m_GameComponents.Map.GetMapSize();
 		Vector2I mapPosition = m_GameComponents.Map.GetMapPosition();
 
 		m_SpawnZone = new Rect2(mapPosition, mapSize);
 	}
 	public override void _Process(double delta)
 	{
-		if(m_GameComponents.EnemySpawnerTimer.TimeLeft <= 0.0)
+		if (m_GameComponents.EnemySpawnerTimer.TimeLeft <= 0.0)
 		{
 			for (int i = 0; i < 10; i++)
 				SpawnEnemy();
@@ -68,8 +68,8 @@ public partial class Main : Node
 	}
 	public void SpawnEnemy()
 	{
-		Enemy enemy      = ResourceLoader.Load<PackedScene>("res://Scenes/Enemies/Enemy.tscn").Instantiate() as Enemy;
-		enemy.Position   = GetNextPosition();
+		Enemy enemy = ResourceLoader.Load<PackedScene>("res://Scenes/Enemies/Enemy.tscn").Instantiate() as Enemy;
+		enemy.Position = GetNextPosition();
 		m_GameComponents.Enemies.CallDeferred("add_child", enemy);
 	}
 

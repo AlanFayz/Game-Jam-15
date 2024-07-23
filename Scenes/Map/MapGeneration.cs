@@ -152,7 +152,7 @@ public partial class MapGeneration : Node
 
 	public void GenerateMobs()
 	{
-		//TODO: should reference a mob class 
+		//TODO: should reference a mob class which needs to be created.
 	}
 
 	private void UpdateTileMap()

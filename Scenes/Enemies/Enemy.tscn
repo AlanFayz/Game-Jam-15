@@ -8,7 +8,7 @@ height = 40.0
 
 [sub_resource type="Animation" id="Animation_1i6ob"]
 resource_name = "Attacking"
-length = 1.5
+length = 1.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
