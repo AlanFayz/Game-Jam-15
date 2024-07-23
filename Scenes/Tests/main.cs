@@ -55,4 +55,12 @@ public partial class Main : Node
 		potionPool.Position = Pos;
 		m_GameComponents.Projectiles.CallDeferred("add_child", potionPool);
 	}
+
+	public void OnPlayerSlash(Vector2 SlashPos, Vector2 SlashDir)
+	{
+		Slash1 slash = ResourceLoader.Load<PackedScene>("res://Scenes/Melee/Slashes/Slash1.tscn").Instantiate() as Slash1;
+		slash.Position = SlashPos;
+		slash.AttackDir = SlashDir;
+		AddChild(slash);
+	}
 }

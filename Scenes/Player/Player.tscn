@@ -160,5 +160,11 @@ autoplay = "idle"
 
 [node name="ThrowCooldown" type="Timer" parent="."]
 wait_time = 3.0
+one_shot = true
+
+[node name="SlashCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 
 [connection signal="timeout" from="ThrowCooldown" to="." method="OnThrowCooldownTimeout"]
+[connection signal="timeout" from="SlashCooldown" to="." method="OnSlashCooldownTimeout"]
