@@ -1,19 +1,19 @@
 [gd_scene load_steps=6 format=3 uid="uid://m1itshtgk0rs"]
 
-[ext_resource type="Script" path="res://Scenes/Tests/Main.cs" id="1_w1g5d"]
-[ext_resource type="PackedScene" uid="uid://crvlq7eqk44r7" path="res://Scenes/Map/Map.tscn" id="2_e18kw"]
-[ext_resource type="PackedScene" uid="uid://bactn7u40to0h" path="res://Scenes/Player/Player.tscn" id="3_1byu1"]
-[ext_resource type="PackedScene" uid="uid://b3pisw0cqu0ag" path="res://Scenes/Enemies/Enemy.tscn" id="4_k0sak"]
+[ext_resource type="Script" path="res://Scenes/Tests/Main.cs" id="1_e2qyf"]
+[ext_resource type="PackedScene" uid="uid://crvlq7eqk44r7" path="res://Scenes/Map/Map.tscn" id="2_eidng"]
+[ext_resource type="PackedScene" uid="uid://bactn7u40to0h" path="res://Scenes/Player/Player.tscn" id="3_fcmqm"]
+[ext_resource type="PackedScene" uid="uid://b3pisw0cqu0ag" path="res://Scenes/Enemies/Enemy.tscn" id="4_5bre8"]
 
 [sub_resource type="Environment" id="Environment_yuhxu"]
 
 [node name="Main" type="Node"]
-script = ExtResource("1_w1g5d")
+script = ExtResource("1_e2qyf")
 
-[node name="Map" parent="." instance=ExtResource("2_e18kw")]
+[node name="Map" parent="." instance=ExtResource("2_eidng")]
 position = Vector2(364, 212)
 
-[node name="Player" parent="." instance=ExtResource("3_1byu1")]
+[node name="Player" parent="." instance=ExtResource("3_fcmqm")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_yuhxu")
@@ -22,7 +22,7 @@ environment = SubResource("Environment_yuhxu")
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="Enemy" parent="Enemies" instance=ExtResource("4_k0sak")]
+[node name="Enemy" parent="Enemies" instance=ExtResource("4_5bre8")]
 position = Vector2(332, 105)
 
 [node name="Timer" type="Timer" parent="Enemies"]

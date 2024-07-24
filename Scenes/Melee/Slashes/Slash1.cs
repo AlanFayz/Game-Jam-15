@@ -4,15 +4,36 @@ using System;
 public partial class Slash1 : Area2D
 {
 	public Vector2 AttackDir;
-	// Called when the node enters the scene tree for the first time.
+	public float Damage;
+
 	public override void _Ready()
 	{
-		LookAt(AttackDir);
+		LookAt(AttackDir+GlobalPosition);
+		if (AttackDir.X<0)
+		{
+			Vector2 scale = Scale;
+			scale.Y *= -1;
+			Scale = scale;
+		}
+
+		
+		if (GD.Randi()%2==0)
+		{
+			GetNode<AnimationPlayer>("AnimationPlayer").Play("Slash", -1, 3);
+		}
+		else
+		{
+			GetNode<AnimationPlayer>("AnimationPlayer").Play("UpSlash", -1, 3);
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public void OnBodyEntered(Node2D body)
 	{
+		if (body is IHittable target)
+		{
+			target.Hit(this, Damage);
+		}
 	}
 
 	public void SlashEnd()

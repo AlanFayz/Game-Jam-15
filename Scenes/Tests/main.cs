@@ -50,20 +50,23 @@ public partial class Main : Node
 		}
 	}
 
-	public void OnPlayerPotionThrow(Vector2 Pos, Vector2 Dir, float Speed)
+	public void OnPlayerPotionThrow(Vector2 Pos, Vector2 Dir, float speed, float breakDamage, float poolDamage)
 	{
 		var potion = ResourceLoader.Load<PackedScene>("res://Scenes/Projectiles/Potion.tscn").Instantiate() as Potion;
 		potion.Position = Pos;
-		potion.Speed = Speed;
+		potion.Speed = speed;
 		potion.Direction = Dir;
+		potion.PoolDamage = poolDamage;
+		potion.BreakDamage = breakDamage;
 		m_GameComponents.Projectiles.AddChild(potion);
 		potion.Connect("PotionBreak", new Callable(this, MethodName.OnPotionPotionBreak));
 	}
 
-	public void OnPotionPotionBreak(Vector2 Pos)
+	public void OnPotionPotionBreak(Vector2 Pos, float poolDamage)
 	{
 		PotionPool potionPool = ResourceLoader.Load<PackedScene>("res://Scenes/Projectiles/PotionPool.tscn").Instantiate() as PotionPool;
 		potionPool.Position = Pos;
+		potionPool.Damage = poolDamage;
 		m_GameComponents.Projectiles.CallDeferred("add_child", potionPool);
 	}
 	public void SpawnEnemy()
@@ -83,11 +86,12 @@ public partial class Main : Node
 
 		return position;
 	}
-	public void OnPlayerSlash(Vector2 SlashPos, Vector2 SlashDir)
+	public void OnPlayerSlash(Vector2 slashPos, Vector2 slashDir, float slashDamage)
 	{
 		Slash1 slash = ResourceLoader.Load<PackedScene>("res://Scenes/Melee/Slashes/Slash1.tscn").Instantiate() as Slash1;
-		slash.Position = SlashPos;
-		slash.AttackDir = SlashDir;
+		slash.Position = slashPos;
+		slash.AttackDir = slashDir;
+		slash.Damage = slashDamage;
 		AddChild(slash);
 	}
 }

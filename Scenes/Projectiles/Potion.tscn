@@ -45,6 +45,8 @@ _data = {
 }
 
 [node name="Potion" type="Area2D"]
+collision_layer = 4
+collision_mask = 82
 script = ExtResource("1_f2vdf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

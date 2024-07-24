@@ -5,11 +5,13 @@ using System.ComponentModel;
 public partial class Potion : Area2D
 {
 	[Signal]
-	public delegate void PotionBreakEventHandler(Vector2 Pos);
+	public delegate void PotionBreakEventHandler(Vector2 Pos, float poolDamage);
 
 
 	public Vector2 Direction;
 	public float Speed;
+	public float PoolDamage;
+	public float BreakDamage;
 
 	public override void _Ready()
 	{
@@ -29,14 +31,14 @@ public partial class Potion : Area2D
 	{
 		if (body is IHittable target)
 		{
-			target.Hit(this);
+			target.Hit(this, BreakDamage);
 		}
 		Break();
 	}
 
 	public void Break()
 	{
-		EmitSignal(SignalName.PotionBreak, GlobalPosition);
+		EmitSignal(SignalName.PotionBreak, GlobalPosition, PoolDamage);
 		QueueFree();
 	}
 }

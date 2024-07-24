@@ -3,6 +3,7 @@ using System;
 
 public partial class PotionPool : Area2D
 {
+	public float Damage;
 	public void OnTimerTimeout()
 	{
 		QueueFree();
@@ -12,7 +13,7 @@ public partial class PotionPool : Area2D
 	{
 		if (body is IHittable target)
 		{
-			target.Hit(this);
+			target.Hit(this, Damage);
 		}
 	}
 }

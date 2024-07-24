@@ -4,22 +4,28 @@ using System;
 public partial class Player : CharacterBody2D, IHittable
 {
 	[Signal]
-	public delegate void PotionThrowEventHandler(Vector2 Pos, Vector2 Dir, float Speed);
+	public delegate void PotionThrowEventHandler(Vector2 Pos, Vector2 Dir, float speed, float breakDamage, float poolDamage);
 	[Signal]
-	public delegate void SlashEventHandler(Vector2 Pos, Vector2 Dir);
+	public delegate void SlashEventHandler(Vector2 Pos, Vector2 Dir, float slashDamage);
+
 	
 	float PlayerSpeed = 50000f;
 
 	bool IsWalking = false;
 
+	float Health = 100f;
+
 
 
 	bool CanThrow = true;
 	float ThrowSpeed = 400f;
+	float BreakDamage = 5f;
+	float PoolDamage = 30f;
 
 
 	float SlashDistance = 15f;
 	bool CanSlash = true;
+	float SlashDamage = 10f;
 
 
 
@@ -79,7 +85,7 @@ public partial class Player : CharacterBody2D, IHittable
 	{
 		CanThrow = false;
 		ThrowCooldown.Start();
-		EmitSignal(SignalName.PotionThrow, GlobalPosition, GetLocalMousePosition().Normalized(),ThrowSpeed);
+		EmitSignal(SignalName.PotionThrow, GlobalPosition, GetLocalMousePosition().Normalized(),ThrowSpeed, BreakDamage, PoolDamage);
 	}
 
 	public void OnThrowCooldownTimeout()
@@ -87,9 +93,11 @@ public partial class Player : CharacterBody2D, IHittable
 		CanThrow = true;
 	}
 
-	public void Hit(Node Origin)
+	public void Hit(Node Origin, float damage)
 	{
 		GD.Print($"Hit by {Origin}");
+		Health -= damage;
+		GD.Print($"Health = {Health}");
 	}
 
 	public void SlashAttack()
@@ -98,7 +106,7 @@ public partial class Player : CharacterBody2D, IHittable
 		SlashCooldown.Start();
 		Vector2 mouseDir = GetLocalMousePosition().Normalized();
 		Vector2 LocalSlashLocation = mouseDir*SlashDistance;
-		EmitSignal(SignalName.Slash, GlobalPosition+LocalSlashLocation, mouseDir);
+		EmitSignal(SignalName.Slash, GlobalPosition+LocalSlashLocation, mouseDir, SlashDamage);
 	}
 
 

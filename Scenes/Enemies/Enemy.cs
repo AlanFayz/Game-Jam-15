@@ -2,10 +2,11 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 delegate void ProcessStateDelegate(double delta);
 
-public partial class Enemy : CharacterBody2D
+public partial class Enemy : CharacterBody2D, IHittable
 {
 	private enum State
 	{
@@ -45,8 +46,8 @@ public partial class Enemy : CharacterBody2D
 	{
 		m_EnemyState.State = State.Death;
 		m_IsAnimationPlaying = false;
-		m_Nodes.AnimationPlayer.Stop();
 		m_Nodes.CollisionShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+		m_Nodes.AnimationPlayer.Play("Death");
 	}
 
 	public override void _Ready()
@@ -74,16 +75,14 @@ public partial class Enemy : CharacterBody2D
 
 	public override void _Process(double delta)
 	{
-		if (m_Nodes.Timer.TimeLeft == 0 && m_EnemyState.State != State.Death)
+		if (m_EnemyState.State != State.Death)
+		{
+		if (m_Nodes.Timer.TimeLeft == 0)
 		{
 			m_EnemyState.State = ChooseState();
 			m_IsAnimationPlaying = false;
 		}
-		else if (m_Nodes.Timer.TimeLeft == 0 && m_EnemyState.State == State.Death)
-		{
-			QueueFree();
-			return;
-		}
+		
 
 		if (GlobalPosition.DistanceTo(GetPlayerPosition()) <= m_ViewRadius)
 		{
@@ -95,10 +94,26 @@ public partial class Enemy : CharacterBody2D
 		Velocity = m_EnemyState.Velocity;
 
 		MoveAndSlide();
+		}
+		else if (m_Nodes.Timer.TimeLeft == 0)
+		{
+			QueueFree();
+			return;
+		}
 	}
 
-	public override void _PhysicsProcess(double delta)
+	public void Hit(Node origin, float damage)
 	{
+		m_EnemyState.Health -= damage;
+		GD.Print(m_EnemyState.Health);
+		CheckHealth();
+	}
+	public void CheckHealth()
+	{
+		if (m_EnemyState.Health <= 0)
+		{
+			Kill();
+		}
 	}
 
 	private void InitalizeStates()

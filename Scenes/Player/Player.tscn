@@ -135,7 +135,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 27
+collision_mask = 123
 script = ExtResource("1_ulukk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -150,7 +150,6 @@ frame = 24
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
-position_smoothing_enabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -163,7 +162,7 @@ wait_time = 3.0
 one_shot = true
 
 [node name="SlashCooldown" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.25
 one_shot = true
 
 [connection signal="timeout" from="ThrowCooldown" to="." method="OnThrowCooldownTimeout"]
