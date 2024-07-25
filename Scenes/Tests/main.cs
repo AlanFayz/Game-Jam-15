@@ -73,7 +73,9 @@ public partial class Main : Node
 	{
 		Enemy enemy = ResourceLoader.Load<PackedScene>("res://Scenes/Enemies/Enemy.tscn").Instantiate() as Enemy;
 		enemy.Position = GetNextPosition();
+		enemy.Connect("FireBolt", new Callable(this, MethodName.OnEnemyFireBolt));
 		m_GameComponents.Enemies.CallDeferred("add_child", enemy);
+		
 	}
 
 	private Vector2 GetNextPosition()
@@ -93,5 +95,14 @@ public partial class Main : Node
 		slash.AttackDir = slashDir;
 		slash.Damage = slashDamage;
 		AddChild(slash);
+	}
+	public void OnEnemyFireBolt(Vector2 Pos, Vector2 Dir, float speed, float damage)
+	{
+		FireBolt fireBolt = ResourceLoader.Load<PackedScene>("res://Scenes/Projectiles/FireBolt.tscn").Instantiate() as FireBolt;
+		fireBolt.GlobalPosition = Pos;
+		fireBolt.Direction = Dir;
+		fireBolt.Speed = speed;
+		fireBolt.Damage = damage;
+		m_GameComponents.Projectiles.CallDeferred("add_child",fireBolt);
 	}
 }

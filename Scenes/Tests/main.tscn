@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://m1itshtgk0rs"]
+[gd_scene load_steps=5 format=3 uid="uid://m1itshtgk0rs"]
 
 [ext_resource type="Script" path="res://Scenes/Tests/Main.cs" id="1_e2qyf"]
 [ext_resource type="PackedScene" uid="uid://crvlq7eqk44r7" path="res://Scenes/Map/Map.tscn" id="2_eidng"]
 [ext_resource type="PackedScene" uid="uid://bactn7u40to0h" path="res://Scenes/Player/Player.tscn" id="3_fcmqm"]
-[ext_resource type="PackedScene" uid="uid://b3pisw0cqu0ag" path="res://Scenes/Enemies/Enemy.tscn" id="4_5bre8"]
 
 [sub_resource type="Environment" id="Environment_yuhxu"]
 
@@ -21,9 +20,6 @@ environment = SubResource("Environment_yuhxu")
 [node name="Projectiles" type="Node2D" parent="."]
 
 [node name="Enemies" type="Node2D" parent="."]
-
-[node name="Enemy" parent="Enemies" instance=ExtResource("4_5bre8")]
-position = Vector2(332, 105)
 
 [node name="Timer" type="Timer" parent="Enemies"]
 wait_time = 10.0

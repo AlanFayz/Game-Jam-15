@@ -8,6 +8,9 @@ delegate void ProcessStateDelegate(double delta);
 
 public partial class Enemy : CharacterBody2D, IHittable
 {
+	[Signal]
+	public delegate void FireBoltEventHandler(Vector2 Pos, Vector2 Dir, float Speed, float Damage);
+
 	private enum State
 	{
 		Idle = 0, Move, Attack, Death
@@ -29,12 +32,16 @@ public partial class Enemy : CharacterBody2D, IHittable
 		public CollisionShape2D CollisionShape;
 		public Node Parent;
 		public Player Player;
+		public Marker2D ShootPoint;
 	};
 
 	private const float m_Speed = 10.0f;
 	private const float m_ViewRadius = 100.0f;
 	private const double m_TimeBetweenStates = 10.0;
 	private bool m_IsAnimationPlaying = false;
+
+	private const float m_Damage = 25f;
+	private const float m_ProjectileSpeed = 350f;
 
 	private Dictionary<State, ProcessStateDelegate> m_States;
 	private RandomNumberGenerator m_RandomNumberGenerator;
@@ -63,6 +70,7 @@ public partial class Enemy : CharacterBody2D, IHittable
 		m_Nodes.CollisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
 		m_Nodes.Parent = GetParent().GetParent();
 		m_Nodes.Player = m_Nodes.Parent.GetNode<Player>("Player");
+		m_Nodes.ShootPoint = GetNode<Marker2D>("ShootPoint");
 
 		m_EnemyState.State = State.Idle;
 		m_EnemyState.Velocity = Vector2.Zero;
@@ -84,7 +92,7 @@ public partial class Enemy : CharacterBody2D, IHittable
 		}
 		
 
-		if (GlobalPosition.DistanceTo(GetPlayerPosition()) <= m_ViewRadius)
+		if (GlobalPosition.DistanceTo(GetGlobalPlayerPosition()) <= m_ViewRadius)
 		{
 			m_EnemyState.State = State.Attack;
 		}
@@ -154,7 +162,7 @@ public partial class Enemy : CharacterBody2D, IHittable
 
 		ProcessStateDelegate ProcessAttackState = (double delta) =>
 		{
-			Vector2 direction = GetPlayerPosition() - Position;
+			Vector2 direction = GetLocalPlayerPosition();
 			direction = direction.Normalized();
 
 			m_EnemyState.Direction = direction;
@@ -207,8 +215,17 @@ public partial class Enemy : CharacterBody2D, IHittable
 		return (State)m_RandomNumberGenerator.RandiRange(0, 1);
 	}
 
-	private Vector2 GetPlayerPosition()
+	private Vector2 GetGlobalPlayerPosition()
 	{
 		return m_Nodes.Player.GlobalPosition;
+	}
+	private Vector2 GetLocalPlayerPosition()
+	{
+		return m_Nodes.Player.GlobalPosition-GlobalPosition;
+	}
+
+	private void Shoot()
+	{
+		EmitSignal(SignalName.FireBolt, m_Nodes.ShootPoint.GlobalPosition, (GetGlobalPlayerPosition()-m_Nodes.ShootPoint.GlobalPosition).Normalized(), m_ProjectileSpeed, m_Damage);
 	}
 }

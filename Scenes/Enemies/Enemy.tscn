@@ -21,6 +21,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"Shoot"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_uur6s"]
 resource_name = "Death"
@@ -118,3 +132,6 @@ libraries = {
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.197
 one_shot = true
+
+[node name="ShootPoint" type="Marker2D" parent="."]
+position = Vector2(17, -38)

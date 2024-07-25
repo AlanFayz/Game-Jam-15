@@ -13,9 +13,7 @@ public partial class Potion : Area2D
 	public float PoolDamage;
 	public float BreakDamage;
 
-	public override void _Ready()
-	{
-	}
+
 
 	public override void _Process(double delta)
 	{
