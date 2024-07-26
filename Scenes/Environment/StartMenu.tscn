@@ -1,9 +1,88 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3nwrqcjxiao5"]
+[gd_scene load_steps=4 format=3 uid="uid://blqrydku5rwj8"]
 
-[ext_resource type="PackedScene" uid="uid://crvlq7eqk44r7" path="res://Scenes/Map/Map.tscn" id="1_ojovw"]
+[ext_resource type="Script" path="res://Scenes/Environment/StartMenu.cs" id="1_8cfvw"]
+[ext_resource type="FontFile" uid="uid://dsqedp1xxenxf" path="res://Assets/Fonts/Capture it.ttf" id="1_k02th"]
+[ext_resource type="VideoStream" path="res://Assets/Images/Throbber/Filling broken wheel.ogv" id="3_qk2gv"]
 
-[node name="StartMenu" type="Node2D"]
+[node name="StartMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8cfvw")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Welcome" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.118
+anchor_top = 0.303
+anchor_right = 0.882
+anchor_bottom = 0.697
+offset_left = 0.563995
+offset_top = 4.15599
+offset_right = -0.564026
+offset_bottom = -4.15601
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Map" parent="." instance=ExtResource("1_ojovw")]
+[node name="Title" type="Label" parent="Welcome"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_k02th")
+theme_override_font_sizes/font_size = 75
+text = "INSERT GAME NAME HERE"
+
+[node name="HSeparator" type="HSeparator" parent="Welcome"]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="Welcome"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_k02th")
+theme_override_font_sizes/font_size = 50
+text = "Start Game"
+
+[node name="SettingsButton" type="Button" parent="Welcome"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_k02th")
+theme_override_font_sizes/font_size = 30
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="Welcome"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_k02th")
+theme_override_font_sizes/font_size = 30
+text = "Quit Game
+"
+
+[node name="Loading" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Loading"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_k02th")
+theme_override_font_sizes/font_size = 50
+text = "Loading"
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Loading"]
+layout_mode = 2
+size_flags_horizontal = 4
+stream = ExtResource("3_qk2gv")
+autoplay = true
+loop = true
+
+[connection signal="button_up" from="Welcome/StartButton" to="." method="OnStartButtonButtonUp"]
+[connection signal="button_up" from="Welcome/SettingsButton" to="." method="OnSettingsButtonButtonUp"]
+[connection signal="button_up" from="Welcome/QuitButton" to="." method="OnQuitButtonButtonUp"]

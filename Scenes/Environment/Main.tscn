@@ -11,6 +11,7 @@ script = ExtResource("1_e2qyf")
 
 [node name="Map" parent="." instance=ExtResource("2_eidng")]
 position = Vector2(364, 212)
+MapSizeExport = Vector2i(1000, 1000)
 
 [node name="Player" parent="." instance=ExtResource("3_fcmqm")]
 
