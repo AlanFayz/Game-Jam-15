@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bactn7u40to0h"]
+[gd_scene load_steps=11 format=3 uid="uid://bactn7u40to0h"]
 
 [ext_resource type="Texture2D" uid="uid://c4up0rxlo8o0x" path="res://Assets/Images/Hooded protag/AnimationSheet_Character.png" id="1_83dca"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.cs" id="1_ulukk"]
@@ -125,8 +125,39 @@ tracks/0/keys = {
 "values": [24, 25, 26, 27, 28, 29, 30, 31]
 }
 
+[sub_resource type="Animation" id="Animation_q415j"]
+resource_name = "Death"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [48, 49, 50, 51]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"EndDeath"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rojot"]
 _data = {
+"Death": SubResource("Animation_q415j"),
 "RESET": SubResource("Animation_4iond"),
 "idle": SubResource("Animation_q88r7"),
 "walk_left": SubResource("Animation_axp8q"),

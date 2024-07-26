@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Reflection.Metadata.Ecma335;
 
 public partial class Player : CharacterBody2D, IHittable
 {
@@ -7,13 +8,28 @@ public partial class Player : CharacterBody2D, IHittable
 	public delegate void PotionThrowEventHandler(Vector2 Pos, Vector2 Dir, float speed, float breakDamage, float poolDamage);
 	[Signal]
 	public delegate void SlashEventHandler(Vector2 Pos, Vector2 Dir, float slashDamage);
+	[Signal]
+	public delegate void PlayerDeathEventHandler();
 
 	
 	float PlayerSpeed = 50000f;
 
 	bool IsWalking = false;
 
-	float Health = 100f;
+	bool IsDying = false;
+
+
+	private float health = 100f;
+	public float Health 
+	{
+		get {return health;} 
+		set 
+		{
+			health = value;
+			CheckDeath(value);
+		}
+	}
+	
 
 
 
@@ -43,6 +59,8 @@ public partial class Player : CharacterBody2D, IHittable
 
 	public override void _Process(double delta)
 	{
+		if (IsDying) {return;}
+
 		Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down").Normalized();
 		
 		if (inputDir == Vector2.Zero)
@@ -109,6 +127,25 @@ public partial class Player : CharacterBody2D, IHittable
 		EmitSignal(SignalName.Slash, GlobalPosition+LocalSlashLocation, mouseDir, SlashDamage);
 	}
 
+	public void CheckDeath(float value)
+	{
+		if (health <= 0)
+		{
+			StartDeath();
+		}
+	}
 
+	public void StartDeath()
+	{
+		IsDying = true;
+		Animation.Play("Death", 0, 0.25f, false);
+	}
+	public void EndDeath()
+	{
+		EmitSignal(SignalName.PlayerDeath);
+
+		IsDying = false; //For testing, remove this in final ver
+		Health = 100f;
+	}
 }
 

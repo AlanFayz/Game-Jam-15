@@ -105,4 +105,9 @@ public partial class Main : Node
 		fireBolt.Damage = damage;
 		m_GameComponents.Projectiles.CallDeferred("add_child",fireBolt);
 	}
+	public void OnPlayerPlayerDeath()
+	{
+		GD.Print("Player Has Died");
+		//add in game ending stuff (e.g. game over screen) here
+	}
 }
