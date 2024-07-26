@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 
 public partial class Player : CharacterBody2D, IHittable
@@ -7,7 +8,7 @@ public partial class Player : CharacterBody2D, IHittable
 	[Signal]
 	public delegate void PotionThrowEventHandler(Vector2 Pos, Vector2 Dir, float speed, float breakDamage, float poolDamage);
 	[Signal]
-	public delegate void SlashEventHandler(Vector2 Pos, Vector2 Dir, float slashDamage);
+	public delegate void SlashEventHandler(Vector2 Pos, Vector2 Dir, float slashDamage, String slashType);
 	[Signal]
 	public delegate void PlayerDeathEventHandler();
 
@@ -29,6 +30,8 @@ public partial class Player : CharacterBody2D, IHittable
 			CheckDeath();
 		}
 	}
+
+	bool IsImmune = false;
 	
 
 
@@ -39,22 +42,27 @@ public partial class Player : CharacterBody2D, IHittable
 	float PoolDamage = 30f;
 
 
-	float SlashDistance = 15f;
+	float[] SlashDistances = {15f,30f};
 	bool CanSlash = true;
 	float SlashDamage = 10f;
+	string[] Slashes = {"res://Scenes/Melee/Slashes/Slash1.tscn", "res://Scenes/Melee/Slashes/Slash2.tscn"};
 
 
 
 	//Node references
 	Timer ThrowCooldown;
 	Timer SlashCooldown;
+	Timer ImmunityFrames;
 	AnimationPlayer Animation;
 
 	public override void _Ready()
 	{
 		ThrowCooldown = GetNode<Timer>("ThrowCooldown");
 		SlashCooldown = GetNode<Timer>("SlashCooldown");
+		ImmunityFrames = GetNode<Timer>("ImmunityFrames");
 		Animation = GetNode<AnimationPlayer>("AnimationPlayer");
+
+
 	}
 
 	public override void _Process(double delta)
@@ -113,9 +121,18 @@ public partial class Player : CharacterBody2D, IHittable
 
 	public void Hit(Node Origin, float damage)
 	{
-		GD.Print($"Hit by {Origin}");
-		Health -= damage;
-		GD.Print($"Health = {Health}");
+		if (!IsImmune)
+		{
+			Health -= damage;
+			GD.Print($"Health = {Health}");
+			IsImmune = true;
+			ImmunityFrames.Start();
+		}
+	}
+
+	public void OnImmunityFramesTimeout()
+	{
+		IsImmune = false;
 	}
 
 	public void SlashAttack()
@@ -123,8 +140,9 @@ public partial class Player : CharacterBody2D, IHittable
 		CanSlash = false;
 		SlashCooldown.Start();
 		Vector2 mouseDir = GetLocalMousePosition().Normalized();
-		Vector2 LocalSlashLocation = mouseDir*SlashDistance;
-		EmitSignal(SignalName.Slash, GlobalPosition+LocalSlashLocation, mouseDir, SlashDamage);
+		int slashType = Math.Abs((int)GD.Randi())%2;
+		Vector2 LocalSlashLocation = mouseDir*SlashDistances[slashType];
+		EmitSignal(SignalName.Slash, GlobalPosition+LocalSlashLocation, mouseDir, SlashDamage, Slashes[slashType]);
 	}
 
 	public void CheckDeath()
@@ -148,4 +166,3 @@ public partial class Player : CharacterBody2D, IHittable
 		Health = 100f;
 	}
 }
-

@@ -88,9 +88,9 @@ public partial class Main : Node
 
 		return position;
 	}
-	public void OnPlayerSlash(Vector2 slashPos, Vector2 slashDir, float slashDamage)
+	public void OnPlayerSlash(Vector2 slashPos, Vector2 slashDir, float slashDamage, string slashType)
 	{
-		Slash1 slash = ResourceLoader.Load<PackedScene>("res://Scenes/Melee/Slashes/Slash1.tscn").Instantiate() as Slash1;
+		BaseSlash slash = ResourceLoader.Load<PackedScene>(slashType).Instantiate() as BaseSlash;
 		slash.Position = slashPos;
 		slash.AttackDir = slashDir;
 		slash.Damage = slashDamage;

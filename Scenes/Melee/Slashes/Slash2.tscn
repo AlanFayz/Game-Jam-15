@@ -1,0 +1,121 @@
+[gd_scene load_steps=9 format=3 uid="uid://dthlkpbh4nfgo"]
+
+[ext_resource type="PackedScene" uid="uid://dr572m0abfs6k" path="res://Scenes/Melee/Slashes/BaseSlash.tscn" id="1_c7y2g"]
+[ext_resource type="Texture2D" uid="uid://clv4mcywm10gv" path="res://Assets/Images/Small slash FX/small_sting.png" id="2_catw3"]
+[ext_resource type="Script" path="res://Scenes/Melee/Slashes/Slash2.cs" id="2_xq16d"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gp0a1"]
+radius = 8.0
+height = 40.0
+
+[sub_resource type="Animation" id="Animation_osyd2"]
+resource_name = "Slash"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlashSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"SlashEnd"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_s7ixr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlashSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SlashSprite:flip_v")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_cd2sm"]
+resource_name = "UpSlash"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlashSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"SlashEnd"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x0jkv"]
+_data = {
+"RESET": SubResource("Animation_s7ixr"),
+"Slash": SubResource("Animation_osyd2"),
+"UpSlash": SubResource("Animation_cd2sm")
+}
+
+[node name="Slash2" instance=ExtResource("1_c7y2g")]
+script = ExtResource("2_xq16d")
+
+[node name="SlashShape" parent="." index="0"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_gp0a1")
+
+[node name="SlashSprite" parent="." index="1"]
+position = Vector2(-30, -2)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_catw3")
+hframes = 4
+
+[node name="AnimationPlayer" parent="." index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_x0jkv")
+}
