@@ -1,17 +1,20 @@
 using Godot;
+using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-delegate void ProcessStateDelegate(double delta);
 
 public partial class Enemy : CharacterBody2D, IHittable
 {
-	[Signal]
+    delegate void ProcessStateDelegate(double delta);
+
+
+    [Signal]
 	public delegate void FireBoltEventHandler(Vector2 Pos, Vector2 Dir, float Speed, float Damage);
 
-	private enum State
+    private enum State
 	{
 		Idle = 0, Move, Attack, Death
 	}
@@ -35,15 +38,20 @@ public partial class Enemy : CharacterBody2D, IHittable
 		public Marker2D ShootPoint;
 	};
 
-	private const float m_Speed = 10.0f;
-	private const float m_ViewRadius = 100.0f;
-	private const double m_TimeBetweenStates = 10.0;
-	private bool m_IsAnimationPlaying = false;
+	private struct EnemyProperties
+	{
+		// (in pixel space)
+        public const float Speed = 100.0f;
+        public const float ViewRadius = 300.0f;
+		public const float AttackRadius = 150.0f;
+        public const float Damage = 25.0f;
+        public const float ProjectileSpeed = 350.0f;
+    };
 
-	private const float m_Damage = 25f;
-	private const float m_ProjectileSpeed = 350f;
+    private bool  m_IsAnimationPlaying = false;
+	private Rect2 m_Bounds;
 
-	private Dictionary<State, ProcessStateDelegate> m_States;
+    private Dictionary<State, ProcessStateDelegate> m_States;
 	private RandomNumberGenerator m_RandomNumberGenerator;
 
 	private EnemyState m_EnemyState;
@@ -72,36 +80,42 @@ public partial class Enemy : CharacterBody2D, IHittable
 		m_Nodes.Player = m_Nodes.Parent.GetNode<Player>("Player");
 		m_Nodes.ShootPoint = GetNode<Marker2D>("ShootPoint");
 
-		m_EnemyState.State = State.Idle;
+		MapGeneration map = m_Nodes.Parent.GetNode<MapGeneration>("Map");
+
+		m_Bounds = new Rect2(map.GetMapPositionInLocalSpace(), map.GetMapSizeInLocalSpace());
+
+        m_EnemyState.State = State.Idle;
 		m_EnemyState.Velocity = Vector2.Zero;
 		m_EnemyState.Health = 100.0f;
 
 		InitalizeStates();
 
-		m_States[State.Idle](m_Speed);
+		m_States[State.Idle](EnemyProperties.Speed);
 	}
 
 	public override void _Process(double delta)
 	{
 		if (m_EnemyState.State != State.Death)
 		{
-		if (m_Nodes.Timer.TimeLeft == 0)
-		{
-			m_EnemyState.State = ChooseState();
-			m_IsAnimationPlaying = false;
-		}
+			if (m_Nodes.Timer.TimeLeft == 0)
+			{
+				m_EnemyState.State = ChooseState();
+				m_IsAnimationPlaying = false;
+			}
 		
+			if (GlobalPosition.DistanceTo(GetGlobalPlayerPosition()) <= EnemyProperties.ViewRadius)
+			{
+				m_EnemyState.State = State.Attack;
+                m_IsAnimationPlaying = false;
+            }
 
-		if (GlobalPosition.DistanceTo(GetGlobalPlayerPosition()) <= m_ViewRadius)
-		{
-			m_EnemyState.State = State.Attack;
-		}
+			m_States[m_EnemyState.State](EnemyProperties.Speed);
 
-		m_States[m_EnemyState.State](m_Speed);
+			Velocity = m_EnemyState.Velocity;
 
-		Velocity = m_EnemyState.Velocity;
+			MoveAndSlide();
 
-		MoveAndSlide();
+			Position = ClampPosition(Position);
 		}
 		else if (m_Nodes.Timer.TimeLeft == 0)
 		{
@@ -157,16 +171,20 @@ public partial class Enemy : CharacterBody2D, IHittable
 				m_IsAnimationPlaying = true;
 			}
 
-			m_EnemyState.Velocity = m_EnemyState.Direction * m_Speed * (float)delta;
+			m_EnemyState.Velocity = m_EnemyState.Direction * (float)delta;
 		};
 
 		ProcessStateDelegate ProcessAttackState = (double delta) =>
 		{
-			Vector2 direction = GetLocalPlayerPosition();
+			Vector2 direction = GetGlobalPlayerPosition() - GlobalPosition;
 			direction = direction.Normalized();
 
 			m_EnemyState.Direction = direction;
-			m_EnemyState.Velocity = m_EnemyState.Direction * m_Speed * (float)delta;
+
+			if (Position.DistanceTo(GetGlobalPlayerPosition()) >= EnemyProperties.AttackRadius)
+				m_EnemyState.Velocity = m_EnemyState.Direction * (float)delta;
+			else
+				m_EnemyState.Velocity = new Vector2(0.0f, 0.0f);
 
 			FlipSpriteIfNeeded();
 
@@ -221,11 +239,40 @@ public partial class Enemy : CharacterBody2D, IHittable
 	}
 	private Vector2 GetLocalPlayerPosition()
 	{
-		return m_Nodes.Player.GlobalPosition-GlobalPosition;
+		return m_Nodes.Player.Position; 
 	}
 
 	private void Shoot()
 	{
-		EmitSignal(SignalName.FireBolt, m_Nodes.ShootPoint.GlobalPosition, (GetGlobalPlayerPosition()-m_Nodes.ShootPoint.GlobalPosition).Normalized(), m_ProjectileSpeed, m_Damage);
+		Vector2 direction = (GetGlobalPlayerPosition() - m_Nodes.ShootPoint.GlobalPosition);
+
+        EmitSignal(
+			SignalName.FireBolt, 
+			m_Nodes.ShootPoint.GlobalPosition,
+            direction.Normalized(), 
+			EnemyProperties.ProjectileSpeed, 
+			EnemyProperties.Damage);
+	}
+
+	private Vector2 ClampPosition(Vector2 position)
+	{
+		if (m_Bounds.HasPoint(position))
+			return position;
+
+		float xFactor = 0.0f;
+
+		if (position.X > m_Bounds.End.X)
+			xFactor = position.X - m_Bounds.End.X;
+		else if (position.X < m_Bounds.Position.X)
+			xFactor = m_Bounds.Position.X - position.X;
+
+		float yFactor = 0.0f;
+
+        if (position.Y > m_Bounds.End.Y)
+            yFactor = position.Y - m_Bounds.End.Y;
+        else if (position.Y < m_Bounds.Position.Y)
+            yFactor = m_Bounds.Position.Y - position.Y;
+
+		return new Vector2(position.X - xFactor, position.Y - yFactor);
 	}
 }

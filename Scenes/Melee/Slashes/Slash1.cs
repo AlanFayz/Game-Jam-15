@@ -9,6 +9,7 @@ public partial class Slash1 : Area2D
 	public override void _Ready()
 	{
 		LookAt(AttackDir+GlobalPosition);
+
 		if (AttackDir.X<0)
 		{
 			Vector2 scale = Scale;

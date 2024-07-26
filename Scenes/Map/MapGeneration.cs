@@ -63,6 +63,16 @@ public partial class MapGeneration : Node
 		return m_MapData.MapSize;
 	}
 
+	public Vector2 GetMapPositionInLocalSpace()
+	{
+		return m_MapData.TileMap.MapToLocal(GetMapPosition());	
+	}
+
+	public Vector2 GetMapSizeInLocalSpace()
+	{
+		return m_MapData.TileMap.MapToLocal(GetMapSize());
+	}
+
 	public override void _Ready()
 	{
 		m_NoiseGeneration = new NoiseGeneration();
