@@ -34,8 +34,8 @@ public partial class Main : Node
 		}
 
 
-		Vector2I mapSize = m_GameComponents.Map.GetMapSize();
-		Vector2I mapPosition = m_GameComponents.Map.GetMapPosition();
+		Vector2 mapSize = m_GameComponents.Map.GetMapSizeInLocalSpace();
+		Vector2 mapPosition = m_GameComponents.Map.GetMapPositionInLocalSpace();
 
 		m_SpawnZone = new Rect2(mapPosition, mapSize);
 	}

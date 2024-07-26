@@ -48,6 +48,7 @@ public partial class MapGeneration : Node
 		public List<Cell> SparseSet;
 	}
 
+	private Vector2I m_Offset = new Vector2I(21, 10);
 	private NoiseGeneration m_NoiseGeneration;
 	private MapData m_MapData;
 
@@ -65,7 +66,7 @@ public partial class MapGeneration : Node
 
 	public Vector2 GetMapPositionInLocalSpace()
 	{
-		return m_MapData.TileMap.MapToLocal(GetMapPosition());	
+		return m_MapData.TileMap.MapToLocal(GetMapPosition()) + m_MapData.TileMap.MapToLocal(m_Offset);	
 	}
 
 	public Vector2 GetMapSizeInLocalSpace()
@@ -85,7 +86,7 @@ public partial class MapGeneration : Node
 		GD.Print("Seed: ", m_NoiseGeneration.NoiseGenerationAlgorithm.Seed);
 
 		m_MapData.OccupiedLootCoords = new HashSet<Vector2I>();
-		m_MapData.MapSize = new Vector2I(1000, 1000);
+		m_MapData.MapSize = new Vector2I(100, 100);
 		m_MapData.Cells   = new List<CellInfo>();
 		m_MapData.TileSet = new List<bool>();
 		m_MapData.TileMap = GetNode<TileMap>("MainTileMap");

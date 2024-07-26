@@ -3,24 +3,32 @@
   "WorkspaceRootPath": "D:\\Dev\\Game-Jam-15\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|d:\\dev\\game-jam-15\\scenes\\enemies\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\enemies\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|d:\\dev\\game-jam-15\\scenes\\map\\mapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\map\\mapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|d:\\dev\\game-jam-15\\scenes\\tests\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\tests\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|d:\\dev\\game-jam-15\\scenes\\melee\\slashes\\slash1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\melee\\slashes\\slash1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|d:\\dev\\game-jam-15\\scenes\\map\\mapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\map\\mapgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|d:\\dev\\game-jam-15\\scenes\\melee\\slashes\\baseslash.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\melee\\slashes\\baseslash.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|d:\\dev\\game-jam-15\\scenes\\tests\\slash1test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\tests\\slash1test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|d:\\dev\\game-jam-15\\scenes\\enemies\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\enemies\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|d:\\dev\\game-jam-15\\scenes\\globals\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\globals\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|d:\\dev\\game-jam-15\\scenes\\tests\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|solutionrelative:scenes\\tests\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4B6AD972-D645-4123-9604-8723A1651AA7}|Game Jam 15.csproj|d:\\dev\\game-jam-15\\scripts\\interfaces\\ihittable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -83,7 +91,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -92,6 +100,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "BaseSlash.cs",
+              "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Melee\\Slashes\\BaseSlash.cs",
+              "RelativeDocumentMoniker": "Scenes\\Melee\\Slashes\\BaseSlash.cs",
+              "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Melee\\Slashes\\BaseSlash.cs",
+              "RelativeToolTip": "Scenes\\Melee\\Slashes\\BaseSlash.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAAAgwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-26T15:26:59Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Slash1Test.cs",
+              "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Tests\\Slash1Test.cs",
+              "RelativeDocumentMoniker": "Scenes\\Tests\\Slash1Test.cs",
+              "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Tests\\Slash1Test.cs",
+              "RelativeToolTip": "Scenes\\Tests\\Slash1Test.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-26T15:26:10.557Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "Globals.cs",
               "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Globals\\Globals.cs",
               "RelativeDocumentMoniker": "Scenes\\Globals\\Globals.cs",
@@ -104,20 +138,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "Enemy.cs",
               "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Enemies\\Enemy.cs",
               "RelativeDocumentMoniker": "Scenes\\Enemies\\Enemy.cs",
               "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Enemies\\Enemy.cs",
               "RelativeToolTip": "Scenes\\Enemies\\Enemy.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAAwCgAAAAmAAAA",
+              "ViewState": "AQIAAF8AAAAAAAAAAAAswGwAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-22T16:20:04.462Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "IHittable.cs",
               "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scripts\\Interfaces\\IHittable.cs",
               "RelativeDocumentMoniker": "Scripts\\Interfaces\\IHittable.cs",
@@ -130,43 +164,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Potion.cs",
-              "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Projectiles\\Potion.cs",
-              "RelativeDocumentMoniker": "Scenes\\Projectiles\\Potion.cs",
-              "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Projectiles\\Potion.cs",
-              "RelativeToolTip": "Scenes\\Projectiles\\Potion.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAACAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-20T16:42:42.834Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 10,
-              "Title": "FSM.cs",
-              "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Tests\\FSM.cs",
-              "RelativeDocumentMoniker": "Scenes\\Tests\\FSM.cs",
-              "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Tests\\FSM.cs",
-              "RelativeToolTip": "Scenes\\Tests\\FSM.cs",
-              "ViewState": "AQIAABQAAAAAAAAAAAAQwBAAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-19T19:53:07.958Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Player.cs",
-              "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Player\\Player.cs",
-              "RelativeDocumentMoniker": "Scenes\\Player\\Player.cs",
-              "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Player\\Player.cs",
-              "RelativeToolTip": "Scenes\\Player\\Player.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADgAAAACAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-19T19:53:01.061Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
               "Title": "TestFSM.cs",
               "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Tests\\TestFSM.cs",
               "RelativeDocumentMoniker": "Scenes\\Tests\\TestFSM.cs",
@@ -178,7 +176,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "FSMTestMan.cs",
               "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Tests\\FSMTestMan.cs",
               "RelativeDocumentMoniker": "Scenes\\Tests\\FSMTestMan.cs",
@@ -190,33 +188,82 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "MapGeneration.cs",
               "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Map\\MapGeneration.cs",
               "RelativeDocumentMoniker": "Scenes\\Map\\MapGeneration.cs",
               "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Map\\MapGeneration.cs",
               "RelativeToolTip": "Scenes\\Map\\MapGeneration.cs",
-              "ViewState": "AQIAAB8AAAAAAAAAAAAkwDsAAAAAAAAA",
+              "ViewState": "AQIAAEoAAAAAAAAAAAAUwFcAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-17T21:23:06.109Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Slash1.cs",
               "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Melee\\Slashes\\Slash1.cs",
               "RelativeDocumentMoniker": "Scenes\\Melee\\Slashes\\Slash1.cs",
-              "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Melee\\Slashes\\Slash1.cs*",
-              "RelativeToolTip": "Scenes\\Melee\\Slashes\\Slash1.cs*",
-              "ViewState": "AQIAABkAAAAAAAAAAAAQwCwAAAAAAAAA",
+              "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Melee\\Slashes\\Slash1.cs",
+              "RelativeToolTip": "Scenes\\Melee\\Slashes\\Slash1.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-23T13:52:02.7Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Main.cs",
+              "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Tests\\Main.cs",
+              "RelativeDocumentMoniker": "Scenes\\Tests\\Main.cs",
+              "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Tests\\Main.cs",
+              "RelativeToolTip": "Scenes\\Tests\\Main.cs",
+              "ViewState": "AQIAAEUAAAAAAAAAAAAowCgAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-17T21:30:40.263Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Player.cs",
+              "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Player\\Player.cs",
+              "RelativeDocumentMoniker": "Scenes\\Player\\Player.cs",
+              "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Player\\Player.cs",
+              "RelativeToolTip": "Scenes\\Player\\Player.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADgAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-19T19:53:01.061Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "FSM.cs",
+              "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Tests\\FSM.cs",
+              "RelativeDocumentMoniker": "Scenes\\Tests\\FSM.cs",
+              "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Tests\\FSM.cs",
+              "RelativeToolTip": "Scenes\\Tests\\FSM.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAQwBAAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-19T19:53:07.958Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 14,
+              "Title": "Potion.cs",
+              "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Projectiles\\Potion.cs",
+              "RelativeDocumentMoniker": "Scenes\\Projectiles\\Potion.cs",
+              "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Projectiles\\Potion.cs",
+              "RelativeToolTip": "Scenes\\Projectiles\\Potion.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-20T16:42:42.834Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
               "Title": "CSharpInstanceBridge.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\AppData\\Local\\Temp\\.vsdbgsrc\\e02c6d47bcf93dc176fd92dbe50e48b6346bd905c9638f8cf9ab6f4e860123e7\\CSharpInstanceBridge.cs",
               "ToolTip": "C:\\Users\\Alan\\AppData\\Local\\Temp\\.vsdbgsrc\\e02c6d47bcf93dc176fd92dbe50e48b6346bd905c9638f8cf9ab6f4e860123e7\\CSharpInstanceBridge.cs [Read Only]",
@@ -227,7 +274,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "PotionPool.cs",
               "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Projectiles\\PotionPool.cs",
               "RelativeDocumentMoniker": "Scenes\\Projectiles\\PotionPool.cs",
@@ -238,25 +285,12 @@
               "WhenOpened": "2024-07-21T20:36:24.613Z"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Main.cs",
-              "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scenes\\Tests\\Main.cs",
-              "RelativeDocumentMoniker": "Scenes\\Tests\\Main.cs",
-              "ToolTip": "D:\\Dev\\Game-Jam-15\\Scenes\\Tests\\Main.cs",
-              "RelativeToolTip": "Scenes\\Tests\\Main.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAAwBEAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-17T21:30:40.263Z",
-              "EditorCaption": ""
-            },
-            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "AudioManager.cs",
               "DocumentMoniker": "D:\\Dev\\Game-Jam-15\\Scripts\\Audio\\AudioManager.cs",
               "RelativeDocumentMoniker": "Scripts\\Audio\\AudioManager.cs",
@@ -268,7 +302,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "Node.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\AppData\\Local\\Temp\\.vsdbgsrc\\eb56e6f63474fc2fcc91ba3b0ced511a7b7342672f3c8969eff2831f5abff660\\Node.cs",
               "ToolTip": "C:\\Users\\Alan\\AppData\\Local\\Temp\\.vsdbgsrc\\eb56e6f63474fc2fcc91ba3b0ced511a7b7342672f3c8969eff2831f5abff660\\Node.cs [Read Only]",
@@ -279,7 +313,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "MapGeneration.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scripts\\Map\\MapGeneration.cs",
               "ToolTip": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scripts\\Map\\MapGeneration.cs",
@@ -288,7 +322,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "TestFSM.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scripts\\FSMs\\TestFSM.cs",
               "ToolTip": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scripts\\FSMs\\TestFSM.cs",
@@ -298,7 +332,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "FSM.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scripts\\FSMs\\FSM.cs",
               "ToolTip": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scripts\\FSMs\\FSM.cs",
@@ -308,7 +342,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "FSMTestMan.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scenes\\FSMTestMan.cs",
               "ToolTip": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scenes\\FSMTestMan.cs",
@@ -318,7 +352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "main.cs",
               "DocumentMoniker": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scripts\\main.cs",
               "ToolTip": "C:\\Users\\Alan\\Desktop\\Dev\\Godot Projects\\Game Jam 15\\Scripts\\main.cs",

@@ -254,25 +254,11 @@ public partial class Enemy : CharacterBody2D, IHittable
 			EnemyProperties.Damage);
 	}
 
-	private Vector2 ClampPosition(Vector2 position)
-	{
-		if (m_Bounds.HasPoint(position))
-			return position;
+    private Vector2 ClampPosition(Vector2 position)
+    {
+        float clampedX = Mathf.Clamp(position.X, m_Bounds.Position.X, m_Bounds.End.X);
+        float clampedY = Mathf.Clamp(position.Y, m_Bounds.Position.Y, m_Bounds.End.Y);
 
-		float xFactor = 0.0f;
-
-		if (position.X > m_Bounds.End.X)
-			xFactor = position.X - m_Bounds.End.X;
-		else if (position.X < m_Bounds.Position.X)
-			xFactor = m_Bounds.Position.X - position.X;
-
-		float yFactor = 0.0f;
-
-        if (position.Y > m_Bounds.End.Y)
-            yFactor = position.Y - m_Bounds.End.Y;
-        else if (position.Y < m_Bounds.Position.Y)
-            yFactor = m_Bounds.Position.Y - position.Y;
-
-		return new Vector2(position.X - xFactor, position.Y - yFactor);
-	}
+        return new Vector2(clampedX, clampedY);
+    }
 }
