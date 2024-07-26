@@ -26,7 +26,7 @@ public partial class Player : CharacterBody2D, IHittable
 		set 
 		{
 			health = value;
-			CheckDeath(value);
+			CheckDeath();
 		}
 	}
 	
@@ -127,7 +127,7 @@ public partial class Player : CharacterBody2D, IHittable
 		EmitSignal(SignalName.Slash, GlobalPosition+LocalSlashLocation, mouseDir, SlashDamage);
 	}
 
-	public void CheckDeath(float value)
+	public void CheckDeath()
 	{
 		if (health <= 0)
 		{
