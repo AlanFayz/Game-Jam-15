@@ -4,9 +4,11 @@ using System;
 public partial class StartScreen : Node2D
 {
 	StartMenu Menu;
+	PackedScene GameScene;
     public override void _Ready()
     {
         Menu = GetNode<StartMenu>("StartMenu");
+		GameScene = ResourceLoader.Load<PackedScene>("res://Scenes/Environment/Main.tscn");
     }
     public void OnStartMenuQuitGame()
 	{
@@ -15,6 +17,6 @@ public partial class StartScreen : Node2D
 	public void OnStartMenuStartGame()
 	{
 		Menu.Loading();
-		GetTree().ChangeSceneToFile("res://Scenes/Environment/Main.tscn");
+		GetTree().ChangeSceneToPacked(GameScene);
 	}
 }
