@@ -15,6 +15,8 @@ public partial class PotionPool : Area2D
 			SetCollisionMaskValue(1,false);
 			Damage *= 0.7f;
 		}
+		Timer timer = GetNode<Timer>("Timer");
+		timer.Start(5+PotionType[1]);
     }
 
     public void OnTimerTimeout()
@@ -26,7 +28,7 @@ public partial class PotionPool : Area2D
 	{
 		if (body is IHittable target)
 		{
-			target.Hit(this, Damage, new int[4]);
+			target.Hit(this, Damage, new int[3]);
 		}
 	}
 }

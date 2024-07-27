@@ -188,18 +188,45 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="ThrowCooldown" type="Timer" parent="."]
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="ThrowCooldown" type="Timer" parent="Timers"]
 wait_time = 3.0
 one_shot = true
 
-[node name="SlashCooldown" type="Timer" parent="."]
+[node name="SlashCooldown" type="Timer" parent="Timers"]
 wait_time = 0.25
 one_shot = true
 
-[node name="ImmunityFrames" type="Timer" parent="."]
+[node name="ImmunityFrames" type="Timer" parent="Timers"]
 wait_time = 0.5
 one_shot = true
 
-[connection signal="timeout" from="ThrowCooldown" to="." method="OnThrowCooldownTimeout"]
-[connection signal="timeout" from="SlashCooldown" to="." method="OnSlashCooldownTimeout"]
-[connection signal="timeout" from="ImmunityFrames" to="." method="OnImmunityFramesTimeout"]
+[node name="FireTimeLeft" type="Timer" parent="Timers"]
+wait_time = 2.0
+one_shot = true
+
+[node name="FreezeTimeLeft" type="Timer" parent="Timers"]
+wait_time = 0.75
+one_shot = true
+
+[node name="PoisonTimeLeft" type="Timer" parent="Timers"]
+wait_time = 5.0
+one_shot = true
+
+[node name="FireTicks" type="Timer" parent="Timers"]
+wait_time = 0.2
+one_shot = true
+
+[node name="PoisonTicks" type="Timer" parent="Timers"]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="Timers/ThrowCooldown" to="." method="OnThrowCooldownTimeout"]
+[connection signal="timeout" from="Timers/SlashCooldown" to="." method="OnSlashCooldownTimeout"]
+[connection signal="timeout" from="Timers/ImmunityFrames" to="." method="OnImmunityFramesTimeout"]
+[connection signal="timeout" from="Timers/FireTimeLeft" to="." method="OnFireTimeLeftTimeout"]
+[connection signal="timeout" from="Timers/FreezeTimeLeft" to="." method="OnFreezeTimeLeftTimeout"]
+[connection signal="timeout" from="Timers/PoisonTimeLeft" to="." method="OnPoisonTimeLeftTimeout"]
+[connection signal="timeout" from="Timers/FireTicks" to="." method="OnFireTicksTimeout"]
+[connection signal="timeout" from="Timers/PoisonTicks" to="." method="OnPoisonTicksTimeout"]

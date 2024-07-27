@@ -18,6 +18,13 @@ public partial class Player : CharacterBody2D, IHittable
 	bool IsWalking = false;
 
 	bool IsDying = false;
+	bool IsFrozen = false;
+	bool IsOnFire = false;
+	bool IsPoisoned = false;
+	float FireDamage = 4f;
+	float PoisonDamage = 2f;
+	int SlowLevel = 0;
+
 
 
 	private float health = 100f;
@@ -58,18 +65,32 @@ public partial class Player : CharacterBody2D, IHittable
 	Timer ThrowCooldown;
 	Timer SlashCooldown;
 	Timer ImmunityFrames;
+	Timer FireCountdown;
+	Timer FireTicks;
+	Timer PoisonCountdown;
+	Timer PoisonTicks;
+	Timer FreezeCountdown;
+
 	AnimationPlayer Animation;
 
 	public override void _Ready()
 	{
-		ThrowCooldown = GetNode<Timer>("ThrowCooldown");
-		SlashCooldown = GetNode<Timer>("SlashCooldown");
-		ImmunityFrames = GetNode<Timer>("ImmunityFrames");
+		ThrowCooldown = GetNode<Timer>("Timers/ThrowCooldown");
+		SlashCooldown = GetNode<Timer>("Timers/SlashCooldown");
+		ImmunityFrames = GetNode<Timer>("Timers/ImmunityFrames");
+		FireCountdown = GetNode<Timer>("Timers/FireTimeLeft");
+		FireTicks = GetNode<Timer>("Timers/FireTicks");
+		PoisonCountdown = GetNode<Timer>("Timers/PoisonTimeLeft");
+		PoisonTicks = GetNode<Timer>("Timers/PoisonTicks");
+		FreezeCountdown = GetNode<Timer>("Timers/FreezeTimeLeft");
+
+
 		Animation = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 
 	public override void _Process(double delta)
 	{
+		GD.Print("Health");
 		if (IsDying) {return;}
 
 		Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down").Normalized();
@@ -124,13 +145,33 @@ public partial class Player : CharacterBody2D, IHittable
 
 	public void Hit(Node Origin, float damage, int[] Effects)
 	{
-		if (!IsImmune)
+		if (IsImmune) {return;}
+
+		Health -= damage;
+		GD.Print($"Health = {Health}");
+		IsImmune = true;
+		ImmunityFrames.Start();
+
+		//Freeze
+		if (Effects[0] > 2)
 		{
-			Health -= damage;
-			GD.Print($"Health = {Health}");
-			IsImmune = true;
-			ImmunityFrames.Start();
+			IsFrozen = true;
+			FreezeCountdown.Start();
 		}
+		else if (Effects[0] > 0)
+		{
+			FreezeCountdown.Start();
+			SlowLevel = Effects[0];
+		}
+		//Burn
+		if (Effects[1] > 0);
+		{
+			IsOnFire = true;
+			FireCountdown.Start(2f+(0.5f*Effects[1]));
+			FireDamage = 2f+Effects[1];
+		}
+
+
 	}
 
 	public void OnImmunityFramesTimeout()
@@ -168,4 +209,26 @@ public partial class Player : CharacterBody2D, IHittable
 		IsDying = false; //For testing, remove this in final ver
 		Health = 100f;
 	}
+
+	public void OnFireTimeLeftTimeout()
+	{
+		IsOnFire = false;
+	}
+	public void OnFreezeTimeLeftTimeout()
+	{
+		IsFrozen = false;
+	}
+	public void OnPoisonTimeLeftTimeout()
+	{
+		IsPoisoned = false;
+	}
+	public void OnFireTicksTimeout()
+	{
+		Health -= FireDamage;
+	}
+	public void OnPoisonTicksTimeout()
+	{
+		Health -= PoisonDamage;
+	}
+
 }

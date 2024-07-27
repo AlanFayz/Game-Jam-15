@@ -14,16 +14,15 @@ public partial class Potion : Area2D
 	public float PoolDamage;
 	public float BreakDamage;
 	public int[] PotionType;
-	public int[] PotionEffects;
+	public int[] PotionEffects = new int[3];
 
 
     public override void _Ready()
     {
 		for (int i = 2; i<5; i++)
 		{
-        	PotionEffects.Append<int>(PotionType[i]);
+        	PotionEffects[i-2] = PotionType[i];
 		}
-		GD.Print(PotionEffects);
     }
 
     public override void _Process(double delta)

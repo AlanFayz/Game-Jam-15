@@ -35,7 +35,7 @@ texture = ExtResource("2_4owig")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
-autostart = true
+one_shot = true
 
 [connection signal="body_entered" from="." to="." method="OnBodyEntered"]
 [connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]
