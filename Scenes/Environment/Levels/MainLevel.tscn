@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://cb71na4j0e25"]
+
+[ext_resource type="PackedScene" uid="uid://dviu3gfydcdjb" path="res://Scenes/Environment/Levels/LevelBase.tscn" id="1_4m86y"]
+[ext_resource type="Script" path="res://Scenes/Environment/Levels/MainLevel.cs" id="2_wtgsl"]
+[ext_resource type="PackedScene" uid="uid://crvlq7eqk44r7" path="res://Scenes/Map/Map.tscn" id="3_5sofy"]
+
+[sub_resource type="Environment" id="Environment_dehsf"]
+
+[node name="MainLevel" instance=ExtResource("1_4m86y")]
+script = ExtResource("2_wtgsl")
+
+[node name="Map" parent="." index="0" instance=ExtResource("3_5sofy")]
+position = Vector2(364, 212)
+MapSizeExport = Vector2i(100, 100)
+
+[node name="WorldEnvironment" parent="." index="2"]
+environment = SubResource("Environment_dehsf")
+
+[node name="EnemyTimer" type="Timer" parent="Enemies" index="0"]
+wait_time = 10.0
+autostart = true
+
+[connection signal="timeout" from="Enemies/EnemyTimer" to="." method="OnEnemyTimerTimeout"]
