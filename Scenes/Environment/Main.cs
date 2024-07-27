@@ -38,6 +38,7 @@ public partial class Main : Node
 		Vector2 mapPosition = m_GameComponents.Map.GetMapPositionInLocalSpace();
 
 		m_SpawnZone = new Rect2(mapPosition, mapSize);
+
 	}
 	public override void _Process(double delta)
 	{
@@ -75,7 +76,6 @@ public partial class Main : Node
 		enemy.Position = GetNextPosition();
 		enemy.Connect("FireBolt", new Callable(this, MethodName.OnEnemyFireBolt));
 		m_GameComponents.Enemies.CallDeferred("add_child", enemy);
-		
 	}
 
 	private Vector2 GetNextPosition()

@@ -5,7 +5,8 @@ using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Runtime.CompilerServices;
-
+using System.Threading;
+using System.Threading.Tasks;
 public partial class MapGeneration : Node
 {
 	private enum Cell
@@ -77,6 +78,17 @@ public partial class MapGeneration : Node
 		return m_MapData.TileMap.MapToLocal(GetMapSize());
 	}
 
+	public void RenderMap()
+	{
+		Parallel.For(0, m_MapData.TileSet.Count, index =>
+		{
+			m_MapData.TileSet[index] = false;
+		});
+        
+
+		UpdateTileMap();
+    }
+
 	public override void _Ready()
 	{
 		m_NoiseGeneration = new NoiseGeneration();
@@ -108,7 +120,7 @@ public partial class MapGeneration : Node
 
 		InitalizeBiomes();
 		GenerateWorld();
-		UpdateTileMap();
+		RenderMap();
 	}
 
 	public override void _Process(double delta)
@@ -145,17 +157,7 @@ public partial class MapGeneration : Node
 						m_MapData.TileSet[maxIndex] = true;
 					}
 				}
-
-				if (atlasSize.X > 1 || atlasSize.Y > 1) //make sure its very unlikley they repeat
-				{
-					m_NoiseGeneration.NoiseGenerationAlgorithm.Seed = (int)noiseValue;
-				}
 			}
-		}
-
-		for (int i = 0; i < m_MapData.TileSet.Count; i++)
-		{
-			m_MapData.TileSet[i] = false;
 		}
 	}
 

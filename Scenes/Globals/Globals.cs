@@ -3,7 +3,7 @@ using System;
 
 public partial class Globals : Node
 {
-    int MasterVolume = 50;
-    int SoundVolume = 50;
-    int MusicVolume = 50;
+    public int MasterVolume = 50;
+    public int SoundVolume = 50;
+    public int MusicVolume = 50;
 }

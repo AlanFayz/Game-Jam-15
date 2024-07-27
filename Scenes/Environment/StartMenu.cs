@@ -8,15 +8,15 @@ public partial class StartMenu : Control
 	[Signal]
 	public delegate void QuitGameEventHandler();
 
-	VBoxContainer Welcome;
-	VBoxContainer Load;
+	public VBoxContainer Welcome;
+	public VBoxContainer Load;
 
-    public override void _Ready()
-    {
-        Welcome = GetNode<VBoxContainer>("Welcome");
+	public override void _Ready()
+	{
+		Welcome = GetNode<VBoxContainer>("Welcome");
 		Load = GetNode<VBoxContainer>("Loading");
-    }
-    public void OnStartButtonButtonUp()
+	}
+	public void OnStartButtonButtonUp()
 	{
 		GD.Print("StartButton");
 		EmitSignal(SignalName.StartGame);
