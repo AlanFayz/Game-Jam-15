@@ -6,7 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 public partial class Player : CharacterBody2D, IHittable
 {
 	[Signal]
-	public delegate void PotionThrowEventHandler(Vector2 Pos, Vector2 Dir, float speed, float breakDamage, float poolDamage);
+	public delegate void PotionThrowEventHandler(Vector2 Pos, Vector2 Dir, float speed, float breakDamage, float poolDamage, int[] potionType);
 	[Signal]
 	public delegate void SlashEventHandler(Vector2 Pos, Vector2 Dir, float slashDamage, String slashType);
 	[Signal]
@@ -41,6 +41,11 @@ public partial class Player : CharacterBody2D, IHittable
 	float BreakDamage = 5f;
 	float PoolDamage = 30f;
 
+	//Potion's structure is [Protection, Endurance, Freeze, Burn, Poison]
+	int[] PotionType = {1, 1, 1, 1, 1};
+
+
+
 
 	float[] SlashDistances = {15f,30f};
 	bool CanSlash = true;
@@ -61,8 +66,6 @@ public partial class Player : CharacterBody2D, IHittable
 		SlashCooldown = GetNode<Timer>("SlashCooldown");
 		ImmunityFrames = GetNode<Timer>("ImmunityFrames");
 		Animation = GetNode<AnimationPlayer>("AnimationPlayer");
-
-
 	}
 
 	public override void _Process(double delta)
@@ -99,7 +102,7 @@ public partial class Player : CharacterBody2D, IHittable
 		{
 			SlashAttack();
 		}
-
+		
 	}
 
 	public void OnSlashCooldownTimeout()
@@ -111,7 +114,7 @@ public partial class Player : CharacterBody2D, IHittable
 	{
 		CanThrow = false;
 		ThrowCooldown.Start();
-		EmitSignal(SignalName.PotionThrow, GlobalPosition, GetLocalMousePosition().Normalized(),ThrowSpeed, BreakDamage, PoolDamage);
+		EmitSignal(SignalName.PotionThrow, GlobalPosition, GetLocalMousePosition().Normalized(),ThrowSpeed, BreakDamage, PoolDamage, PotionType);
 	}
 
 	public void OnThrowCooldownTimeout()
@@ -119,7 +122,7 @@ public partial class Player : CharacterBody2D, IHittable
 		CanThrow = true;
 	}
 
-	public void Hit(Node Origin, float damage)
+	public void Hit(Node Origin, float damage, int[] Effects)
 	{
 		if (!IsImmune)
 		{

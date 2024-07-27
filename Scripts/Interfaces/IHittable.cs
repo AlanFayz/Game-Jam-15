@@ -3,5 +3,6 @@ using System;
 
 public interface IHittable
 {
-    void Hit(Node Origin, float damage);
+    // Effects: [Freeze, Burn, Poison, Purifier]
+    void Hit(Node Origin, float damage, int[] Effects);
 }

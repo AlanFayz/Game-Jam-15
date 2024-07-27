@@ -124,7 +124,7 @@ public partial class Enemy : CharacterBody2D, IHittable
 		}
 	}
 
-	public void Hit(Node origin, float damage)
+	public void Hit(Node origin, float damage, int[] potionEffects)
 	{
 		m_EnemyState.Health -= damage;
 		GD.Print(m_EnemyState.Health);

@@ -29,7 +29,7 @@ public partial class FireBolt : Area2D
 	{
 		if (body is IHittable target)
 		{
-			target.Hit(this, Damage);
+			target.Hit(this, Damage, new int[]{0,1,0,0,0});
 		}
 		QueueFree();
 	}

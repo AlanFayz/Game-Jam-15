@@ -32,7 +32,7 @@ public partial class Slash1Test : Area2D
 	{
 		if (body is IHittable target)
 		{
-			target.Hit(this, Damage);
+			target.Hit(this, Damage, new int[]{0,0,0,0,0});
 		}
 	}
 

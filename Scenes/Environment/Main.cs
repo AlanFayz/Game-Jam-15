@@ -51,7 +51,7 @@ public partial class Main : Node
 		}
 	}
 
-	public void OnPlayerPotionThrow(Vector2 Pos, Vector2 Dir, float speed, float breakDamage, float poolDamage)
+	public void OnPlayerPotionThrow(Vector2 Pos, Vector2 Dir, float speed, float breakDamage, float poolDamage, int[] potionType)
 	{
 		var potion = ResourceLoader.Load<PackedScene>("res://Scenes/Projectiles/Potion.tscn").Instantiate() as Potion;
 		potion.Position = Pos;
@@ -59,15 +59,17 @@ public partial class Main : Node
 		potion.Direction = Dir;
 		potion.PoolDamage = poolDamage;
 		potion.BreakDamage = breakDamage;
+		potion.PotionType = potionType;
 		m_GameComponents.Projectiles.AddChild(potion);
 		potion.Connect("PotionBreak", new Callable(this, MethodName.OnPotionPotionBreak));
 	}
 
-	public void OnPotionPotionBreak(Vector2 Pos, float poolDamage)
+	public void OnPotionPotionBreak(Vector2 Pos, float poolDamage, int[] potionType)
 	{
 		PotionPool potionPool = ResourceLoader.Load<PackedScene>("res://Scenes/Projectiles/PotionPool.tscn").Instantiate() as PotionPool;
 		potionPool.Position = Pos;
 		potionPool.Damage = poolDamage;
+		potionPool.PotionType = potionType;
 		m_GameComponents.Projectiles.CallDeferred("add_child", potionPool);
 	}
 	public void SpawnEnemy()
