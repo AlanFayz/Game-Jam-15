@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://b3pisw0cqu0ag"]
 
-[ext_resource type="Script" path="res://Scenes/Enemies/Enemy.cs" id="1_0dftj"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Enemy.gd" id="1_8yi65"]
 [ext_resource type="Texture2D" uid="uid://dqnoguj6bjtqn" path="res://Assets/Images/Enemies/Necromancer_creativekind-Sheet.png" id="2_5xpow"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k650b"]
@@ -113,7 +113,7 @@ _data = {
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 117
-script = ExtResource("1_0dftj")
+script = ExtResource("1_8yi65")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_k650b")

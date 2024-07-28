@@ -1,10 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dviu3gfydcdjb"]
+[gd_scene load_steps=2 format=3 uid="uid://dviu3gfydcdjb"]
 
 [ext_resource type="PackedScene" uid="uid://bactn7u40to0h" path="res://Scenes/Player/Player.tscn" id="1_322hc"]
-[ext_resource type="Script" path="res://Scenes/Environment/Levels/LevelBase.cs" id="1_y41a1"]
 
 [node name="LevelBase" type="Node2D"]
-script = ExtResource("1_y41a1")
 
 [node name="Player" parent="." instance=ExtResource("1_322hc")]
 
@@ -13,7 +11,3 @@ script = ExtResource("1_y41a1")
 [node name="Projectiles" type="Node2D" parent="."]
 
 [node name="Enemies" type="Node2D" parent="."]
-
-[connection signal="PlayerDeath" from="Player" to="." method="OnPlayerPlayerDeath"]
-[connection signal="PotionThrow" from="Player" to="." method="OnPlayerPotionThrow"]
-[connection signal="Slash" from="Player" to="." method="OnPlayerSlash"]

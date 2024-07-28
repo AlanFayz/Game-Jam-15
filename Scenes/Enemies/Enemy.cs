@@ -10,7 +10,6 @@ public partial class Enemy : CharacterBody2D, IHittable
 {
     delegate void ProcessStateDelegate(double delta);
 
-
     [Signal]
 	public delegate void FireBoltEventHandler(Vector2 Pos, Vector2 Dir, float Speed, float Damage);
 

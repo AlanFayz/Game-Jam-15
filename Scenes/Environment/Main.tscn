@@ -13,7 +13,6 @@ script = ExtResource("1_cb6at")
 
 [node name="Map" parent="." instance=ExtResource("2_eidng")]
 position = Vector2(364, 212)
-script = null
 
 [node name="Player" parent="." instance=ExtResource("3_fcmqm")]
 

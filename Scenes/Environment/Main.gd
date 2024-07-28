@@ -36,7 +36,7 @@ func OnPotionPotionbreak(position, poolDamage, potionType):
 	
 func SpawnEnemy():
 	var enemy = ResourceLoader.load("res://Scenes/Enemies/Enemy.tscn")
-	enemy.Position = GetNextPosition()
+	enemy.position = GetNextPosition()
 	enemy.connect("FireBolt", OnEnemyFireBolt)
 	$Enemies.call_deferred("add_child", enemy)
 
@@ -59,12 +59,11 @@ func OnPlayerPlayerDeath():
 	print("Player has died")
 
 func GetNextPosition() -> Vector2:
-	var start = m_SpawnZone.Position;
-	var end = m_SpawnZone.End;
+	var start = m_SpawnZone.position;
+	var end = m_SpawnZone.end;
 
-	var position = Vector2(m_GameComponents.RandomNumbers.RandfRange(start.X, end.X),
-						   m_GameComponents.RandomNumbers.RandfRange(start.Y, end.Y));
-
+	var position = Vector2(m_GameComponents.RandomNumbers.randf_range(start.x, end.x),
+						   m_GameComponents.RandomNumbers.randf_range(start.y, end.y));
 	return position;
 
 

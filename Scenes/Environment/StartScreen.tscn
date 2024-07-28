@@ -11,10 +11,9 @@ script = ExtResource("1_jne0r")
 
 [node name="Map" parent="." instance=ExtResource("1_3fpqi")]
 scale = Vector2(0.2, 0.2)
-script = null
+MapSizeExport = Vector2i(100, 100)
 
 [node name="StartMenu" parent="." instance=ExtResource("2_ulrbv")]
 anchors_preset = 9
 anchor_right = 0.0
 grow_horizontal = 1
-script = null

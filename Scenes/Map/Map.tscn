@@ -131,6 +131,7 @@ sources/4 = SubResource("TileSetAtlasSource_tptsc")
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_pu1yf")
+MapSizeExport = Vector2i(100, 100)
 
 [node name="LightTileMap" type="TileMap" parent="."]
 self_modulate = Color(0.650274, 0.0811527, 0.669881, 1)
