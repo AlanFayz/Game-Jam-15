@@ -129,7 +129,7 @@ public partial class Player : CharacterBody2D, IHittable
 			Animation.Play("walk_vertical");
 		}
 		
-		Velocity = inputDir*PlayerSpeed*(float)delta*GetFreezeSlowdown();
+		Velocity = inputDir*PlayerSpeed*GetFreezeSlowdown();
 //		GD.Print($"GetFreezeSlowdown {GetFreezeSlowdown()}");
 //		GD.Print(Velocity);
 //		GD.Print($"IsFrozen: {IsSlowed}");
