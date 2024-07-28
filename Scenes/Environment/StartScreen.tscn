@@ -1,22 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://c3nwrqcjxiao5"]
 
 [ext_resource type="PackedScene" uid="uid://crvlq7eqk44r7" path="res://Scenes/Map/Map.tscn" id="1_3fpqi"]
-[ext_resource type="Script" path="res://Scenes/Environment/StartScreen.cs" id="1_rkktc"]
+[ext_resource type="Script" path="res://Scenes/Environment/StartScreen.gd" id="1_jne0r"]
 [ext_resource type="PackedScene" uid="uid://blqrydku5rwj8" path="res://Scenes/Environment/StartMenu.tscn" id="2_ulrbv"]
 
 [node name="StartScreen" type="Node2D"]
-script = ExtResource("1_rkktc")
+script = ExtResource("1_jne0r")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Map" parent="." instance=ExtResource("1_3fpqi")]
 scale = Vector2(0.2, 0.2)
-MapSizeExport = Vector2i(350, 200)
+script = null
 
 [node name="StartMenu" parent="." instance=ExtResource("2_ulrbv")]
 anchors_preset = 9
 anchor_right = 0.0
 grow_horizontal = 1
-
-[connection signal="QuitGame" from="StartMenu" to="." method="OnStartMenuQuitGame"]
-[connection signal="StartGame" from="StartMenu" to="." method="OnStartMenuStartGame"]
+script = null
