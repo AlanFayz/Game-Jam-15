@@ -23,5 +23,3 @@ func Loading():
 	$Welcome.visible = false
 	$Loading.visible = true
 
-func _process(delta):
-	pass

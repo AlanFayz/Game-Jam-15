@@ -2,7 +2,8 @@ extends Node
 
 class GameComponents:
 	var RandomNumbers: RandomNumberGenerator
-	
+		
+
 var m_GameComponents = null
 var m_SpawnZone = null
 
@@ -16,7 +17,7 @@ func _ready():
 	m_SpawnZone = Rect2(mapPosition, mapSize)
 
 func OnPlayerPotionThrow(position, direction, speed, breakDamage, poolDamage, potionType):
-	var potion = ResourceLoader.load("res://Scenes/Projectiles/Potion.tscn")
+	var potion = preload("res://Scenes/Projectiles/Potion.tscn").instantiate()
 	potion.Position = position
 	potion.Speed = speed
 	potion.Direction = direction
@@ -28,28 +29,28 @@ func OnPlayerPotionThrow(position, direction, speed, breakDamage, poolDamage, po
 	pass
 
 func OnPotionPotionbreak(position, poolDamage, potionType):
-	var potionPool = ResourceLoader.load("res://Scenes/Projectiles/PotionPool.tscn")
+	var potionPool = preload("res://Scenes/Projectiles/PotionPool.tscn").instantiate()
 	potionPool.Position = position
 	potionPool.Damage = poolDamage
 	potionPool.PotionType = potionType
 	$Projectiles.call_deferred("add_child", potionPool)
 	
 func SpawnEnemy():
-	var enemy = ResourceLoader.load("res://Scenes/Enemies/Enemy.tscn")
+	var enemy = preload("res://Scenes/Enemies/Enemy.tscn").instantiate()
 	enemy.position = GetNextPosition()
 	enemy.connect("FireBolt", OnEnemyFireBolt)
 	$Enemies.call_deferred("add_child", enemy)
 
 func OnPlayerSlash(slashPosition, slashDirection, slashDamage, slashType):
-	var slash = ResourceLoader.load(slashType)
+	var slash = load(slashType)
 	slash.Position = slashPosition
 	slash.AttackDir = slashDirection
 	slash.Damage = slashDamage
 	add_child(slash)
 
 func OnEnemyFireBolt(position, direction, speed, damage):
-	var fireBolt = ResourceLoader.load("res://Scenes/Projectiles/FireBolt.tscn")
-	fireBolt.GlobalPosition = position
+	var fireBolt = preload("res://Scenes/Projectiles/FireBolt.tscn").instantiate()
+	fireBolt.global_position = position
 	fireBolt.Direction = direction
 	fireBolt.Speed = speed
 	fireBolt.Damage = damage
@@ -68,7 +69,7 @@ func GetNextPosition() -> Vector2:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if $Enemies/Timer.time_left <= 0.0:
 		for i in range(0, 10):
 			SpawnEnemy();

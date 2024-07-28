@@ -6,7 +6,11 @@
 
 [sub_resource type="Environment" id="Environment_yuhxu"]
 background_mode = 3
-adjustment_brightness = 3.69
+glow_enabled = true
+glow_bloom = 1.0
+adjustment_enabled = true
+adjustment_contrast = 1.3
+adjustment_saturation = 0.5
 
 [node name="Main" type="Node"]
 script = ExtResource("1_cb6at")

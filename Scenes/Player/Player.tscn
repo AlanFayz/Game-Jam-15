@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://bactn7u40to0h"]
 
 [ext_resource type="Texture2D" uid="uid://c4up0rxlo8o0x" path="res://Assets/Images/Hooded protag/AnimationSheet_Character.png" id="1_83dca"]
-[ext_resource type="Script" path="res://Scenes/Player/Player.cs" id="1_ulukk"]
+[ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_xvpvg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ynfhk"]
 radius = 6.0
@@ -167,7 +167,7 @@ _data = {
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 123
-script = ExtResource("1_ulukk")
+script = ExtResource("1_xvpvg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ynfhk")

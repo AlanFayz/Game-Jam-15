@@ -1,6 +1,6 @@
 extends Area2D
 
-signal PotionBreakEventHandler(pos, poolDamage, potionType);
+signal PotionBreak(pos, poolDamage, potionType);
 
 var Direction = null
 var Speed = null
@@ -28,5 +28,5 @@ func OnBodyEntered(body):
 
 
 func Break():
-	emit_signal(PotionBreakEventHandler.get_name(), self.global_position, PoolDamage, PotionType);
+	emit_signal(PotionBreak.get_name(), self.global_position, PoolDamage, PotionType);
 	queue_free();

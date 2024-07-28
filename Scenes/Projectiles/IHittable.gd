@@ -1,6 +1,6 @@
 class_name IHittable
 
-func Hit(origin, damage, effects):
+func Hit(_origin, _damage, _effects):
 	pass
 
 

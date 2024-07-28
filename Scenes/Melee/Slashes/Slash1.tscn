@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://utucuujipkn6"]
 
-[ext_resource type="Script" path="res://Scenes/Melee/Slashes/Slash1.cs" id="1_rwk0y"]
 [ext_resource type="PackedScene" uid="uid://dr572m0abfs6k" path="res://Scenes/Melee/Slashes/BaseSlash.tscn" id="1_y6gnl"]
+[ext_resource type="Script" path="res://Scenes/Melee/Slashes/Slash1.gd" id="2_htmtc"]
 [ext_resource type="Texture2D" uid="uid://dbyymged0uewg" path="res://Assets/Images/Small slash FX/small_slash_1.png" id="2_jg8g4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qbd4r"]
@@ -115,7 +115,7 @@ _data = {
 }
 
 [node name="Slash1" instance=ExtResource("1_y6gnl")]
-script = ExtResource("1_rwk0y")
+script = ExtResource("2_htmtc")
 
 [node name="SlashShape" parent="." index="0"]
 shape = SubResource("CapsuleShape2D_qbd4r")

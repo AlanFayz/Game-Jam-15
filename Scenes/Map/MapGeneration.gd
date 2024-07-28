@@ -54,8 +54,8 @@ func GetMapSizeInLocalSpace() -> Vector2:
 	return $DarkTileMap.map_to_local(GetMapSize());
 
 #position is in world space coordinates
-func GetPositionInTileSpace(position: Vector2) -> Vector2i:
-	return $DarkTileMap.local_to_map(position);
+func GetPositionInTileSpace(_position: Vector2) -> Vector2i:
+	return $DarkTileMap.local_to_map(_position);
 
 #tile is in tile space coordinates
 func ChangeTileToLight(tile: Vector2i):
@@ -139,13 +139,8 @@ func _ready():
 	for i in range(0, 5):
 		m_MapData.SparseSet.append(i as Cell)
 
-	var lambda = func RandomSort(a, b) -> Cell:
-		if m_NoiseGeneration.RandomNumbers.randi() > m_NoiseGeneration.RandomNumbers.randi():
-			return a
-		else:
-			return b
-
-	m_MapData.SparseSet.sort_custom(lambda)
+	randomize()
+	m_MapData.SparseSet.shuffle()
 
 	InitalizeBiomes()
 	GenerateWorld()
@@ -245,8 +240,8 @@ func CreateBiome(tileSet: TileSet, tileSetSourceIndex: int) -> Biome:
 	var source = tileSet.get_source(biome.TileSetSourceIndex)
 
 	if source != null && source is TileSetAtlasSource:
-		biome.AtlasCoordinates = GetAtlasCoordinatesFromSource(source)
-		biome.AtlasSizes = GetAtlasSizesFromCoordinates(biome.AtlasCoordinates, source)
+		biome.AtlasCoordinates = MapGeneration.GetAtlasCoordinatesFromSource(source)
+		biome.AtlasSizes = MapGeneration.GetAtlasSizesFromCoordinates(biome.AtlasCoordinates, source)
 	
 	return biome
 

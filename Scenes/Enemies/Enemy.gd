@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-signal FireBoltEventHandler(position: Vector2, direction: Vector2, speed: float, damage: float)
+signal FireBolt(position: Vector2, direction: Vector2, speed: float, damage: float)
 
 enum State
 {
@@ -48,14 +48,15 @@ func _ready():
 	m_RandomNumberGenerator = RandomNumberGenerator.new()
 	m_EnemyState = EnemyState.new()
 
-	m_Nodes.Parent = get_parent().get_parent()
-	m_Nodes.Player = m_Nodes.Parent.get_node("Player") 
+	m_Nodes.Parent = get_parent().get_parent()	
+	m_Nodes.PlayerNode = m_Nodes.Parent.get_node("Player") 
+
 
 	var map = m_Nodes.Parent.get_node("Map")
 
 	m_Bounds = Rect2(map.GetMapPositionInLocalSpace(), map.GetMapSizeInLocalSpace())
 
-	m_EnemyState.State = State.Idle
+	m_EnemyState.StateType = State.Idle
 	m_EnemyState.Velocity = Vector2.ZERO
 	m_EnemyState.Health = 100.0
 
@@ -64,18 +65,18 @@ func _ready():
 	m_States[State.Idle].call(EnemyProperties.Speed)
 
 
-func _process(delta):
-	if m_EnemyState.State != State.Death:
-		if m_Nodes.Timer.TimeLeft == 0:
-			m_EnemyState.State = ChooseState()
+func _process(_delta):
+	if m_EnemyState.StateType != State.Death:
+		if $Timer.time_left == 0:
+			m_EnemyState.StateType = ChooseState()
 			m_IsAnimationPlaying = false
 	
 		if self.global_position.distance_to(GetGlobalPlayerPosition()) <= EnemyProperties.ViewRadius:
-			m_EnemyState.State = State.Attack;
+			m_EnemyState.StateType = State.Attack;
 			m_IsAnimationPlaying = false;
 		
 
-		m_States[m_EnemyState.State].call(EnemyProperties.Speed);
+		m_States[m_EnemyState.StateType].call(EnemyProperties.Speed);
 
 		self.velocity = m_EnemyState.Velocity;
 
@@ -87,7 +88,7 @@ func _process(delta):
 		queue_free()
 		return
 
-func Hit(origin: Node, damage: float, potionEffects: Array):
+func Hit(_origin: Node, damage: float):
 	m_EnemyState.Health -= damage
 	print(m_EnemyState.Health)
 	CheckHealth()
@@ -97,7 +98,7 @@ func CheckHealth():
 		Kill();
 
 
-func ProcessIdleStateFun(delta):
+func ProcessIdleStateFun(_delta):
 	if !m_IsAnimationPlaying:
 		m_EnemyState.Direction = ChooseDirection()
 		m_EnemyState.Velocity = Vector2.ZERO
@@ -137,11 +138,11 @@ func ProcessAttackStateFun(delta):
 
 	if !m_IsAnimationPlaying:
 		$AnimationPlayer.play("Attacking")
-		%Timer.start(2)
-
+		$Timer.start(2)
+		
 		m_IsAnimationPlaying = true;
 
-func ProcessDeathStateFun(delta):
+func ProcessDeathStateFun(_delta):
 	if !m_IsAnimationPlaying:
 		$AnimationPlayer.Play("Death")
 		$Timer.Start(5)
@@ -166,34 +167,34 @@ func ChooseDirection() -> Vector2:
 
 func FlipSpriteIfNeeded():
 	if m_EnemyState.Direction.x < 0:
-		$Sprite2D.FlipH = true;
+		$Sprite2D.flip_h = true;
 	else:
-		$Sprite2D.FlipH = false;
+		$Sprite2D.flip_h = false;
 
 
 func ChooseState() -> State:
 	return m_RandomNumberGenerator.randi_range(0, 1) as State
 
 func GetGlobalPlayerPosition() -> Vector2:
-	return m_Nodes.Player.global_position
+	return m_Nodes.PlayerNode.global_position
 
 func GetLocalPlayerPosition() -> Vector2:
-	return m_Nodes.Player.position 
+	return m_Nodes.PlayerNode.position 
 
 func Shoot():
-	var direction = (GetGlobalPlayerPosition() - %ShootPoint.global_position)
+	var direction = (GetGlobalPlayerPosition() - $ShootPoint.global_position)
 
 	emit_signal(
-		FireBoltEventHandler.get_name(),
+		FireBolt.get_name(),
 		$ShootPoint.global_position,
-		direction.Normalized(), 
+		direction.normalized(), 
 		EnemyProperties.ProjectileSpeed, 
 		EnemyProperties.Damage)
 
 
-func ClampPosition(position: Vector2) -> Vector2:
-	var clampedX = clamp(position.x, m_Bounds.position.x, m_Bounds.end.x)
-	var clampedY = clamp(position.y, m_Bounds.position.y, m_Bounds.end.y)
+func ClampPosition(pos: Vector2) -> Vector2:
+	var clampedX = clamp(pos.x, m_Bounds.position.x, m_Bounds.end.x)
+	var clampedY = clamp(pos.y, m_Bounds.position.y, m_Bounds.end.y)
 
 	return Vector2(clampedX, clampedY);
 

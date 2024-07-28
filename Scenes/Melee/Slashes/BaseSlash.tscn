@@ -1,11 +1,11 @@
 [gd_scene load_steps=2 format=3 uid="uid://dr572m0abfs6k"]
 
-[ext_resource type="Script" path="res://Scenes/Melee/Slashes/BaseSlash.cs" id="1_7qy3p"]
+[ext_resource type="Script" path="res://Scenes/Melee/Slashes/BaseSlash.gd" id="1_lyseo"]
 
 [node name="BaseSlash" type="Area2D"]
 collision_layer = 4
 collision_mask = 66
-script = ExtResource("1_7qy3p")
+script = ExtResource("1_lyseo")
 
 [node name="SlashShape" type="CollisionShape2D" parent="."]
 
