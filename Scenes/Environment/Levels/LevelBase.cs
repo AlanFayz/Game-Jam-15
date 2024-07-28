@@ -15,7 +15,6 @@ public partial class LevelBase : Node2D
 
 	protected GameComponents m_GameComponents;
 	
-
 	public override void _Ready()
 	{
 		m_GameComponents.AudioManager = new AudioManager();

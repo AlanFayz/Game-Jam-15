@@ -133,6 +133,7 @@ sources/4 = SubResource("TileSetAtlasSource_tptsc")
 script = ExtResource("1_0awnk")
 
 [node name="LightTileMap" type="TileMap" parent="."]
+self_modulate = Color(0.650274, 0.0811527, 0.669881, 1)
 material = SubResource("CanvasItemMaterial_d46yj")
 tile_set = SubResource("TileSet_jf1s8")
 format = 2

@@ -3,14 +3,12 @@ using System;
 
 public partial class MainLevel : LevelBase
 {
-
 	private Rect2 m_SpawnZone;
-	private PackedScene EnemyScene;
-
+	private PackedScene m_EnemyScene;
 
     public override void _Ready()
     {
-		EnemyScene = ResourceLoader.Load<PackedScene>("res://Scenes/Enemies/Enemy.tscn");
+        m_EnemyScene = ResourceLoader.Load<PackedScene>("res://Scenes/Enemies/Enemy.tscn");
 		m_GameComponents.Map = GetNode<MapGeneration>("Map");
 		m_GameComponents.EnemySpawnerTimer = GetNode<Timer>("Enemies/EnemyTimer");
 		m_GameComponents.Enemies = GetNode<Node2D>("Enemies");
@@ -29,7 +27,7 @@ public partial class MainLevel : LevelBase
 
 	public void SpawnEnemy()
 	{
-		Enemy enemy = EnemyScene.Instantiate() as Enemy;
+		Enemy enemy = m_EnemyScene.Instantiate() as Enemy;
 		enemy.Position = GetNextPosition();
 		enemy.Connect("FireBolt", new Callable(this, MethodName.OnEnemyFireBolt));
 		m_GameComponents.Enemies.CallDeferred("add_child", enemy);

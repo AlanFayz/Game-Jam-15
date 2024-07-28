@@ -152,10 +152,10 @@ public partial class MapGeneration : Node
 	*/
 	public Cell GetTile(Vector2I tile)
 	{
-        Vector2I coords = new Vector2I(Mathf.Clamp(tile.X, -m_MapData.MapSize.X / 2, m_MapData.MapSize.X / 2),
-                                       Mathf.Clamp(tile.Y, -m_MapData.MapSize.Y / 2, m_MapData.MapSize.Y / 2));
+		Vector2I coords = new Vector2I(Mathf.Clamp(tile.X, -m_MapData.MapSize.X / 2, m_MapData.MapSize.X / 2),
+									   Mathf.Clamp(tile.Y, -m_MapData.MapSize.Y / 2, m_MapData.MapSize.Y / 2));
 
-        tile = new Vector2I(coords.X + m_MapData.MapSize.X / 2, coords.Y + m_MapData.MapSize.Y / 2);
+		tile = new Vector2I(coords.X + m_MapData.MapSize.X / 2, coords.Y + m_MapData.MapSize.Y / 2);
 
 		int index = tile.X + tile.Y * m_MapData.MapSize.X;
 

@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://bactn7u40to0h" path="res://Scenes/Player/Player.tscn" id="3_fcmqm"]
 
 [sub_resource type="Environment" id="Environment_yuhxu"]
+background_mode = 3
+adjustment_brightness = 3.69
 
 [node name="Main" type="Node"]
 script = ExtResource("1_e2qyf")
