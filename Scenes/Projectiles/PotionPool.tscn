@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://wi7gjjlvl56q"]
 
-[ext_resource type="Script" path="res://Scenes/Projectiles/PotionPool.cs" id="1_dhxmd"]
+[ext_resource type="Script" path="res://Scenes/Projectiles/PotionPool.gd" id="1_loup7"]
 [ext_resource type="Texture2D" uid="uid://b3jl5ojdnxjod" path="res://Assets/Images/PotionsPack/PotEffects.png" id="2_4owig"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gbo5r"]
@@ -22,7 +22,7 @@ gravity = Vector3(0, -10, 0)
 [node name="PotionPool" type="Area2D"]
 collision_layer = 32
 collision_mask = 67
-script = ExtResource("1_dhxmd")
+script = ExtResource("1_loup7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_gbo5r")

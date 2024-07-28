@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cxno1pxe1mxqr"]
 
-[ext_resource type="Script" path="res://Scenes/Projectiles/Potion.cs" id="1_f2vdf"]
 [ext_resource type="Texture2D" uid="uid://bc2sixvewt0ja" path="res://Assets/Images/PotionsPack/PotionsPack1.png" id="1_flr0r"]
+[ext_resource type="Script" path="res://Scenes/Projectiles/Potion.gd" id="1_xvipa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xsolj"]
 radius = 8.06226
@@ -47,7 +47,7 @@ _data = {
 [node name="Potion" type="Area2D"]
 collision_layer = 4
 collision_mask = 82
-script = ExtResource("1_f2vdf")
+script = ExtResource("1_xvipa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_xsolj")
