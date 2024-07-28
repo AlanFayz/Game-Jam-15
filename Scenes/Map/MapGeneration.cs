@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 public partial class MapGeneration : Node
 {
-	private enum Cell
+	public enum Cell
 	{
 		Tundra = 0, Taiga, Forest, Desert, Swamp, None
 	}
@@ -145,6 +145,29 @@ public partial class MapGeneration : Node
 			}
 		}
 
+	}
+
+	/*
+		in tile space
+	*/
+	public Cell GetTile(Vector2I tile)
+	{
+        Vector2I coords = new Vector2I(Mathf.Clamp(tile.X, -m_MapData.MapSize.X / 2, m_MapData.MapSize.X / 2),
+                                       Mathf.Clamp(tile.Y, -m_MapData.MapSize.Y / 2, m_MapData.MapSize.Y / 2));
+
+        tile = new Vector2I(coords.X + m_MapData.MapSize.X / 2, coords.Y + m_MapData.MapSize.Y / 2);
+
+		int index = tile.X + tile.Y * m_MapData.MapSize.X;
+
+		return m_MapData.Cells[index].Cell;
+	}
+
+	/*
+		in world space
+	*/
+	public Cell GetTile(Vector2 coordinates)
+	{
+		return GetTile(GetPositionInTileSpace(coordinates));
 	}
 
 	public override void _Ready()
