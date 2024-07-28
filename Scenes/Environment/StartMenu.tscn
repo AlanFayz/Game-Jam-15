@@ -31,7 +31,8 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_k02th")
 theme_override_font_sizes/font_size = 75
-text = "INSERT GAME NAME HERE"
+text = "Face Yourself"
+horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="Welcome"]
 layout_mode = 2

@@ -5,6 +5,7 @@ public partial class PotionPool : Area2D
 {
 	public float Damage;
 	public int[] PotionType;
+	public int[] Effects = new int[3];
 
     public override void _Ready()
     {
@@ -17,6 +18,16 @@ public partial class PotionPool : Area2D
 		}
 		Timer timer = GetNode<Timer>("Timer");
 		timer.Start(5+PotionType[1]);
+
+		for (int i = 2; i<5; i++)
+		{
+        	Effects[i-2] = PotionType[i];
+		}
+
+		GD.Print($"PotionType: ");
+		Console.WriteLine("[{0}]", string.Join(", ", PotionType));
+		GD.Print($"PotionEffects: ");
+		Console.WriteLine("[{0}]", string.Join(", ", Effects));
     }
 
     public void OnTimerTimeout()
@@ -28,7 +39,7 @@ public partial class PotionPool : Area2D
 	{
 		if (body is IHittable target)
 		{
-			target.Hit(this, Damage, new int[3]);
+			target.Hit(this, Damage, Effects);
 		}
 	}
 }

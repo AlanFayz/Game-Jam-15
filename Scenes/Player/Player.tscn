@@ -216,10 +216,11 @@ one_shot = true
 
 [node name="FireTicks" type="Timer" parent="Timers"]
 wait_time = 0.2
-one_shot = true
 
 [node name="PoisonTicks" type="Timer" parent="Timers"]
 wait_time = 0.5
+
+[node name="FreezeImmunity" type="Timer" parent="Timers"]
 one_shot = true
 
 [connection signal="timeout" from="Timers/ThrowCooldown" to="." method="OnThrowCooldownTimeout"]
@@ -230,3 +231,4 @@ one_shot = true
 [connection signal="timeout" from="Timers/PoisonTimeLeft" to="." method="OnPoisonTimeLeftTimeout"]
 [connection signal="timeout" from="Timers/FireTicks" to="." method="OnFireTicksTimeout"]
 [connection signal="timeout" from="Timers/PoisonTicks" to="." method="OnPoisonTicksTimeout"]
+[connection signal="timeout" from="Timers/FreezeImmunity" to="." method="OnFreezeImmunityTimeout"]

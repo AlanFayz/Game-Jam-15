@@ -18,11 +18,25 @@ public partial class Player : CharacterBody2D, IHittable
 	bool IsWalking = false;
 
 	bool IsDying = false;
-	bool IsFrozen = false;
+	bool IsSlowed = false;
+	bool freezeImmunity = false;
+	public bool FreezeImmunity
+	{
+		get {return freezeImmunity;}
+		set
+		{
+			freezeImmunity = value;
+			if (value)
+			{
+				FreezeImmunityTimer.Start();
+			}
+		}
+	}
 	bool IsOnFire = false;
 	bool IsPoisoned = false;
-	float FireDamage = 4f;
-	float PoisonDamage = 2f;
+	float FireDamage = 0f;
+	float PoisonDamage = 0f;
+	float PoisonWeaknessLevel = 0f;
 	int SlowLevel = 0;
 
 
@@ -34,6 +48,7 @@ public partial class Player : CharacterBody2D, IHittable
 		set 
 		{
 			health = value;
+			GD.Print($"Health = {Health}");
 			CheckDeath();
 		}
 	}
@@ -46,10 +61,10 @@ public partial class Player : CharacterBody2D, IHittable
 	bool CanThrow = true;
 	float ThrowSpeed = 400f;
 	float BreakDamage = 5f;
-	float PoolDamage = 30f;
+	float PoolDamage = 15f;
 
 	//Potion's structure is [Protection, Endurance, Freeze, Burn, Poison]
-	int[] PotionType = {1, 1, 1, 1, 1};
+	int[] PotionType = {0, 1, 1, 1, 999};
 
 
 
@@ -70,6 +85,7 @@ public partial class Player : CharacterBody2D, IHittable
 	Timer PoisonCountdown;
 	Timer PoisonTicks;
 	Timer FreezeCountdown;
+	Timer FreezeImmunityTimer;
 
 	AnimationPlayer Animation;
 
@@ -83,6 +99,7 @@ public partial class Player : CharacterBody2D, IHittable
 		PoisonCountdown = GetNode<Timer>("Timers/PoisonTimeLeft");
 		PoisonTicks = GetNode<Timer>("Timers/PoisonTicks");
 		FreezeCountdown = GetNode<Timer>("Timers/FreezeTimeLeft");
+		FreezeImmunityTimer = GetNode<Timer>("Timers/FreezeImmunity");
 
 
 		Animation = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -90,7 +107,7 @@ public partial class Player : CharacterBody2D, IHittable
 
 	public override void _Process(double delta)
 	{
-		GD.Print("Health");
+		//GD.Print($"Health = {Health}");
 		if (IsDying) {return;}
 
 		Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down").Normalized();
@@ -112,7 +129,16 @@ public partial class Player : CharacterBody2D, IHittable
 			Animation.Play("walk_vertical");
 		}
 		
-		Velocity = inputDir*PlayerSpeed*(float)delta;
+		Velocity = inputDir*PlayerSpeed*(float)delta*GetFreezeSlowdown();
+//		GD.Print($"GetFreezeSlowdown {GetFreezeSlowdown()}");
+//		GD.Print(Velocity);
+//		GD.Print($"IsFrozen: {IsSlowed}");
+//		GD.Print($"IsFreezeImmune: {FreezeImmunity}");
+//		GD.Print($"SlowLevel: {SlowLevel}");
+		GD.Print($"PoisonWeaknessLevel: {PoisonWeaknessLevel}");
+		
+
+
 		MoveAndSlide();
 
 		if (CanThrow & Input.IsActionPressed("throw_potion"))
@@ -135,7 +161,7 @@ public partial class Player : CharacterBody2D, IHittable
 	{
 		CanThrow = false;
 		ThrowCooldown.Start();
-		EmitSignal(SignalName.PotionThrow, GlobalPosition, GetLocalMousePosition().Normalized(),ThrowSpeed, BreakDamage, PoolDamage, PotionType);
+		EmitSignal(SignalName.PotionThrow, GlobalPosition, GetLocalMousePosition().Normalized(),ThrowSpeed*GetPoisonWeakness(), BreakDamage*GetPoisonWeakness(), PoolDamage, PotionType);
 	}
 
 	public void OnThrowCooldownTimeout()
@@ -147,28 +173,42 @@ public partial class Player : CharacterBody2D, IHittable
 	{
 		if (IsImmune) {return;}
 
+		GD.Print($"PlayerEffects: ");
+		Console.WriteLine("[{0}]", string.Join(", ", Effects));
+
 		Health -= damage;
-		GD.Print($"Health = {Health}");
 		IsImmune = true;
 		ImmunityFrames.Start();
 
 		//Freeze
-		if (Effects[0] > 2)
+		if (Effects[0] > 2 && !IsSlowed)
 		{
-			IsFrozen = true;
-			FreezeCountdown.Start();
+			IsSlowed = true;
+			SlowLevel = Effects[0];
+			FreezeCountdown.Start(0.75f);
 		}
-		else if (Effects[0] > 0)
+		else if (Effects[0] > 0 && !IsSlowed)
 		{
-			FreezeCountdown.Start();
+			IsSlowed = true;
+			FreezeCountdown.Start(2.5f);
 			SlowLevel = Effects[0];
 		}
 		//Burn
-		if (Effects[1] > 0);
+		if (Effects[1] > 0)
 		{
 			IsOnFire = true;
-			FireCountdown.Start(2f+(0.5f*Effects[1]));
-			FireDamage = 2f+Effects[1];
+			FireCountdown.Start(1.5f+(0.5f*Effects[1]));
+			FireDamage = 2f+0.5f*Effects[1];
+			FireTicks.Start();
+		}
+		//Poison
+		if (Effects[2] > 0)
+		{
+			IsPoisoned = true;
+			PoisonCountdown.Start(5f+2*Effects[2]);
+			PoisonDamage = 2f+0.5f*Effects[1];
+			PoisonTicks.Start();
+			PoisonWeaknessLevel = Effects[2];
 		}
 
 
@@ -182,11 +222,11 @@ public partial class Player : CharacterBody2D, IHittable
 	public void SlashAttack()
 	{
 		CanSlash = false;
-		SlashCooldown.Start();
+		SlashCooldown.Start(0.25*PoisonWeaknessLevel);
 		Vector2 mouseDir = GetLocalMousePosition().Normalized();
 		int slashType = Math.Abs((int)GD.Randi())%2;
 		Vector2 LocalSlashLocation = mouseDir*SlashDistances[slashType];
-		EmitSignal(SignalName.Slash, GlobalPosition+LocalSlashLocation, mouseDir, SlashDamage, Slashes[slashType]);
+		EmitSignal(SignalName.Slash, GlobalPosition+LocalSlashLocation, mouseDir, SlashDamage*GetPoisonWeakness(), Slashes[slashType]);
 	}
 
 	public void CheckDeath()
@@ -213,14 +253,19 @@ public partial class Player : CharacterBody2D, IHittable
 	public void OnFireTimeLeftTimeout()
 	{
 		IsOnFire = false;
+		FireTicks.Stop();
 	}
 	public void OnFreezeTimeLeftTimeout()
 	{
-		IsFrozen = false;
+		IsSlowed = false;
+		SlowLevel = 0;
+		FreezeImmunity = true;
 	}
 	public void OnPoisonTimeLeftTimeout()
 	{
 		IsPoisoned = false;
+		PoisonWeaknessLevel = 0f;
+		PoisonTicks.Stop();
 	}
 	public void OnFireTicksTimeout()
 	{
@@ -229,6 +274,20 @@ public partial class Player : CharacterBody2D, IHittable
 	public void OnPoisonTicksTimeout()
 	{
 		Health -= PoisonDamage;
+	}
+
+	public void OnFreezeImmunityTimeout()
+	{
+		FreezeImmunity = false;
+	}
+
+	public float GetFreezeSlowdown()
+	{
+		return Mathf.Clamp(1f-SlowLevel/3f, 0, 1);
+	}
+	public float GetPoisonWeakness()
+	{
+		return 1/Mathf.Clamp(PoisonWeaknessLevel*2f/3f, 1, 2^32);
 	}
 
 }

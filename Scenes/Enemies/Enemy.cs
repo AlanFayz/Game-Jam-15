@@ -44,7 +44,7 @@ public partial class Enemy : CharacterBody2D, IHittable
         public const float Speed = 100.0f;
         public const float ViewRadius = 300.0f;
 		public const float AttackRadius = 150.0f;
-        public const float Damage = 25.0f;
+        public const float Damage = 10.0f;
         public const float ProjectileSpeed = 350.0f;
     };
 
@@ -87,6 +87,7 @@ public partial class Enemy : CharacterBody2D, IHittable
         m_EnemyState.State = State.Idle;
 		m_EnemyState.Velocity = Vector2.Zero;
 		m_EnemyState.Health = 100.0f;
+
 
 		InitalizeStates();
 

@@ -14,15 +14,13 @@ public partial class Potion : Area2D
 	public float PoolDamage;
 	public float BreakDamage;
 	public int[] PotionType;
-	public int[] PotionEffects = new int[3];
+	
 
 
     public override void _Ready()
     {
-		for (int i = 2; i<5; i++)
-		{
-        	PotionEffects[i-2] = PotionType[i];
-		}
+		
+		
     }
 
     public override void _Process(double delta)
@@ -39,7 +37,7 @@ public partial class Potion : Area2D
 	{
 		if (body is IHittable target)
 		{
-			target.Hit(this, BreakDamage, PotionEffects);
+			target.Hit(this, BreakDamage, new int[3]);
 		}
 		Break();
 	}
