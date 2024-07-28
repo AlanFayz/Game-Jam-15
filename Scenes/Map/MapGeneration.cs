@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
+using System.Dynamic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -43,9 +44,10 @@ public partial class MapGeneration : Node
 		public List<CellInfo> Cells;
 		public Dictionary<Cell, Biome> Biomes;
 		public HashSet<Vector2I> OccupiedLootCoords;
-		public TileMap TileMap;
+		public TileMap LightTileMap;
+		public TileMap DarkTileMap;
 		public Vector2I MapSize;
-		public List<bool> TileSet;
+		public List<bool> TilesSet;
 		public List<Cell> SparseSet;
 	}
 
@@ -56,7 +58,8 @@ public partial class MapGeneration : Node
 	private NoiseGeneration m_NoiseGeneration;
 	private MapData m_MapData;
 
-	private const int m_LayerIndex = 0;
+	private const int m_DarkLayerIndex = 0;
+	private const int m_LightLayerIndex = 0;
 
 	public Vector2I GetMapPosition()
 	{
@@ -70,24 +73,79 @@ public partial class MapGeneration : Node
 
 	public Vector2 GetMapPositionInLocalSpace()
 	{
-		return m_MapData.TileMap.MapToLocal(GetMapPosition()) + m_MapData.TileMap.MapToLocal(m_Offset);	
+		return m_MapData.DarkTileMap.MapToLocal(GetMapPosition()) + m_MapData.DarkTileMap.MapToLocal(m_Offset);	
 	}
 
 	public Vector2 GetMapSizeInLocalSpace()
 	{
-		return m_MapData.TileMap.MapToLocal(GetMapSize());
+		return m_MapData.DarkTileMap.MapToLocal(GetMapSize());
 	}
 
-	public void RenderMap()
+	/*
+		position is in world space coordinates
+	*/
+	public Vector2I GetPositionInTileSpace(Vector2 position)
 	{
-		Parallel.For(0, m_MapData.TileSet.Count, index =>
-		{
-			m_MapData.TileSet[index] = false;
-		});
-        
+		return m_MapData.DarkTileMap.LocalToMap(position);
+	}
 
-		UpdateTileMap();
-    }
+	/*
+		tile is in tile space coordinates
+	*/
+
+	public void ChangeTileToLight(Vector2I tile)
+	{
+		Vector2I coords = new Vector2I(Mathf.Clamp(tile.X, -m_MapData.MapSize.X / 2, m_MapData.MapSize.X / 2),
+									   Mathf.Clamp(tile.Y, -m_MapData.MapSize.Y / 2, m_MapData.MapSize.Y / 2));
+
+		tile = new Vector2I(coords.X + m_MapData.MapSize.X / 2, coords.Y + m_MapData.MapSize.Y / 2);
+
+		int index = tile.X + tile.Y * m_MapData.MapSize.X;
+
+		CellInfo cellInfo = m_MapData.Cells[index];
+		Biome biome = m_MapData.Biomes[cellInfo.Cell];
+
+		Vector2I atlasCoords = biome.AtlastCoordinates[cellInfo.AtlasIndex];
+		Vector2I atlasSize = biome.AtlasSizes[cellInfo.AtlasIndex];
+
+		int xOffset = (atlasSize.X - 1) / 2;
+		int yOffset = (atlasSize.Y - 1) / 2;
+
+		Vector2I tileCoordinate = new Vector2I(coords.X + xOffset, coords.Y + yOffset);
+
+		m_MapData.LightTileMap.SetCell(m_LightLayerIndex, tileCoordinate, biome.TileSetSource, atlasCoords);
+	}
+
+
+	/*
+		tile is in tile space coordinates
+		radius is also in tile space coordinates
+	*/
+	public void ChangeTilesToLight(Vector2I tile, float radius)
+	{
+		int minX = tile.X - Mathf.CeilToInt(radius);
+		int maxX = tile.X + Mathf.CeilToInt(radius);
+
+		int minY = tile.Y - Mathf.CeilToInt(radius);
+		int maxY = tile.Y + Mathf.CeilToInt(radius);
+
+		Vector2 integerTile = new Vector2((float)tile.X, (float)tile.Y);
+
+		for(int y = minY; y < maxY; y++)
+		{
+			for(int x = minX; x < maxX; x++)
+			{
+				Vector2 coordinate = new Vector2((float)x, (float)y);
+
+				if (coordinate.DistanceTo(integerTile) <= radius)
+				{
+					Vector2I integerCoordinate = new Vector2I(x, y);
+					ChangeTileToLight(integerCoordinate);
+				}
+			}
+		}
+
+	}
 
 	public override void _Ready()
 	{
@@ -102,15 +160,16 @@ public partial class MapGeneration : Node
 
 		m_MapData.OccupiedLootCoords = new HashSet<Vector2I>();
 		m_MapData.MapSize = MapSizeExport;
-		m_MapData.Cells   = new List<CellInfo>();
-		m_MapData.TileSet = new List<bool>();
-		m_MapData.TileMap = GetNode<TileMap>("MainTileMap");
+		m_MapData.Cells = new List<CellInfo>();
+		m_MapData.TilesSet = new List<bool>();
+		m_MapData.DarkTileMap  = GetNode<TileMap>("DarkTileMap");
+		m_MapData.LightTileMap = GetNode<TileMap>("LightTileMap");
 		m_MapData.SparseSet = new List<Cell>();
 
 		for (int i = 0; i < m_MapData.MapSize.X * m_MapData.MapSize.Y; i++)
 		{
 			m_MapData.Cells.Add(new CellInfo());
-			m_MapData.TileSet.Add(false);
+			m_MapData.TilesSet.Add(false);
 		}
 
 		for (int i = 0; i < 5; i++)
@@ -120,7 +179,10 @@ public partial class MapGeneration : Node
 
 		InitalizeBiomes();
 		GenerateWorld();
-		RenderMap();
+		UpdateTileMap();
+
+		ChangeTilesToLight(new Vector2I(0, 0), 25.0f);
+
 	}
 
 	public override void _Process(double delta)
@@ -135,7 +197,7 @@ public partial class MapGeneration : Node
 			{
 				int index = x + y * m_MapData.MapSize.X;
 
-				if (m_MapData.TileSet[index])
+				if (m_MapData.TilesSet[index])
 					continue;
 
 				float noiseValue = m_NoiseGeneration.NoiseGenerationAlgorithm.GetNoise2D((float)x, (float)y);
@@ -152,37 +214,34 @@ public partial class MapGeneration : Node
 				{
 					for (int dx = 0; dx < atlasSize.X; dx++)
 					{
-						int maxIndex = Math.Min((dx + x) + (dy + y) * m_MapData.MapSize.X, m_MapData.TileSet.Count - 1);
+						int maxIndex = Math.Min((dx + x) + (dy + y) * m_MapData.MapSize.X, m_MapData.TilesSet.Count - 1);
 
-						m_MapData.TileSet[maxIndex] = true;
+						m_MapData.TilesSet[maxIndex] = true;
 					}
 				}
 			}
 		}
 	}
 
-	public void GenerateItems()
-	{
-		//TODO
-	}
-
-	public void GenerateMobs()
-	{
-		//TODO: should reference a mob class which needs to be created.
-	}
-
 	private void UpdateTileMap()
 	{
+		Parallel.For(0, m_MapData.TilesSet.Count - 1, (int index) => 
+		{
+			m_MapData.TilesSet[index] = false;
+		});
+
 		for (int y = 0; y < m_MapData.MapSize.Y; y++)
 		{
 			for (int x = 0; x < m_MapData.MapSize.X; x++)
 			{
-				if (m_MapData.TileSet[x + y * m_MapData.MapSize.X])
+				int index = x + y * m_MapData.MapSize.X;
+
+				if (m_MapData.TilesSet[index])
 					continue;
 
 				Vector2I coordinate = new Vector2I(x - m_MapData.MapSize.X / 2, y - m_MapData.MapSize.Y / 2);
 				
-				CellInfo cellInfo = m_MapData.Cells[x + y * m_MapData.MapSize.X];
+				CellInfo cellInfo = m_MapData.Cells[index];
 
 				Biome biome = m_MapData.Biomes[cellInfo.Cell];
 
@@ -194,9 +253,9 @@ public partial class MapGeneration : Node
 				{
 					for (int dx = 0; dx < atlasSize.X; dx++)
 					{
-						int maxIndex = Math.Min((dx + x) + (dy + y) * m_MapData.MapSize.X, m_MapData.TileSet.Count - 1);
+						int maxIndex = Math.Min((dx + x) + (dy + y) * m_MapData.MapSize.X, m_MapData.TilesSet.Count - 1);
 						
-						m_MapData.TileSet[maxIndex] = true;
+						m_MapData.TilesSet[maxIndex] = true;
 					}
 				}
 
@@ -205,14 +264,14 @@ public partial class MapGeneration : Node
 
 				Vector2I tileCoordinate = new Vector2I(coordinate.X + xOffset, coordinate.Y + yOffset);
 
-				m_MapData.TileMap.SetCell(m_LayerIndex, tileCoordinate, biome.TileSetSource, atlasCoords);
+				m_MapData.DarkTileMap.SetCell(m_DarkLayerIndex, tileCoordinate, biome.TileSetSource, atlasCoords);
 
 			}
 		}
 	}
 	private void InitalizeBiomes()
 	{
-		TileSet tileSet = m_MapData.TileMap.TileSet;
+		TileSet tileSet = m_MapData.DarkTileMap.TileSet; //doesn't matter which one both are identical apart from material used
 
 		m_MapData.Biomes = new Dictionary<Cell, Biome>(12);
 

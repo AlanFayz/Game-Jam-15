@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://crvlq7eqk44r7"]
+[gd_scene load_steps=15 format=3 uid="uid://crvlq7eqk44r7"]
 
 [ext_resource type="Script" path="res://Scenes/Map/MapGeneration.cs" id="1_0awnk"]
 [ext_resource type="Texture2D" uid="uid://2cv1bdkrgmq6" path="res://Assets/Images/Tilesets/fantasy/tundra_/tundra_.png" id="2_cklqu"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cjeeumhd3ywc5" path="res://Assets/Images/Tilesets/fantasy/forest_/forest_.png" id="4_f81gm"]
 [ext_resource type="Texture2D" uid="uid://bey6ryyj1esu5" path="res://Assets/Images/Tilesets/fantasy/desert_/desert_.png" id="5_o0f3b"]
 [ext_resource type="Texture2D" uid="uid://dytedebey50ip" path="res://Assets/Images/Tilesets/fantasy/swamp_/swamp_.png" id="6_2bm76"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d46yj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e5tm3"]
 texture = ExtResource("2_cklqu")
@@ -125,10 +127,19 @@ sources/2 = SubResource("TileSetAtlasSource_eijr6")
 sources/3 = SubResource("TileSetAtlasSource_xoxv3")
 sources/4 = SubResource("TileSetAtlasSource_tptsc")
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_drufn"]
+
 [node name="Map" type="Node2D"]
 script = ExtResource("1_0awnk")
 
-[node name="MainTileMap" type="TileMap" parent="."]
+[node name="LightTileMap" type="TileMap" parent="."]
+material = SubResource("CanvasItemMaterial_d46yj")
 tile_set = SubResource("TileSet_jf1s8")
 format = 2
-layer_0/tile_data = PackedInt32Array(65541, 65536, 5, 262149, 65536, 5, 65544, 65536, 5, 262152, 1048576, 1, 262158, 65536, 1, 327703, 65536, 1)
+
+[node name="DarkTileMap" type="TileMap" parent="."]
+modulate = Color(0.588235, 0.588235, 0.588235, 1)
+material = SubResource("CanvasItemMaterial_drufn")
+tile_set = SubResource("TileSet_jf1s8")
+format = 2
+layer_0/z_index = -1
