@@ -95,7 +95,6 @@ func OnPurificationPoolPurifyArea(pos, radius):
 	print("Is Purifying")
 	var map = $Map
 	var TilePos = map.GetPositionInTileSpace(pos)
-	print(pos)
 	map.ChangeTilesToLight(TilePos, radius/16)
 	
 
