@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bactn7u40to0h"]
+[gd_scene load_steps=15 format=3 uid="uid://bactn7u40to0h"]
 
 [ext_resource type="Texture2D" uid="uid://c4up0rxlo8o0x" path="res://Assets/Images/Hooded protag/AnimationSheet_Character.png" id="1_83dca"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_xvpvg"]
@@ -64,6 +64,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_q88r7"]
@@ -157,9 +169,57 @@ tracks/0/keys = {
 "values": [24, 25, 26, 27, 28, 29, 30, 31]
 }
 
+[sub_resource type="Animation" id="Animation_0f0eq"]
+resource_name = "Immunity"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(0.266159, 0.257093, 0.257093),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.752941), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ahuw2"]
+resource_name = "Dash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [29, 30, 29, 28, 27]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"DashEnd"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rojot"]
 _data = {
+"Dash": SubResource("Animation_ahuw2"),
 "Death": SubResource("Animation_q415j"),
+"Immunity": SubResource("Animation_0f0eq"),
 "RESET": SubResource("Animation_4iond"),
 "idle": SubResource("Animation_q88r7"),
 "walk_left": SubResource("Animation_axp8q"),
@@ -225,11 +285,21 @@ wait_time = 0.5
 [node name="FreezeImmunity" type="Timer" parent="Timers"]
 one_shot = true
 
+[node name="DashCooldown" type="Timer" parent="Timers"]
+wait_time = 2.0
+one_shot = true
+
 [node name="SlashAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_jjcsi")
+volume_db = -10.0
+attenuation = 1.94482e-05
+panning_strength = 0.0
 
 [node name="WalkingDirtAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_0dhav")
+volume_db = -15.0
+attenuation = 6.92209e-05
+panning_strength = 0.0
 
 [connection signal="timeout" from="Timers/ThrowCooldown" to="." method="OnThrowCooldownTimeout"]
 [connection signal="timeout" from="Timers/SlashCooldown" to="." method="OnSlashCooldownTimeout"]
@@ -240,3 +310,4 @@ stream = ExtResource("4_0dhav")
 [connection signal="timeout" from="Timers/FireTicks" to="." method="OnFireTicksTimeout"]
 [connection signal="timeout" from="Timers/PoisonTicks" to="." method="OnPoisonTicksTimeout"]
 [connection signal="timeout" from="Timers/FreezeImmunity" to="." method="OnFreezeImmunityTimeout"]
+[connection signal="timeout" from="Timers/DashCooldown" to="." method="OnDashCooldownTimeout"]

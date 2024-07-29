@@ -6,9 +6,15 @@ signal PurificationPotionThrow(pos, dir, speed, radius)
 signal Slash(pos, dir, slashDamage, slashType)
 signal PlayerDeath()
 
-var PlayerSpeed: float = 50000
+var PlayerSpeed: float = 300
 
-var IsWalking: bool = false
+var DashSpeed: float = 600
+var DashDir: Vector2
+
+
+var IsWalking: bool = true
+var IsDashing: bool = false
+var CanDash: bool = true
 
 var IsDying: bool = false
 var IsSlowed: bool = false
@@ -60,6 +66,7 @@ var OldPosition: Vector2
 @onready var PoisonTicks = $Timers/PoisonTicks
 @onready var FreezeCountdown = $Timers/FreezeTimeLeft
 @onready var FreezeImmunityTimer = $Timers/FreezeImmunity
+@onready var DashCooldown = $Timers/DashCooldown
 @onready var animation = $AnimationPlayer
 @onready var SlashAudioPlayer = $SlashAudioPlayer
 @onready var WalkingAudioPlayer = $WalkingDirtAudioPlayer
@@ -69,32 +76,39 @@ var OldPosition: Vector2
 func _process(delta):
 	if IsDying:
 		return
-		
-	var inputDir = Input.get_vector("move_left", "move_right", "move_up", "move_down").normalized();
-		
-	if (inputDir == Vector2.ZERO):
-		animation.play("idle")
+	elif not IsDashing:
+		var inputDir = Input.get_vector("move_left", "move_right", "move_up", "move_down").normalized();
+			
+		if (inputDir == Vector2.ZERO):
+			animation.play("idle")
 
-	elif (inputDir.x>0):
-		animation.play("walk_right")
-	
-	elif (inputDir.x < 0):
-		animation.play("walk_left")
-	
-	else:
-		animation.play("walk_vertical")
-	
-	velocity = inputDir*PlayerSpeed*GetFreezeSlowdown()*delta
+		elif (inputDir.x>0):
+			animation.play("walk_right")
 
-	move_and_slide()
-	
-	if OldPosition == self.position:
-		WalkingAudioPlayer.stop()
-	elif OldPosition != self.position && WalkingAudioPlayer.playing == false:
-		WalkingAudioPlayer.play()
-	
-	WalkingAudioPlayer.position = self.position
-	OldPosition = self.position
+		elif (inputDir.x < 0):
+			animation.play("walk_left")
+
+		else:
+			animation.play("walk_vertical")
+
+		velocity = inputDir*PlayerSpeed*GetFreezeSlowdown()
+
+		move_and_slide()
+
+		if OldPosition == self.position:
+			WalkingAudioPlayer.stop()
+		elif OldPosition != self.position && WalkingAudioPlayer.playing == false:
+			WalkingAudioPlayer.play()
+
+		WalkingAudioPlayer.position = self.position
+		OldPosition = self.position
+		
+		if CanDash and Input.is_action_pressed("dash"):
+			DashStart(inputDir)
+		
+	elif IsDashing == true:
+		velocity = DashDir*DashSpeed*GetFreezeSlowdown()
+		move_and_slide()
 	
 	if CanThrow and Input.is_action_pressed("throw_potion"):
 		ThrowPotion()
@@ -104,7 +118,16 @@ func _process(delta):
 		
 	if CanThrow and Input.is_action_pressed("throw_purification_potion"):
 		ThrowPurificationPotion()
-	
+
+func DashStart(Dir):
+	CanDash = false
+	IsDashing = true
+	DashDir = Dir
+	animation.play("Dash", -1, 2.5)
+
+func DashEnd():
+	IsDashing = false
+	DashCooldown.start()
 
 func ThrowPotion():
 	CanThrow = false
@@ -222,3 +245,7 @@ func OnPoisonTicksTimeout():
 
 func OnFreezeImmunityTimeout():
 	FreezeImmunity = false
+
+
+func OnDashCooldownTimeout():
+	CanDash = true

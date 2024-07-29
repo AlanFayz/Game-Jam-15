@@ -95,6 +95,7 @@ texture = ExtResource("2_4owig")
 
 [node name="GlassParticles" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_5ehto")
+position = Vector2(-10, 10)
 emitting = false
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_auyq3")
