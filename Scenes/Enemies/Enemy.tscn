@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3pisw0cqu0ag"]
+[gd_scene load_steps=11 format=3 uid="uid://b3pisw0cqu0ag"]
 
 [ext_resource type="Script" path="res://Scenes/Enemies/Enemy.gd" id="1_8yi65"]
 [ext_resource type="Texture2D" uid="uid://dqnoguj6bjtqn" path="res://Assets/Images/Enemies/Necromancer_creativekind-Sheet.png" id="2_5xpow"]
+[ext_resource type="AudioStream" uid="uid://nqkmqkn6tvt2" path="res://Assets/Audio/ghostly_laugh.mp3" id="3_52okq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k650b"]
 height = 40.0
@@ -135,3 +136,11 @@ one_shot = true
 
 [node name="ShootPoint" type="Marker2D" parent="."]
 position = Vector2(17, -38)
+
+[node name="LaughAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_52okq")
+volume_db = -10.0
+
+[node name="LaughAudioTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true

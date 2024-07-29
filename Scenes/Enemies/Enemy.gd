@@ -13,7 +13,6 @@ class EnemyState:
 	var Velocity: Vector2
 	var Health: float
 
-
 class Nodes:
 	var Parent: Node
 	var PlayerNode: Player
@@ -51,7 +50,6 @@ func _ready():
 	m_Nodes.Parent = get_parent().get_parent()	
 	m_Nodes.PlayerNode = m_Nodes.Parent.get_node("Player") 
 
-
 	var map = m_Nodes.Parent.get_node("Map")
 
 	m_Bounds = Rect2(map.GetMapPositionInLocalSpace(), map.GetMapSizeInLocalSpace())
@@ -83,6 +81,11 @@ func _process(_delta):
 		move_and_slide();
 
 		self.position = ClampPosition(self.position)
+		$LaughAudioPlayer.position = self.position
+		
+		if $LaughAudioTimer.time_left == 0.0:
+			$LaughAudioTimer.start()
+			$LaughAudioPlayer.play()
 		
 	elif $Timer.time_left == 0:
 		queue_free()

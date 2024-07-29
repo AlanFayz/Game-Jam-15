@@ -1,7 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bactn7u40to0h"]
+[gd_scene load_steps=15 format=3 uid="uid://bactn7u40to0h"]
 
 [ext_resource type="Texture2D" uid="uid://c4up0rxlo8o0x" path="res://Assets/Images/Hooded protag/AnimationSheet_Character.png" id="1_83dca"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_xvpvg"]
+[ext_resource type="AudioStream" uid="uid://btll3q1mh7usk" path="res://Assets/Audio/slash.mp3" id="3_jjcsi"]
+[ext_resource type="AudioStream" uid="uid://b8euxp8cq16q1" path="res://Assets/Audio/stepdirt_1.wav" id="4_0dhav"]
+[ext_resource type="AudioStream" uid="uid://bejcufi6vnr3l" path="res://Assets/Audio/stepsnow_2.wav" id="4_fd88l"]
+[ext_resource type="AudioStream" uid="uid://b6rbcit3pnqvx" path="res://Assets/Audio/stepwater_2.wav" id="5_tmujo"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ynfhk"]
 radius = 6.0
@@ -222,6 +226,18 @@ wait_time = 0.5
 
 [node name="FreezeImmunity" type="Timer" parent="Timers"]
 one_shot = true
+
+[node name="SlashAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_jjcsi")
+
+[node name="WalkingDirtAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_0dhav")
+
+[node name="WalkingSnowAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_fd88l")
+
+[node name="WalkingWaterAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_tmujo")
 
 [connection signal="timeout" from="Timers/ThrowCooldown" to="." method="OnThrowCooldownTimeout"]
 [connection signal="timeout" from="Timers/SlashCooldown" to="." method="OnSlashCooldownTimeout"]

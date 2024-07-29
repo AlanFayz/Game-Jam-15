@@ -4,7 +4,6 @@ var GameScene = null
 
 func _ready():
 	GameScene = preload("res://Scenes/Environment/Main.tscn")
-	pass # Replace with function body.
 
 func OnStartMenuQuitGame():
 	get_tree().quit()

@@ -17,7 +17,6 @@ func SetFreezeImmunity(value):
 	if value:
 		FreezeImmunityTimer.Start()
 
-
 var IsOnFire: bool = false
 var IsPoisoned: bool = false
 var FireDamage: float = 0
@@ -33,7 +32,6 @@ func SetHealth(value):
 
 var IsImmune: bool = false
 
-
 var CanThrow: bool = true
 var ThrowSpeed: float = 400
 var BreakDamage: float = 5
@@ -46,6 +44,8 @@ var CanSlash = true
 var SlashDamage: float = 10
 var Slashes = ["res://Scenes/Melee/Slashes/Slash1.tscn", "res://Scenes/Melee/Slashes/Slash2.tscn"]
 
+var OldPosition: Vector2
+
 @onready var ThrowCooldown = $Timers/ThrowCooldown
 @onready var SlashCooldown = $Timers/SlashCooldown
 @onready var ImmunityFrames = $Timers/ImmunityFrames
@@ -55,8 +55,9 @@ var Slashes = ["res://Scenes/Melee/Slashes/Slash1.tscn", "res://Scenes/Melee/Sla
 @onready var PoisonTicks = $Timers/PoisonTicks
 @onready var FreezeCountdown = $Timers/FreezeTimeLeft
 @onready var FreezeImmunityTimer = $Timers/FreezeImmunity
-
 @onready var animation = $AnimationPlayer
+@onready var SlashAudioPlayer = $SlashAudioPlayer
+@onready var WalkingAudioPlayer = $WalkingDirtAudioPlayer
 
 func _process(delta):
 	if IsDying:
@@ -79,6 +80,14 @@ func _process(delta):
 	velocity = inputDir*PlayerSpeed*GetFreezeSlowdown()*delta
 
 	move_and_slide()
+	
+	if OldPosition == self.position:
+		WalkingAudioPlayer.stop()
+	elif OldPosition != self.position && WalkingAudioPlayer.playing == false:
+		WalkingAudioPlayer.play()
+	
+	WalkingAudioPlayer.position = self.position
+	OldPosition = self.position
 	
 	if CanThrow and Input.is_action_pressed("throw_potion"):
 		ThrowPotion()
@@ -138,7 +147,7 @@ func SlashAttack():
 	var slashType = abs(randi())%2
 	var LocalSlashLocation = mouseDir*SlashDistances[slashType]
 	Slash.emit(global_position+LocalSlashLocation, mouseDir, SlashDamage*GetPoisonWeakness(), Slashes[slashType])
-	
+	SlashAudioPlayer.play()
 
 func CheckDeath():
 	if Health < 0:
@@ -196,7 +205,6 @@ func OnFireTicksTimeout():
 
 func OnPoisonTicksTimeout():
 	SetHealth(Health - PoisonDamage) 
-
 
 func OnFreezeImmunityTimeout():
 	FreezeImmunity = false
