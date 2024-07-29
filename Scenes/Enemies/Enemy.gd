@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends IHittable 
 
 signal FireBolt(position: Vector2, direction: Vector2, speed: float, damage: float)
 
@@ -88,7 +88,7 @@ func _process(_delta):
 		queue_free()
 		return
 
-func Hit(_origin: Node, damage: float):
+func Hit(_origin: Node, damage: float, _effects):
 	m_EnemyState.Health -= damage
 	print(m_EnemyState.Health)
 	CheckHealth()

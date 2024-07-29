@@ -23,7 +23,8 @@ func OnTimerTimeout():
 		queue_free()
 	
 func OnBodyEntered(body):
-		if "Hit" in body:
+		if body is IHittable:
+			print(body)
 			body.Hit(self, Damage, Effects)
 		
 	
