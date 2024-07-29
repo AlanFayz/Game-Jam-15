@@ -68,7 +68,7 @@ func ChangeTileToLight(tile: Vector2i):
 
 	tile = Vector2i(coords.x + m_MapData.MapSize.y / 2, coords.y + m_MapData.MapSize.y / 2)
 
-	var index = tile.x + tile.y * m_MapData.MapSize.x
+	var index = min(tile.x + tile.y * m_MapData.MapSize.x, m_MapData.Cells.size() - 1)
 
 	var cellInfo = m_MapData.Cells[index]
 	var biome = m_MapData.Biomes[cellInfo.CellType]
