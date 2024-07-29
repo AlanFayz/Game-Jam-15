@@ -75,3 +75,28 @@ func _process(_delta):
 			SpawnEnemy();
 
 		$Enemies/Timer.start()
+
+
+func OnPlayerPurificationPotionThrow(pos, dir, speed, radius):
+	var PurificationPotion = preload("res://Scenes/Projectiles/PurificationPotion.tscn").instantiate()
+	PurificationPotion.Radius = radius
+	PurificationPotion.Speed = speed
+	PurificationPotion.position = pos
+	PurificationPotion.Direction = dir
+	PurificationPotion.connect("CreatePurificationPool", OnPurificationPotionCreatePurificationPool)
+	$Projectiles.call_deferred("add_child", PurificationPotion)
+	
+func OnPurificationPotionCreatePurificationPool(pos, radius):
+	var PurificationPool = preload("res://Scenes/Projectiles/PurificationPool.tscn").instantiate()
+	PurificationPool.position = pos
+	PurificationPool.Radius = radius
+	PurificationPool.connect("PurifyArea", OnPurificationPoolPurifyArea)
+	$Projectiles.call_deferred("add_child", PurificationPool)
+
+func OnPurificationPoolPurifyArea(pos, radius):
+	print("Is Purifying")
+	var map = $Map
+	var TilePos = map.GetPositionInTileSpace(pos)
+	print(pos)
+	map.ChangeTilesToLight(TilePos, radius/16)
+	

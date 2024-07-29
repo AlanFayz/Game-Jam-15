@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 signal PotionThrow(pos, dir, speed, breakDamage, poolDamage, potionType)
+signal PurificationPotionThrow(pos, dir, speed, radius)
 signal Slash(pos, dir, slashDamage, slashType)
 signal PlayerDeath()
 
@@ -40,6 +41,9 @@ var BreakDamage: float = 5
 var PoolDamage: float = 15
 #Potion's structure is [Protection, Endurance, Freeze, Burn, Poison]
 var PotionType = [1,1,1,1,999]
+
+var PurificationRadius: float = 100
+
 
 var SlashDistances = [15.0,30.0]
 var CanSlash = true
@@ -85,10 +89,13 @@ func _process(delta):
 	
 	if (CanSlash and Input.is_action_pressed("primary_attack")):
 		SlashAttack()
+		
+	if CanThrow and Input.is_action_pressed("throw_purification_potion"):
+		ThrowPurificationPotion()
 	
 
 func ThrowPotion():
-	CanThrow = false;
+	CanThrow = false
 	ThrowCooldown.start()
 	PotionThrow.emit(global_position, 
 					 get_local_mouse_position().normalized(), 
@@ -96,7 +103,11 @@ func ThrowPotion():
 					 BreakDamage * GetPoisonWeakness(), 
 					 PoolDamage,
 					 PotionType)
-	
+
+func ThrowPurificationPotion():
+	CanThrow = false
+	ThrowCooldown.start()
+	PurificationPotionThrow.emit(global_position, get_local_mouse_position().normalized(), ThrowSpeed*GetPoisonWeakness(), 100)
 	
 func Hit(_Origin, damage, Effects):
 	if IsImmune:
@@ -152,7 +163,7 @@ func EndDeath():
 	PlayerDeath.emit()
 	
 	#for testing
-	Health = 100
+	Health = 10000
 	IsDying = false
 
 func GetFreezeSlowdown():

@@ -1,6 +1,6 @@
 extends Area2D
 
-signal PotionBreak(pos, poolDamage, potionType);
+signal PotionBreak(pos, poolDamage, potionType)
 
 var Direction = null
 var Speed = null

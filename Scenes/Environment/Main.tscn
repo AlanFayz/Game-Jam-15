@@ -16,7 +16,6 @@ adjustment_saturation = 0.5
 script = ExtResource("1_cb6at")
 
 [node name="Map" parent="." instance=ExtResource("2_eidng")]
-position = Vector2(364, 212)
 
 [node name="Player" parent="." instance=ExtResource("3_fcmqm")]
 
@@ -33,4 +32,5 @@ one_shot = true
 
 [connection signal="PlayerDeath" from="Player" to="." method="OnPlayerPlayerDeath"]
 [connection signal="PotionThrow" from="Player" to="." method="OnPlayerPotionThrow"]
+[connection signal="PurificationPotionThrow" from="Player" to="." method="OnPlayerPurificationPotionThrow"]
 [connection signal="Slash" from="Player" to="." method="OnPlayerSlash"]
