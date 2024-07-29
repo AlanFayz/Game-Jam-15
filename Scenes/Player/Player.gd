@@ -38,7 +38,7 @@ var ThrowSpeed: float = 400
 var BreakDamage: float = 5
 var PoolDamage: float = 15
 #Potion's structure is [Protection, Endurance, Freeze, Burn, Poison]
-var PotionType = [1,1,1,1,999]
+var PotionType = [1,1,3,1,1]
 
 var PurificationRadius: float = 100
 
@@ -49,6 +49,7 @@ var SlashDamage: float = 10
 var Slashes = ["res://Scenes/Melee/Slashes/Slash1.tscn", "res://Scenes/Melee/Slashes/Slash2.tscn"]
 
 var OldPosition: Vector2
+
 
 @onready var ThrowCooldown = $Timers/ThrowCooldown
 @onready var SlashCooldown = $Timers/SlashCooldown
@@ -62,6 +63,8 @@ var OldPosition: Vector2
 @onready var animation = $AnimationPlayer
 @onready var SlashAudioPlayer = $SlashAudioPlayer
 @onready var WalkingAudioPlayer = $WalkingDirtAudioPlayer
+
+
 
 func _process(delta):
 	if IsDying:
@@ -139,7 +142,7 @@ func Hit(_Origin, damage, Effects):
 	#Burn
 	if (Effects[1] > 0):
 		IsOnFire = true
-		FireCountdown.start(1.5+(0.5*Effects[1]))
+		FireCountdown.start(1.0+(0.5*Effects[1]))
 		FireDamage = 2+0.5*Effects[1]
 		FireTicks.start()
 	
@@ -175,10 +178,10 @@ func EndDeath():
 	Health = 10000
 	IsDying = false
 
-func GetFreezeSlowdown():
+func GetFreezeSlowdown() -> float:
 	return clampf(1-SlowLevel/3,0,1)
 
-func GetPoisonWeakness():
+func GetPoisonWeakness() -> float:
 	return 1/clamp(PoisonWeaknessLevel*2/3, 1, 2^32);
 
 func OnThrowCooldownTimeout():
@@ -193,7 +196,7 @@ func OnImmunityFramesTimeout():
 	IsImmune = false
 
 
-func OnFireLeftTimeout():
+func OnFireTimeLeftTimeout():
 	IsOnFire = false
 	FireTicks.stop()
 

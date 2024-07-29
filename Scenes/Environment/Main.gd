@@ -15,6 +15,8 @@ func _ready():
 	var mapPosition = $Map.GetMapPositionInLocalSpace()
 	
 	m_SpawnZone = Rect2(mapPosition, mapSize)
+	
+	SpawnEnemy()
 
 func OnPlayerPotionThrow(position, direction, speed, breakDamage, poolDamage, potionType):
 	var potion = preload("res://Scenes/Projectiles/Potion.tscn").instantiate()
@@ -70,11 +72,7 @@ func GetNextPosition() -> Vector2:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if $Enemies/Timer.time_left <= 0.0:
-		for i in range(0, 10):
-			SpawnEnemy();
-
-		$Enemies/Timer.start()
+	pass
 
 
 func OnPlayerPurificationPotionThrow(pos, dir, speed, radius):
@@ -100,3 +98,8 @@ func OnPurificationPoolPurifyArea(pos, radius):
 	print(pos)
 	map.ChangeTilesToLight(TilePos, radius/16)
 	
+
+
+func OnEnemySpawnTimerTimeout():
+	for i in range(0, 1):
+			SpawnEnemy();

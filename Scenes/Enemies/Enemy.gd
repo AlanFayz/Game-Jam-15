@@ -13,6 +13,11 @@ class EnemyState:
 	var Velocity: Vector2
 	var Health: float
 
+func SetHealth(value):
+	m_EnemyState.Health = value
+	print("Enemy Health = ", m_EnemyState.Health)
+	CheckHealth()
+
 class Nodes:
 	var Parent: Node
 	var PlayerNode: Player
@@ -34,6 +39,27 @@ var m_RandomNumberGenerator : RandomNumberGenerator
 
 var m_EnemyState: EnemyState 
 var m_Nodes: Nodes
+
+#Effects stuff
+@onready var FireCountdown = $Timers/FireTimeLeft
+@onready var FireTicks = $Timers/FireTicks
+@onready var PoisonCountdown = $Timers/PoisonTimeLeft
+@onready var PoisonTicks = $Timers/PoisonTicks
+@onready var FreezeCountdown = $Timers/FreezeTimeLeft
+@onready var FreezeImmunityTimer = $Timers/FreezeImmunity
+
+var IsOnFire: bool = false
+var IsPoisoned: bool = false
+var FireDamage: float = 0
+var PoisonDamage: float = 0
+var PoisonWeaknessLevel: float = 0
+var SlowLevel: float = 0
+var IsSlowed: bool = false
+
+var FreezeImmunity: bool = false
+func SetFreezeImmunity(value):
+	if value:
+		FreezeImmunityTimer.Start()
 
 func Kill():
 	m_EnemyState.StateType = State.Death
@@ -76,7 +102,8 @@ func _process(_delta):
 
 		m_States[m_EnemyState.StateType].call(EnemyProperties.Speed);
 
-		self.velocity = m_EnemyState.Velocity;
+		self.velocity = m_EnemyState.Velocity*GetFreezeSlowdown();
+		
 
 		move_and_slide();
 
@@ -91,10 +118,33 @@ func _process(_delta):
 		queue_free()
 		return
 
-func Hit(_origin: Node, damage: float, _effects):
-	m_EnemyState.Health -= damage
-	print(m_EnemyState.Health)
-	CheckHealth()
+func Hit(_origin: Node, damage: float, effects):
+	SetHealth(m_EnemyState.Health - damage)
+	
+	#Freeze
+	if effects[0] > 2 and not IsSlowed:
+		IsSlowed = true
+		SlowLevel = effects[0]
+		FreezeCountdown.start(0.75)
+	elif (effects[0] > 0 && !IsSlowed):
+		IsSlowed = true
+		FreezeCountdown.start(2.5)
+		SlowLevel = effects[0]
+		
+	#Burn
+	if (effects[1] > 0):
+		IsOnFire = true
+		FireCountdown.start(1.5+(0.5*effects[1]))
+		FireDamage = 2+0.5*effects[1]
+		FireTicks.start()
+	
+	#Poison
+	if (effects[2] > 0):
+		IsPoisoned = true;
+		PoisonCountdown.start(5+2*effects[2])
+		PoisonDamage = 2+0.5*effects[1]
+		PoisonTicks.start()
+		PoisonWeaknessLevel = effects[2]
 
 func CheckHealth():
 	if m_EnemyState.Health <= 0:
@@ -192,7 +242,7 @@ func Shoot():
 		$ShootPoint.global_position,
 		direction.normalized(), 
 		EnemyProperties.ProjectileSpeed, 
-		EnemyProperties.Damage)
+		EnemyProperties.Damage * GetPoisonWeakness())
 
 
 func ClampPosition(pos: Vector2) -> Vector2:
@@ -200,4 +250,42 @@ func ClampPosition(pos: Vector2) -> Vector2:
 	var clampedY = clamp(pos.y, m_Bounds.position.y, m_Bounds.end.y)
 
 	return Vector2(clampedX, clampedY);
+	
+	
+
+func GetFreezeSlowdown() -> float:
+	return clampf(1-SlowLevel/3,0,1)
+
+func GetPoisonWeakness() -> float:
+	return 1/clampf(PoisonWeaknessLevel*2/3, 1, 2^32);
+
+func OnFireTimeLeftTimeout():
+	IsOnFire = false
+	FireTicks.stop()
+
+
+func OnFreezeTimeLeftTimeout():
+	IsSlowed = false
+	SlowLevel = 0
+	FreezeImmunity = true
+
+
+func OnPoisonTimeLeftTimeout():
+	IsPoisoned = false
+	PoisonWeaknessLevel = 0
+	PoisonTicks.stop()
+	print("Stopped Poison")
+
+
+func OnFireTicksTimeout():
+	SetHealth(m_EnemyState.Health - FireDamage) 
+
+
+func OnPoisonTicksTimeout():
+	SetHealth(m_EnemyState.Health - PoisonDamage) 
+
+func OnFreezeImmunityTimeout():
+	FreezeImmunity = false
+
+
 

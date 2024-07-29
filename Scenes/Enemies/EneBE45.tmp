@@ -147,6 +147,18 @@ one_shot = true
 
 [node name="Timers" type="Node2D" parent="."]
 
+[node name="ThrowCooldown" type="Timer" parent="Timers"]
+wait_time = 3.0
+one_shot = true
+
+[node name="SlashCooldown" type="Timer" parent="Timers"]
+wait_time = 0.25
+one_shot = true
+
+[node name="ImmunityFrames" type="Timer" parent="Timers"]
+wait_time = 0.5
+one_shot = true
+
 [node name="FireTimeLeft" type="Timer" parent="Timers"]
 wait_time = 2.0
 one_shot = true
@@ -167,10 +179,3 @@ wait_time = 0.5
 
 [node name="FreezeImmunity" type="Timer" parent="Timers"]
 one_shot = true
-
-[connection signal="timeout" from="Timers/FireTimeLeft" to="." method="OnFireTimeLeftTimeout"]
-[connection signal="timeout" from="Timers/FreezeTimeLeft" to="." method="OnFreezeTimeLeftTimeout"]
-[connection signal="timeout" from="Timers/PoisonTimeLeft" to="." method="OnPoisonTimeLeftTimeout"]
-[connection signal="timeout" from="Timers/FireTicks" to="." method="OnFireTicksTimeout"]
-[connection signal="timeout" from="Timers/PoisonTicks" to="." method="OnPoisonTicksTimeout"]
-[connection signal="timeout" from="Timers/FreezeImmunity" to="." method="OnFreezeImmunityTimeout"]
