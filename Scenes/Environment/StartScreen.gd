@@ -14,3 +14,7 @@ func _process(_delta):
 	$StartMenu.Loading()
 	get_tree().change_scene_to_packed(GameScene)
 	pass
+
+
+func OnStartMenuStartGame():
+	pass # Replace with function body.
