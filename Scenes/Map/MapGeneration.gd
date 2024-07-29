@@ -63,8 +63,8 @@ func GetTileFromWorldSpace(coordinates: Vector2) -> Cell:
 
 #tile is in tile space coordinates
 func ChangeTileToLight(tile: Vector2i):
-	var coords = Vector2i(clamp(tile.x, -m_MapData.MapSize.x / 2, m_MapData.MapSize.x / 2), 
-						  clamp(tile.y, -m_MapData.MapSize.y / 2, m_MapData.MapSize.y / 2))
+	var coords = Vector2i(clamp(tile.x, -m_MapData.MapSize.x / 2, (m_MapData.MapSize.x / 2) - 1), 
+						  clamp(tile.y, -m_MapData.MapSize.y / 2, (m_MapData.MapSize.y / 2) - 1))
 
 	tile = Vector2i(coords.x + m_MapData.MapSize.y / 2, coords.y + m_MapData.MapSize.y / 2)
 
@@ -107,8 +107,8 @@ func ChangeTilesToLight(tile: Vector2i, radius: float):
 
 #in tile space
 func GetTile(tile: Vector2i) -> Cell:
-	var coords = Vector2i(clamp(tile.x, -m_MapData.MapSize.x / 2, m_MapData.MapSize.x / 2),
-						  clamp(tile.y, -m_MapData.MapSize.y / 2, m_MapData.MapSize.y / 2))
+	var coords = Vector2i(clamp(tile.x, -m_MapData.MapSize.x / 2, (m_MapData.MapSize.x / 2) - 1),
+						  clamp(tile.y, -m_MapData.MapSize.y / 2, (m_MapData.MapSize.y / 2) - 1))
 
 	var tileClamped = Vector2i(coords.x + m_MapData.MapSize.x / 2, coords.y + m_MapData.MapSize.y / 2);
 	var index = min(tileClamped.x + tileClamped.y * m_MapData.MapSize.x, m_MapData.Cells.size() - 1);
