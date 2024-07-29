@@ -42,7 +42,7 @@ func SpawnEnemy():
 	$Enemies.call_deferred("add_child", enemy)
 
 func OnPlayerSlash(slashPosition, slashDirection, slashDamage, slashType):
-	var slash = load(slashType)
+	var slash = load(slashType).instantiate()
 	slash.Position = slashPosition
 	slash.AttackDir = slashDirection
 	slash.Damage = slashDamage
