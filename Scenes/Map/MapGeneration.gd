@@ -33,7 +33,7 @@ class MapData:
 	var SparseSet: Array
 	
 @export var MapSizeExport: Vector2i	
-@export var m_Offset: Vector2i = Vector2i(21, 10)
+@export var m_Offset: Vector2 = Vector2(21, 10)
 
 var m_NoiseGeneration = NoiseGeneration.new()
 var m_MapData = MapData.new()
@@ -48,14 +48,18 @@ func GetMapSize() -> Vector2i:
 	return m_MapData.MapSize
 
 func GetMapPositionInLocalSpace() -> Vector2:
-	return $DarkTileMap.map_to_local(GetMapPosition()) + $DarkTileMap.map_to_local(m_Offset);	
+	return $DarkTileMap.map_to_local(GetMapPosition()) + $DarkTileMap.map_to_local(m_Offset)	
 
 func GetMapSizeInLocalSpace() -> Vector2:
-	return $DarkTileMap.map_to_local(GetMapSize());
+	return $DarkTileMap.map_to_local(GetMapSize())
 
 #position is in world space coordinates
 func GetPositionInTileSpace(_position: Vector2) -> Vector2i:
-	return $DarkTileMap.local_to_map(_position);
+	return $DarkTileMap.local_to_map(_position + m_Offset)
+	
+#in world space
+func GetTileFromWorldSpace(coordinates: Vector2) -> Cell:
+	return GetTile(GetPositionInTileSpace(coordinates))
 
 #tile is in tile space coordinates
 func ChangeTileToLight(tile: Vector2i):
@@ -106,16 +110,10 @@ func GetTile(tile: Vector2i) -> Cell:
 	var coords = Vector2i(clamp(tile.x, -m_MapData.MapSize.x / 2, m_MapData.MapSize.x / 2),
 						  clamp(tile.y, -m_MapData.MapSize.y / 2, m_MapData.MapSize.y / 2))
 
-	tile = Vector2i(coords.x + m_MapData.MapSize.x / 2, coords.y + m_MapData.MapSize.y / 2);
-
-	var index = tile.x + tile.y * m_MapData.MapSize.x;
+	var tileClamped = Vector2i(coords.x + m_MapData.MapSize.x / 2, coords.y + m_MapData.MapSize.y / 2);
+	var index = min(tileClamped.x + tileClamped.y * m_MapData.MapSize.x, m_MapData.Cells.size() - 1);
 
 	return m_MapData.Cells[index].CellType;
-
-
-#in world space
-func GetTileFromWorldSpace(coordinates: Vector2) -> Cell:
-	return GetTile(GetPositionInTileSpace(coordinates));
 
 func _ready():
 	m_NoiseGeneration = NoiseGeneration.new()
@@ -267,6 +265,3 @@ static func GetAtlasSizesFromCoordinates(coordinates: Array, tileSetSource: Tile
 		atlasSizes.append(tileSetSource.get_tile_size_in_atlas(coordinates[i]))
 	
 	return atlasSizes;
-
-			
-	
