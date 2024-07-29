@@ -18,7 +18,7 @@ func _ready():
 
 func OnPlayerPotionThrow(position, direction, speed, breakDamage, poolDamage, potionType):
 	var potion = preload("res://Scenes/Projectiles/Potion.tscn").instantiate()
-	potion.Position = position
+	potion.position = position
 	potion.Speed = speed
 	potion.Direction = direction
 	potion.PoolDamage = poolDamage
@@ -30,7 +30,7 @@ func OnPlayerPotionThrow(position, direction, speed, breakDamage, poolDamage, po
 
 func OnPotionPotionbreak(position, poolDamage, potionType):
 	var potionPool = preload("res://Scenes/Projectiles/PotionPool.tscn").instantiate()
-	potionPool.Position = position
+	potionPool.position = position
 	potionPool.Damage = poolDamage
 	potionPool.PotionType = potionType
 	$Projectiles.call_deferred("add_child", potionPool)

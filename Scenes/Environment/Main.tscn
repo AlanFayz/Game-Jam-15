@@ -30,3 +30,7 @@ environment = SubResource("Environment_yuhxu")
 [node name="Timer" type="Timer" parent="Enemies"]
 wait_time = 10.0
 one_shot = true
+
+[connection signal="PlayerDeath" from="Player" to="." method="OnPlayerPlayerDeath"]
+[connection signal="PotionThrow" from="Player" to="." method="OnPlayerPotionThrow"]
+[connection signal="Slash" from="Player" to="." method="OnPlayerSlash"]

@@ -17,16 +17,13 @@ func _ready():
 	for i in range(2, 5):
 		Effects[i-2] = PotionType[i]
 
-	print($"PotionType: ")
-	print("[{0}] ", PotionType)
-	print($"PotionEffects: ")
-	print("[{0}] ", Effects)
+
 
 func OnTimerTimeout():
-		queue_free();
+		queue_free()
 	
 func OnBodyEntered(body):
-		if body is IHittable:
-			body.Hit(self, Damage, Effects);
+		if "Hit" in body:
+			body.Hit(self, Damage, Effects)
 		
 	

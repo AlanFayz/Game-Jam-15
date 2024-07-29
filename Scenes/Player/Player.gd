@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
-signal PotionThrow(pos, dir, speed, breakDamage, poolDamage)
+signal PotionThrow(pos, dir, speed, breakDamage, poolDamage, potionType)
 signal Slash(pos, dir, slashDamage, slashType)
 signal PlayerDeath()
 
@@ -95,6 +95,7 @@ func ThrowPotion():
 					 get_local_mouse_position().normalized(), 
 					 ThrowSpeed * GetPoisonWeakness(), 
 					 BreakDamage * GetPoisonWeakness(), 
+					 PoolDamage,
 					 PotionType)
 	
 	
@@ -109,11 +110,11 @@ func Hit(_Origin, damage, Effects):
 	if Effects[0] > 2 and not IsSlowed:
 		IsSlowed = true
 		SlowLevel = Effects[0]
-		FreezeCountdown.Start(0.75)
+		FreezeCountdown.start(0.75)
 	
 	elif (Effects[0] > 0 && !IsSlowed):
 		IsSlowed = true
-		FreezeCountdown.Start(2.5)
+		FreezeCountdown.start(2.5)
 		SlowLevel = Effects[0]
 	
 	#Burn
@@ -147,6 +148,13 @@ func CheckDeath():
 func StartDeath():
 	IsDying = true
 	animation.play("Death", 0, 0.25, false)
+	
+func EndDeath():
+	PlayerDeath.emit()
+	
+	#for testing
+	Health = 100
+	IsDying = false
 
 func GetFreezeSlowdown():
 	return clampf(1-SlowLevel/3,0,1)

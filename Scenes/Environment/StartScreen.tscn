@@ -16,3 +16,6 @@ scale = Vector2(0.2, 0.2)
 anchors_preset = 9
 anchor_right = 0.0
 grow_horizontal = 1
+
+[connection signal="QuitGame" from="StartMenu" to="." method="OnStartMenuQuitGame"]
+[connection signal="StartGame" from="StartMenu" to="." method="OnStartMenuStartGame"]
