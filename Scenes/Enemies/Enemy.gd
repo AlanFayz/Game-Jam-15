@@ -1,4 +1,4 @@
-extends IHittable 
+extends CharacterBody2D 
 
 signal FireBolt(position: Vector2, direction: Vector2, speed: float, damage: float)
 
@@ -37,7 +37,7 @@ var m_EnemyState: EnemyState
 var m_Nodes: Nodes
 
 func Kill():
-	m_EnemyState.State = State.Death
+	m_EnemyState.StateType = State.Death
 	m_IsAnimationPlaying = false
 	$CollisionShape2D.set_deferred("disabled", true)
 	$AnimationPlayer.play("Death")
@@ -84,7 +84,7 @@ func _process(_delta):
 
 		self.position = ClampPosition(self.position)
 		
-	elif m_Nodes.Timer.TimeLeft == 0:
+	elif $Timer.time_left == 0:
 		queue_free()
 		return
 

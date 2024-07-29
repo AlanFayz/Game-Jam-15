@@ -24,7 +24,7 @@ func _ready():
 
 
 func OnBodyEntered(body):
-	if body is IHittable:
+	if "Hit" in body:
 		body.Hit(self, Damage, [0,0,0,0,0])
 	
 

@@ -21,7 +21,7 @@ func OnBreakTimerTimeout():
 
 
 func OnBodyEntered(body):
-	if body is IHittable:
+	if "Hit" in body:
 		body.Hit(self, BreakDamage, [0, 0, 0])
 	
 	Break();

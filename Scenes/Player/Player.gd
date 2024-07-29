@@ -1,4 +1,4 @@
-extends IHittable
+extends CharacterBody2D
 class_name Player
 
 signal PotionThrow(pos, dir, speed, breakDamage, poolDamage, potionType)
