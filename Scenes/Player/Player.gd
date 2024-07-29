@@ -34,7 +34,7 @@ func SetHealth(value):
 var IsImmune: bool = false
 
 
-var CanThrow: bool = false
+var CanThrow: bool = true
 var ThrowSpeed: float = 400
 var BreakDamage: float = 5
 var PoolDamage: float = 15
@@ -80,7 +80,6 @@ func _process(delta):
 
 	move_and_slide()
 	
-	CanThrow = true
 	if CanThrow and Input.is_action_pressed("throw_potion"):
 		ThrowPotion()
 	
