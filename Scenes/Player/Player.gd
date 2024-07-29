@@ -39,7 +39,7 @@ var ThrowSpeed: float = 400
 var BreakDamage: float = 5
 var PoolDamage: float = 15
 #Potion's structure is [Protection, Endurance, Freeze, Burn, Poison]
-var PotionType = [0,1,1,1,999]
+var PotionType = [1,1,1,1,999]
 
 var SlashDistances = [15.0,30.0]
 var CanSlash = true

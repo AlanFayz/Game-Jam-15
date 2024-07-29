@@ -9,7 +9,7 @@ func _ready():
 	if PotionType[0]>0:
 		set_collision_layer_value(3, true)
 		set_collision_layer_value(6, false)
-		set_collision_layer_value(1,  false)
+		set_collision_mask_value(1,  false)
 		Damage *= 0.7
 	
 	$Timer.start(5+PotionType[1])
