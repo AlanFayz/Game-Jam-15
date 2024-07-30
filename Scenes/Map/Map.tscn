@@ -73,13 +73,13 @@ script = ExtResource("1_pu1yf")
 MapSizeExport = Vector2i(100, 100)
 
 [node name="LightTileMap" type="TileMap" parent="."]
-self_modulate = Color(0.95, 0.95, 0.95, 1)
+modulate = Color(0.5, 0.55, 0.5, 1)
 material = SubResource("CanvasItemMaterial_d46yj")
 tile_set = SubResource("TileSet_jf1s8")
 format = 2
 
 [node name="DarkTileMap" type="TileMap" parent="."]
-modulate = Color(0.4, 0.4, 0.4, 1)
+modulate = Color(0.2, 0.2, 0.2, 1)
 material = SubResource("CanvasItemMaterial_drufn")
 tile_set = SubResource("TileSet_jf1s8")
 format = 2

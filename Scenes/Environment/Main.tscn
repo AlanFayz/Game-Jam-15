@@ -13,6 +13,7 @@ glow_levels/1 = 1.0
 glow_levels/2 = 1.0
 glow_levels/4 = 1.0
 glow_intensity = 0.6
+glow_bloom = 0.3
 glow_blend_mode = 1
 glow_hdr_scale = 3.0
 glow_hdr_luminance_cap = 64.0
