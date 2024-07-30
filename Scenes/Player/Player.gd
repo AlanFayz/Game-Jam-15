@@ -12,9 +12,9 @@ var DashSpeed: float = 600
 var DashDir: Vector2
 
 
-var PurificationPotionNumber: int = 100
+
 #ResourcesOwned's structure = [Protection, Endurance, Freeze, Burn, Poison, Purifications]
-var ResourcesOwned = [0,0,0,0,0,0]
+var ResourcesOwned = [10,10,10,10,10,10]
 
 
 var IsWalking: bool = true
@@ -123,9 +123,9 @@ func _process(_delta):
 	if (CanSlash and Input.is_action_pressed("primary_attack")):
 		SlashAttack()
 		
-	if PurificationPotionNumber>0 and Input.is_action_just_pressed("throw_purification_potion"):
+	if Input.is_action_just_pressed("throw_purification_potion"):
 		ThrowPurificationPotion()
-		PurificationPotionNumber -= 1
+	print(ResourcesOwned)
 
 func DashStart(Dir):
 	CanDash = false
@@ -138,19 +138,25 @@ func DashEnd():
 	DashCooldown.start()
 
 func ThrowPotion():
-	CanThrow = false
-	ThrowCooldown.start()
-	PotionThrow.emit(global_position, 
-					 get_local_mouse_position().normalized(), 
-					 ThrowSpeed * GetPoisonWeakness(), 
-					 BreakDamage * GetPoisonWeakness(), 
-					 PoolDamage,
-					 PotionType)
-	ResourcesOwned -= PotionType+[0]
+	var newResourcesOwned = IntArraySubtraction(ResourcesOwned, PotionType+[0])
+	print(newResourcesOwned.min())
+	if newResourcesOwned.min() >= 0:
+		print("IsThrowing")
+		CanThrow = false
+		ThrowCooldown.start()
+		PotionThrow.emit(global_position, 
+						 get_local_mouse_position().normalized(), 
+						 ThrowSpeed * GetPoisonWeakness(), 
+						 BreakDamage * GetPoisonWeakness(), 
+						 PoolDamage,
+						 PotionType)
+		ResourcesOwned = newResourcesOwned
 
 func ThrowPurificationPotion():
-	PurificationPotionThrow.emit(global_position, get_local_mouse_position().normalized(), ThrowSpeed*GetPoisonWeakness(), PurificationRadius)
-	ResourcesOwned -= [0,0,0,0,0,1]
+	var newResourcesOwned = IntArraySubtraction(ResourcesOwned, [0,0,0,0,0,1])
+	if newResourcesOwned.min() >= 0:
+		PurificationPotionThrow.emit(global_position, get_local_mouse_position().normalized(), ThrowSpeed*GetPoisonWeakness(), PurificationRadius)
+		ResourcesOwned  = newResourcesOwned
 	
 func Hit(_Origin, damage, Effects):
 	if IsImmune:
@@ -262,3 +268,15 @@ func OnFreezeImmunityTimeout():
 
 func OnDashCooldownTimeout():
 	CanDash = true
+
+func IntArrayAddition(array1, array2):
+	var temp: Array
+	for i in range(0,len(array1)):
+		temp.append(array1[i] + array2[i])
+	return temp
+
+func IntArraySubtraction(array1, array2):
+	var temp: Array
+	for i in range(0,len(array1)):
+		temp.append(array1[i] - array2[i])
+	return temp
