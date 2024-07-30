@@ -25,7 +25,7 @@ adjustment_enabled = true
 script = ExtResource("1_cb6at")
 
 [node name="Map" parent="." instance=ExtResource("2_eidng")]
-MapSizeExport = Vector2i(500, 500)
+MapSizeExport = Vector2i(400, 400)
 
 [node name="Player" parent="." instance=ExtResource("3_fcmqm")]
 

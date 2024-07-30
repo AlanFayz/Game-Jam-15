@@ -5,6 +5,7 @@ signal PotionThrow(pos, dir, speed, breakDamage, poolDamage, potionType)
 signal PurificationPotionThrow(pos, dir, speed, radius)
 signal Slash(pos, dir, slashDamage, slashType)
 signal PlayerDeath()
+signal CollectSignal(pos, radius)
 
 var PlayerSpeed: float = 300
 
@@ -20,6 +21,7 @@ var ResourcesOwned = [10,10,10,10,10,10]
 var IsWalking: bool = true
 var IsDashing: bool = false
 var CanDash: bool = true
+var ShortReset: bool = true
 
 var IsDying: bool = false
 var IsSlowed: bool = false
@@ -74,9 +76,13 @@ var OldPosition: Vector2
 @onready var FreezeCountdown = $Timers/FreezeTimeLeft
 @onready var FreezeImmunityTimer = $Timers/FreezeImmunity
 @onready var DashCooldown = $Timers/DashCooldown
+@onready var ShortCooldown = $Timers/ShortCooldown
+
+
 @onready var animation = $AnimationPlayer
 @onready var SlashAudioPlayer = $SlashAudioPlayer
 @onready var WalkingAudioPlayer = $WalkingDirtAudioPlayer
+@onready var CollectionArea = $CollectionArea
 
 
 
@@ -125,7 +131,36 @@ func _process(_delta):
 		
 	if Input.is_action_just_pressed("throw_purification_potion"):
 		ThrowPurificationPotion()
-	print(ResourcesOwned)
+	if Input.is_action_just_pressed("collect_resources"):
+		CollectStart()
+#	print(ResourcesOwned)
+
+func CollectStart():
+	var CollectionAreaReturn = CollectionArea.get_overlapping_areas()
+	var ShadowDrops: Array
+	for i in CollectionAreaReturn:
+		if i is ShadowDrop:
+			ShadowDrops.append(i)
+	for i in ShadowDrops:
+		ResourcesOwned[5] += 1
+		i.queue_free()
+	CollectSignal.emit(global_position,40)
+
+func CollectEnd(flowers):
+	print(flowers)
+	for i in flowers:
+		match i:
+			0:
+				ResourcesOwned[2]+=1
+			1:
+				ResourcesOwned[0] +=1
+			2:
+				ResourcesOwned[1] += 1
+			3:
+				ResourcesOwned[3] += 1
+			4:
+				ResourcesOwned[4] += 1
+			
 
 func DashStart(Dir):
 	CanDash = false
@@ -269,14 +304,20 @@ func OnFreezeImmunityTimeout():
 func OnDashCooldownTimeout():
 	CanDash = true
 
+
 func IntArrayAddition(array1, array2):
 	var temp: Array
 	for i in range(0,len(array1)):
 		temp.append(array1[i] + array2[i])
 	return temp
 
+
 func IntArraySubtraction(array1, array2):
 	var temp: Array
 	for i in range(0,len(array1)):
 		temp.append(array1[i] - array2[i])
 	return temp
+
+
+func OnShortCooldownTimeout():
+	ShortReset = true

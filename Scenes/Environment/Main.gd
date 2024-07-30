@@ -7,12 +7,17 @@ class GameComponents:
 var m_GameComponents = null
 var m_SpawnZone = null
 
+@onready var MapNode = $Map
+@onready var PlayerNode = $Player
+@onready var Projectiles = $Projectiles
+@onready var Enemies = $Enemies
+
 func _ready():
 	m_GameComponents = GameComponents.new()
 	m_GameComponents.RandomNumbers = RandomNumberGenerator.new()
 	
-	var mapSize = $Map.GetMapSizeInLocalSpace()
-	var mapPosition = $Map.GetMapPositionInLocalSpace()
+	var mapSize = MapNode.GetMapSizeInLocalSpace()
+	var mapPosition = MapNode.GetMapPositionInLocalSpace()
 	
 	m_SpawnZone = Rect2(mapPosition, mapSize)
 	
@@ -27,7 +32,7 @@ func OnPlayerPotionThrow(position, direction, speed, breakDamage, poolDamage, po
 	potion.PoolDamage = poolDamage
 	potion.BreakDamage = breakDamage
 	potion.PotionType = potionType
-	$Projectiles.add_child(potion)
+	Projectiles.add_child(potion)
 	potion.connect("PotionBreak", OnPotionPotionbreak)
 	pass
 
@@ -36,13 +41,14 @@ func OnPotionPotionbreak(position, poolDamage, potionType):
 	potionPool.position = position
 	potionPool.Damage = poolDamage
 	potionPool.PotionType = potionType
-	$Projectiles.call_deferred("add_child", potionPool)
+	Projectiles.call_deferred("add_child", potionPool)
 	
 func SpawnEnemy():
 	var enemy = preload("res://Scenes/Enemies/Enemy.tscn").instantiate()
 	enemy.position = GetNextPosition()
 	enemy.connect("FireBolt", OnEnemyFireBolt)
-	$Enemies.call_deferred("add_child", enemy)
+	enemy.connect("Death", OnEnemyDeath)
+	Enemies.call_deferred("add_child", enemy)
 
 func OnPlayerSlash(slashPosition, slashDirection, slashDamage, slashType):
 	var slash = load(slashType).instantiate()
@@ -57,10 +63,17 @@ func OnEnemyFireBolt(position, direction, speed, damage):
 	fireBolt.Direction = direction
 	fireBolt.Speed = speed
 	fireBolt.Damage = damage
-	$Projectiles.call_deferred("add_child", fireBolt)
+	Projectiles.call_deferred("add_child", fireBolt)
 
 func OnPlayerPlayerDeath():
 	print("Player has died")
+
+func OnEnemyDeath(pos):
+	var num = randi_range(1,5)
+	for i in range(num):
+		var drop = preload("res://Scenes/Objects/ShadowDrop.tscn").instantiate()
+		drop.position = pos
+		call_deferred("add_child", drop)
 
 func GetNextPosition() -> Vector2:
 	var start = m_SpawnZone.position;
@@ -83,22 +96,25 @@ func OnPlayerPurificationPotionThrow(pos, dir, speed, radius):
 	PurificationPotion.position = pos
 	PurificationPotion.Direction = dir
 	PurificationPotion.connect("CreatePurificationPool", OnPurificationPotionCreatePurificationPool)
-	$Projectiles.call_deferred("add_child", PurificationPotion)
+	Projectiles.call_deferred("add_child", PurificationPotion)
 	
 func OnPurificationPotionCreatePurificationPool(pos, radius):
 	var PurificationPool = preload("res://Scenes/Projectiles/PurificationPool.tscn").instantiate()
 	PurificationPool.position = pos
 	PurificationPool.Radius = radius
 	PurificationPool.connect("PurifyArea", OnPurificationPoolPurifyArea)
-	$Projectiles.call_deferred("add_child", PurificationPool)
+	Projectiles.call_deferred("add_child", PurificationPool)
 
 func OnPurificationPoolPurifyArea(pos, radius):
 	print("Is Purifying")
-	var map = $Map
-	var TilePos = map.GetPositionInTileSpace(pos)
-	map.ChangeTilesToLight(TilePos, radius/16)
+	var TilePos = MapNode.GetPositionInTileSpace(pos)
+	MapNode.ChangeTilesToLight(TilePos, radius/16)
 	
 
 func OnEnemySpawnTimerTimeout():
 	for i in range(0, 10):
-			SpawnEnemy();
+		SpawnEnemy()
+
+
+func OnPlayerCollectSignal(pos, radius):
+	PlayerNode.CollectEnd(MapNode.CollectResources(MapNode.GetPositionInTileSpace(pos), int(radius/16)))

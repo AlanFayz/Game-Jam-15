@@ -57,8 +57,8 @@ func GetMapSizeInLocalSpace() -> Vector2:
 	return $DarkTileMap.map_to_local(GetMapSize())
 
 #position is in world space coordinates
-func GetPositionInTileSpace(_position: Vector2) -> Vector2i:
-	return $DarkTileMap.local_to_map(_position + m_Offset)
+func GetPositionInTileSpace(position: Vector2) -> Vector2i:
+	return $DarkTileMap.local_to_map(position + m_Offset)
 	
 #in world space
 func GetTileFromWorldSpace(coordinates: Vector2) -> Cell:
@@ -129,7 +129,7 @@ func GetResourceAtTile(tile: Vector2i) -> Cell:
 	var atlasCoords = biome.AtlasCoordinates[cellInfo.AtlasIndex]
 	var atlasSize   = biome.AtlasSizes[cellInfo.AtlasIndex]
 	
-	if $LightTileMap.get_cell_tile_data(coords.x, coords.y) == null:
+	if $LightTileMap.get_cell_tile_data(0, coords) == null:
 		$DarkTileMap.set_cell(m_DarkLayerIndex, coords, biome.TileSetSourceIndex, atlasCoords);
 	else:
 		$LightTileMap.set_cell(m_LightLayerIndex, coords, biome.TileSetSourceIndex, atlasCoords);

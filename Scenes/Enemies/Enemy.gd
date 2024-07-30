@@ -1,6 +1,7 @@
 extends CharacterBody2D 
 
 signal FireBolt(position: Vector2, direction: Vector2, speed: float, damage: float)
+signal Death(position)
 
 enum State
 {
@@ -66,6 +67,10 @@ func Kill():
 	m_IsAnimationPlaying = false
 	$CollisionShape2D.set_deferred("disabled", true)
 	$AnimationPlayer.play("Death")
+	Death.emit(global_position)
+
+func EndKill():
+	queue_free()
 
 func _ready():
 	m_Nodes = Nodes.new()
@@ -113,10 +118,6 @@ func _process(_delta):
 		if $LaughAudioTimer.time_left == 0.0:
 			$LaughAudioTimer.start()
 			$LaughAudioPlayer.play()
-		
-	elif $Timer.time_left == 0:
-		queue_free()
-		return
 
 func Hit(_origin: Node, damage: float, effects):
 	SetHealth(m_EnemyState.Health - damage)

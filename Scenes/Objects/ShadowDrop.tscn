@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ds438mktccws4" path="res://Assets/Images/Verzatiledev Rocks/BunchOfRocks_Pack/RockPack1080x1080.png" id="2_n8t8x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0pta1"]
-radius = 9.05539
+radius = 4.12311
 
 [node name="ShadowDrop" type="Area2D"]
 script = ExtResource("1_4g5nv")
@@ -14,7 +14,7 @@ shape = SubResource("CircleShape2D_0pta1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.0923971, 0.0923971, 0.0923971, 1)
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.07, 0.07)
 texture = ExtResource("2_n8t8x")
 hframes = 7
 vframes = 6

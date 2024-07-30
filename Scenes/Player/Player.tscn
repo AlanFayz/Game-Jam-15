@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bactn7u40to0h"]
+[gd_scene load_steps=16 format=3 uid="uid://bactn7u40to0h"]
 
 [ext_resource type="Texture2D" uid="uid://c4up0rxlo8o0x" path="res://Assets/Images/Hooded protag/AnimationSheet_Character.png" id="1_83dca"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_xvpvg"]
@@ -227,6 +227,9 @@ _data = {
 "walk_vertical": SubResource("Animation_y38g2")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_pouk6"]
+radius = 40.0
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 123
 script = ExtResource("1_xvpvg")
@@ -289,6 +292,9 @@ one_shot = true
 wait_time = 2.0
 one_shot = true
 
+[node name="ShortCooldown" type="Timer" parent="Timers"]
+wait_time = 0.1
+
 [node name="SlashAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_jjcsi")
 attenuation = 1.94482e-05
@@ -300,6 +306,11 @@ volume_db = -15.0
 attenuation = 6.92209e-05
 panning_strength = 0.0
 
+[node name="CollectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionArea"]
+shape = SubResource("CircleShape2D_pouk6")
+
 [connection signal="timeout" from="Timers/ThrowCooldown" to="." method="OnThrowCooldownTimeout"]
 [connection signal="timeout" from="Timers/SlashCooldown" to="." method="OnSlashCooldownTimeout"]
 [connection signal="timeout" from="Timers/ImmunityFrames" to="." method="OnImmunityFramesTimeout"]
@@ -310,3 +321,4 @@ panning_strength = 0.0
 [connection signal="timeout" from="Timers/PoisonTicks" to="." method="OnPoisonTicksTimeout"]
 [connection signal="timeout" from="Timers/FreezeImmunity" to="." method="OnFreezeImmunityTimeout"]
 [connection signal="timeout" from="Timers/DashCooldown" to="." method="OnDashCooldownTimeout"]
+[connection signal="timeout" from="Timers/ShortCooldown" to="." method="OnShortCooldownTimeout"]
