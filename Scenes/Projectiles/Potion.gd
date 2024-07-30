@@ -8,33 +8,29 @@ var PoolDamage = null
 var BreakDamage = null
 var PotionType = null
 
+@onready var PotionSprite = $SpinPivot/PotionSprite
+
 func _ready():
 	SetVisualEffects()
 	
 func SetVisualEffects():
-	var particleTypeNum: int = 0
-	var activeTypes = []
 	var ChosenType = PotionType.max()
 	print(ChosenType)
-	var ChosenColour = Color()
 
 	match ChosenType:
 		0:
-			ChosenColour = Color("#0195ae")
+			PotionSprite.frame = 67
 		1:
 			pass
 			#As Endurance doesent have a particle emmitter, it is not needed
 		2:
-			ChosenColour = Color("#60FBFF")
+			PotionSprite.frame = 73
 		3:
-			ChosenColour = Color("#FF4963")
+			PotionSprite.frame = 71
 		4:
-			ChosenColour = Color("#CAFFC5")
-	print(ChosenColour)
-	if ChosenColour != Color():
-		$SpinPivot/PotionSprite.modulate = ChosenColour
-	else:
-		$SpinPivot/PotionSprite.frame = 66
+			PotionSprite.frame = 69
+		_:
+			PotionSprite.Frame = 66
 
 
 func _process(delta):

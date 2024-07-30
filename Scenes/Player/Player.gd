@@ -73,7 +73,7 @@ var OldPosition: Vector2
 
 
 
-func _process(delta):
+func _process(_delta):
 	if IsDying:
 		return
 	elif not IsDashing:

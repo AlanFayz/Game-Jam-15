@@ -10,7 +10,7 @@ func _ready():
 	PurifyArea.emit(global_position, Radius)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 
 

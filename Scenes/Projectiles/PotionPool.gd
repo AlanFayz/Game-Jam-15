@@ -35,7 +35,8 @@ func SetVisualEffects():
 		if PotionType[i]>0:
 			particleTypeNum += 1
 			activeTypes.append(i)
-	var amountPerParticle = roundi(amount/particleTypeNum)
+	@warning_ignore("integer_division")
+	var amountPerParticle = roundi(amount/particleTypeNum) 
 	SetParticleSettings(activeTypes, amountPerParticle)
 
 
