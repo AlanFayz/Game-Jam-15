@@ -31,10 +31,13 @@ class MapData:
 	var MapSize: Vector2i	
 	var TilesSet: Array
 	var SparseSet: Array
-	
+
+@export var PercentageChanceOfResource: float = 3
+@export var FlowerTileCoordinate: Vector2i = Vector2i(12, 1)
 @export var MapSizeExport: Vector2i	
 @export var m_Offset: Vector2 = Vector2(21, 10)
 
+var FlowerTileIndex = 0
 var m_NoiseGeneration = NoiseGeneration.new()
 var m_MapData = MapData.new()
 
@@ -102,8 +105,58 @@ func ChangeTilesToLight(tile: Vector2i, radius: float):
 			if coordinate.distance_to(floatTile) <= radius:
 				var integerCoordinate = Vector2i(x, y)
 				ChangeTileToLight(integerCoordinate)
+
+func GetResourceAtTile(tile: Vector2i) -> Cell:
+	var coords = Vector2i(clamp(tile.x, -m_MapData.MapSize.x / 2, (m_MapData.MapSize.x / 2) - 1), 
+						  clamp(tile.y, -m_MapData.MapSize.y / 2, (m_MapData.MapSize.y / 2) - 1))
+
+	tile = Vector2i(coords.x + m_MapData.MapSize.y / 2, coords.y + m_MapData.MapSize.y / 2)
+
+	var index = min(tile.x + tile.y * m_MapData.MapSize.x, m_MapData.Cells.size() - 1)
+
+	var cellInfo = m_MapData.Cells[index]
+	
+	if cellInfo.AtlasIndex != FlowerTileIndex:
+		return Cell.None	
+	
+	var biome = m_MapData.Biomes[cellInfo.CellType]
+	
+	var noiseValue = m_NoiseGeneration.NoiseGenerationAlgorithm.get_noise_2d(tile.x, tile.y)
+	noiseValue = noiseValue * 0.5 + 0.5
+
+	cellInfo.AtlasIndex = floori(noiseValue * (biome.AtlasCoordinates.size() - 1))
+	
+	var atlasCoords = biome.AtlasCoordinates[cellInfo.AtlasIndex]
+	var atlasSize   = biome.AtlasSizes[cellInfo.AtlasIndex]
+	
+	if $LightTileMap.get_cell_tile_data(coords.x, coords.y) == null:
+		$DarkTileMap.set_cell(m_DarkLayerIndex, coords, biome.TileSetSourceIndex, atlasCoords);
+	else:
+		$LightTileMap.set_cell(m_LightLayerIndex, coords, biome.TileSetSourceIndex, atlasCoords);
+		
+	
+	return cellInfo.CellType
+	
 	
 
+func CollectResources(tile: Vector2i, radius:float) -> Array:
+	var minX = tile.x - ceili(radius)
+	var maxX = tile.x + ceili(radius)
+
+	var minY = tile.y - ceili(radius)
+	var maxY = tile.y + ceili(radius)
+
+	var floatTile = Vector2(tile.x, tile.y)
+	
+	var array = Array()
+
+	for y in range(minY, maxY):
+		for x in range(minX, maxX):
+			var cell = GetResourceAtTile(Vector2i(x, y))
+			if cell != Cell.None:
+				array.append(cell)
+	
+	return array
 
 #in tile space
 func GetTile(tile: Vector2i) -> Cell:
@@ -225,7 +278,10 @@ func ConstructCellFromBiome(cell: Cell, x: int, y: int) -> CellInfo:
 	var noiseValue = m_NoiseGeneration.NoiseGenerationAlgorithm.get_noise_2d(x, y)
 	noiseValue = noiseValue * 0.5 + 0.5
 
-	cellInfo.AtlasIndex = floori(noiseValue * biome.AtlasCoordinates.size())
+	cellInfo.AtlasIndex = floori(noiseValue * (biome.AtlasCoordinates.size() - 1))
+	
+	if m_NoiseGeneration.RandomNumbers.randf_range(1, 100) < PercentageChanceOfResource:
+		cellInfo.AtlasIndex = FlowerTileIndex
 
 	return cellInfo;
 
@@ -238,12 +294,12 @@ func CreateBiome(tileSet: TileSet, tileSetSourceIndex: int) -> Biome:
 	var source = tileSet.get_source(biome.TileSetSourceIndex)
 
 	if source != null && source is TileSetAtlasSource:
-		biome.AtlasCoordinates = MapGeneration.GetAtlasCoordinatesFromSource(source)
+		biome.AtlasCoordinates = GetAtlasCoordinatesFromSource(source)
 		biome.AtlasSizes = MapGeneration.GetAtlasSizesFromCoordinates(biome.AtlasCoordinates, source)
 	
 	return biome
 
-static func GetAtlasCoordinatesFromSource(source: TileSetAtlasSource) -> Array:
+func GetAtlasCoordinatesFromSource(source: TileSetAtlasSource) -> Array:
 	var atlasCoords = Array()
 
 	var gridSize = source.get_atlas_grid_size()
@@ -254,6 +310,8 @@ static func GetAtlasCoordinatesFromSource(source: TileSetAtlasSource) -> Array:
 			
 			if source.has_tile(tileCoordinate):
 				atlasCoords.append(tileCoordinate)
+				if tileCoordinate == FlowerTileCoordinate:
+					FlowerTileIndex = atlasCoords.size() - 1
 			
 	return atlasCoords
 

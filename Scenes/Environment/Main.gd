@@ -99,7 +99,6 @@ func OnPurificationPoolPurifyArea(pos, radius):
 	map.ChangeTilesToLight(TilePos, radius/16)
 	
 
-
 func OnEnemySpawnTimerTimeout():
 	for i in range(0, 10):
 			SpawnEnemy();
