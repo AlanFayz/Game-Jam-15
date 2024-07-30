@@ -20,6 +20,7 @@ class Biome:
 	var AtlasCoordinates: Array
 	var AtlasSizes: Array 
 	var TileSetSourceIndex: int
+	var FlowerTileIndex: int
 
 class CellInfo:
 	var CellType: Cell
@@ -37,7 +38,6 @@ class MapData:
 @export var MapSizeExport: Vector2i	
 @export var m_Offset: Vector2 = Vector2(21, 10)
 
-var FlowerTileIndex = 0
 var m_NoiseGeneration = NoiseGeneration.new()
 var m_MapData = MapData.new()
 
@@ -57,8 +57,8 @@ func GetMapSizeInLocalSpace() -> Vector2:
 	return $DarkTileMap.map_to_local(GetMapSize())
 
 #position is in world space coordinates
-func GetPositionInTileSpace(position: Vector2) -> Vector2i:
-	return $DarkTileMap.local_to_map(position + m_Offset)
+func GetPositionInTileSpace(_position: Vector2) -> Vector2i:
+	return $DarkTileMap.local_to_map(_position + m_Offset)
 	
 #in world space
 func GetTileFromWorldSpace(coordinates: Vector2) -> Cell:
@@ -116,10 +116,10 @@ func GetResourceAtTile(tile: Vector2i) -> Cell:
 
 	var cellInfo = m_MapData.Cells[index]
 	
-	if cellInfo.AtlasIndex != FlowerTileIndex:
-		return Cell.None	
-	
 	var biome = m_MapData.Biomes[cellInfo.CellType]
+	
+	if cellInfo.AtlasIndex != biome.FlowerTileIndex:
+		return Cell.None	
 	
 	var noiseValue = m_NoiseGeneration.NoiseGenerationAlgorithm.get_noise_2d(tile.x, tile.y)
 	noiseValue = noiseValue * 0.5 + 0.5
@@ -277,13 +277,14 @@ func ConstructCellFromBiome(cell: Cell, x: int, y: int) -> CellInfo:
 
 	var biome = m_MapData.Biomes[cellInfo.CellType];
 
-	var noiseValue = m_NoiseGeneration.NoiseGenerationAlgorithm.get_noise_2d(x, y)
-	noiseValue = noiseValue * 0.5 + 0.5
-
-	cellInfo.AtlasIndex = floori(noiseValue * (biome.AtlasCoordinates.size() - 1))
+	cellInfo.AtlasIndex = m_NoiseGeneration.RandomNumbers.randi_range(0, biome.AtlasCoordinates.size() - 1)
 	
-	if m_NoiseGeneration.RandomNumbers.randf_range(1, 100) < PercentageChanceOfResource:
-		cellInfo.AtlasIndex = FlowerTileIndex
+	while cellInfo.AtlasIndex == biome.FlowerTileIndex:
+		cellInfo.AtlasIndex = m_NoiseGeneration.RandomNumbers.randi_range(0, biome.AtlasCoordinates.size() - 1)
+		cellInfo.AtlasIndex = min(cellInfo.AtlasIndex, biome.AtlasCoordinates.size() - 1)
+	
+	if m_NoiseGeneration.RandomNumbers.randf_range(0, 100) < PercentageChanceOfResource:
+		cellInfo.AtlasIndex = biome.FlowerTileIndex
 
 	return cellInfo;
 
@@ -299,6 +300,11 @@ func CreateBiome(tileSet: TileSet, tileSetSourceIndex: int) -> Biome:
 		biome.AtlasCoordinates = GetAtlasCoordinatesFromSource(source)
 		biome.AtlasSizes = MapGeneration.GetAtlasSizesFromCoordinates(biome.AtlasCoordinates, source)
 	
+	for i in range(0, biome.AtlasCoordinates.size()):
+		if biome.AtlasCoordinates[i] == FlowerTileCoordinate:
+			biome.FlowerTileIndex = i
+			break
+	
 	return biome
 
 func GetAtlasCoordinatesFromSource(source: TileSetAtlasSource) -> Array:
@@ -312,8 +318,9 @@ func GetAtlasCoordinatesFromSource(source: TileSetAtlasSource) -> Array:
 			
 			if source.has_tile(tileCoordinate):
 				atlasCoords.append(tileCoordinate)
-				if tileCoordinate == FlowerTileCoordinate:
-					FlowerTileIndex = atlasCoords.size() - 1
+	
+	randomize()
+	atlasCoords.shuffle()
 			
 	return atlasCoords
 
