@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://bactn7u40to0h"]
+[gd_scene load_steps=17 format=3 uid="uid://bactn7u40to0h"]
 
 [ext_resource type="Texture2D" uid="uid://c4up0rxlo8o0x" path="res://Assets/Images/Hooded protag/AnimationSheet_Character.png" id="1_83dca"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_xvpvg"]
 [ext_resource type="AudioStream" uid="uid://btll3q1mh7usk" path="res://Assets/Audio/slash.mp3" id="3_jjcsi"]
 [ext_resource type="AudioStream" uid="uid://b8euxp8cq16q1" path="res://Assets/Audio/stepdirt_1.wav" id="4_0dhav"]
+[ext_resource type="PackedScene" uid="uid://b6ykkbnjkhb7k" path="res://Scenes/Player/PlayerUI.tscn" id="5_0famn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ynfhk"]
 radius = 6.0
@@ -310,6 +311,15 @@ panning_strength = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionArea"]
 shape = SubResource("CircleShape2D_pouk6")
+
+[node name="PlayerUI" parent="." instance=ExtResource("5_0famn")]
+anchors_preset = 10
+anchor_bottom = 0.0
+offset_left = -287.0
+offset_top = -161.0
+offset_right = 287.0
+offset_bottom = 161.0
+grow_vertical = 1
 
 [connection signal="timeout" from="Timers/ThrowCooldown" to="." method="OnThrowCooldownTimeout"]
 [connection signal="timeout" from="Timers/SlashCooldown" to="." method="OnSlashCooldownTimeout"]

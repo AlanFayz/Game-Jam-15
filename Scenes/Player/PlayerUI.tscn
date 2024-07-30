@@ -1,4 +1,11 @@
-[gd_scene format=3 uid="uid://b6ykkbnjkhb7k"]
+[gd_scene load_steps=7 format=3 uid="uid://b6ykkbnjkhb7k"]
+
+[ext_resource type="Script" path="res://Scenes/Player/PlayerUI.gd" id="1_2aujg"]
+[ext_resource type="FontFile" uid="uid://dsqedp1xxenxf" path="res://Assets/Fonts/Capture it.ttf" id="1_e7c8v"]
+[ext_resource type="Texture2D" uid="uid://bnwvfgpwoa2p4" path="res://Assets/Images/Tilesets/fantasy/taiga_/IMG_0524.png" id="2_g5o7o"]
+[ext_resource type="Texture2D" uid="uid://b58nuda78wfln" path="res://Assets/Images/Tilesets/fantasy/forest_/IMG_0525.png" id="3_45w1c"]
+[ext_resource type="Texture2D" uid="uid://dv5ijrdj1pyl0" path="res://Assets/Images/Tilesets/fantasy/tundra_/IMG_0525.png" id="4_dhidd"]
+[ext_resource type="Texture2D" uid="uid://bdlq23f0hfnfd" path="res://Assets/Images/Tilesets/fantasy/desert_/IMG_0525.png" id="5_prix4"]
 
 [node name="PlayerUI" type="Control"]
 layout_mode = 3
@@ -7,3 +14,62 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_2aujg")
+
+[node name="HealthLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("1_e7c8v")
+theme_override_font_sizes/font_size = 25
+text = "Health = 100"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="ProtectionPicture" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_g5o7o")
+stretch_mode = 3
+
+[node name="ProtectionLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="EndurancePicture" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_45w1c")
+stretch_mode = 3
+
+[node name="EnduranceLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="TundraPicture" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_dhidd")
+stretch_mode = 3
+
+[node name="TundraLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="DesertPicture" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_prix4")
+stretch_mode = 3
+
+[node name="DesertLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="SwampPicture" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_g5o7o")
+stretch_mode = 3
+
+[node name="SwampLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
