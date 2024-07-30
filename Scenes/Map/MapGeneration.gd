@@ -152,9 +152,11 @@ func CollectResources(tile: Vector2i, radius:float) -> Array:
 
 	for y in range(minY, maxY):
 		for x in range(minX, maxX):
-			var cell = GetResourceAtTile(Vector2i(x, y))
-			if cell != Cell.None:
-				array.append(cell)
+			var coordinate = Vector2(x, y)
+			if coordinate.distance_to(floatTile) <= radius:
+				var cell = GetResourceAtTile(Vector2i(x, y))
+				if cell != Cell.None:
+					array.append(cell)
 	
 	return array
 
