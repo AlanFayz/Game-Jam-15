@@ -9,10 +9,8 @@ func _ready():
 	$GPUParticles2D.emitting = true
 	PurifyArea.emit(global_position, Radius)
 	
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(delta):
 	pass
 
 
