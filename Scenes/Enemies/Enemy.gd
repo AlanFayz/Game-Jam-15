@@ -135,14 +135,14 @@ func Hit(_origin: Node, damage: float, effects):
 	if (effects[1] > 0):
 		IsOnFire = true
 		FireCountdown.start(1.5+(0.5*effects[1]))
-		FireDamage = 2+0.5*effects[1]
+		FireDamage = 2+effects[1]
 		FireTicks.start()
 	
 	#Poison
 	if (effects[2] > 0):
 		IsPoisoned = true;
 		PoisonCountdown.start(5+2*effects[2])
-		PoisonDamage = 2+0.5*effects[1]
+		PoisonDamage = 3+0.75*effects[1]
 		PoisonTicks.start()
 		PoisonWeaknessLevel = effects[2]
 

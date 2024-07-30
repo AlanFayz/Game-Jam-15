@@ -12,7 +12,7 @@ signal ReturnToMenu
 func _ready():
 	Disable()
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_pressed("escape"):
 		ReturnToMenu.emit()
 

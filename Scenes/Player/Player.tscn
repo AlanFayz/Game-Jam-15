@@ -291,7 +291,6 @@ one_shot = true
 
 [node name="SlashAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_jjcsi")
-volume_db = -10.0
 attenuation = 1.94482e-05
 panning_strength = 0.0
 

@@ -16,6 +16,7 @@ func _ready():
 	
 	m_SpawnZone = Rect2(mapPosition, mapSize)
 	
+	
 	SpawnEnemy()
 
 func OnPlayerPotionThrow(position, direction, speed, breakDamage, poolDamage, potionType):
@@ -100,5 +101,5 @@ func OnPurificationPoolPurifyArea(pos, radius):
 
 
 func OnEnemySpawnTimerTimeout():
-	for i in range(0, 1):
+	for i in range(0, 10):
 			SpawnEnemy();

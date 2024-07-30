@@ -12,6 +12,11 @@ var DashSpeed: float = 600
 var DashDir: Vector2
 
 
+var PurificationPotionNumber: int = 100
+#ResourcesOwned's structure = [Protection, Endurance, Freeze, Burn, Poison, Purifications]
+var ResourcesOwned = [0,0,0,0,0,0]
+
+
 var IsWalking: bool = true
 var IsDashing: bool = false
 var CanDash: bool = true
@@ -46,7 +51,9 @@ var PoolDamage: float = 15
 #Potion's structure is [Protection, Endurance, Freeze, Burn, Poison]
 var PotionType = [0,1,0,1,1]
 
-var PurificationRadius: float = 100
+
+
+var PurificationRadius: float = 150
 
 
 var SlashDistances = [15.0,30.0]
@@ -116,8 +123,9 @@ func _process(_delta):
 	if (CanSlash and Input.is_action_pressed("primary_attack")):
 		SlashAttack()
 		
-	if CanThrow and Input.is_action_pressed("throw_purification_potion"):
+	if PurificationPotionNumber>0 and Input.is_action_just_pressed("throw_purification_potion"):
 		ThrowPurificationPotion()
+		PurificationPotionNumber -= 1
 
 func DashStart(Dir):
 	CanDash = false
@@ -138,11 +146,11 @@ func ThrowPotion():
 					 BreakDamage * GetPoisonWeakness(), 
 					 PoolDamage,
 					 PotionType)
+	ResourcesOwned -= PotionType+[0]
 
 func ThrowPurificationPotion():
-	CanThrow = false
-	ThrowCooldown.start()
-	PurificationPotionThrow.emit(global_position, get_local_mouse_position().normalized(), ThrowSpeed*GetPoisonWeakness(), 100)
+	PurificationPotionThrow.emit(global_position, get_local_mouse_position().normalized(), ThrowSpeed*GetPoisonWeakness(), PurificationRadius)
+	ResourcesOwned -= [0,0,0,0,0,1]
 	
 func Hit(_Origin, damage, Effects):
 	if IsImmune:
@@ -184,7 +192,12 @@ func SlashAttack():
 	var slashType = abs(randi())%2
 	var LocalSlashLocation = mouseDir*SlashDistances[slashType]
 	Slash.emit(global_position+LocalSlashLocation, mouseDir, SlashDamage*GetPoisonWeakness(), Slashes[slashType])
+	RandomPitchShift(SlashAudioPlayer,1.2)
 	SlashAudioPlayer.play()
+
+func RandomPitchShift(audioPlayer: AudioStreamPlayer2D, randRange):
+	var shift = randf_range(1/randRange, randRange)
+	audioPlayer.pitch_scale = shift
 
 func CheckDeath():
 	if Health < 0:
