@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://m1itshtgk0rs"]
+[gd_scene load_steps=8 format=3 uid="uid://m1itshtgk0rs"]
 
 [ext_resource type="Script" path="res://Scenes/Environment/Main.gd" id="1_cb6at"]
 [ext_resource type="PackedScene" uid="uid://crvlq7eqk44r7" path="res://Scenes/Map/Map.tscn" id="2_eidng"]
 [ext_resource type="PackedScene" uid="uid://bactn7u40to0h" path="res://Scenes/Player/Player.tscn" id="3_fcmqm"]
 [ext_resource type="PackedScene" uid="uid://b4h64p3o0efjr" path="res://Scenes/Objects/ShadowDrop.tscn" id="4_vil8b"]
+[ext_resource type="AudioStream" uid="uid://dtl132xbjhubw" path="res://Assets/Audio/game-music-7408.mp3" id="5_7pfwg"]
+[ext_resource type="Script" path="res://Scenes/Environment/BackgroundMusic.gd" id="6_mauyq"]
 
 [sub_resource type="Environment" id="Environment_yuhxu"]
 background_mode = 3
@@ -48,6 +50,11 @@ autostart = true
 [node name="ShadowDrop3" parent="." instance=ExtResource("4_vil8b")]
 
 [node name="ShadowDrop4" parent="." instance=ExtResource("4_vil8b")]
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_7pfwg")
+autoplay = true
+script = ExtResource("6_mauyq")
 
 [connection signal="CollectSignal" from="Player" to="." method="OnPlayerCollectSignal"]
 [connection signal="PlayerDeath" from="Player" to="." method="OnPlayerPlayerDeath"]
