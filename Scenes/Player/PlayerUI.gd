@@ -12,6 +12,7 @@ signal PoisonAmountChange(amount)
 @onready var DesertButton = $HBoxContainer/DesertButton
 @onready var SwampButton = $HBoxContainer/SwampButton
 @onready var ShadowLabel = $HBoxContainer/ShadowLabel
+@onready var HealthLabel = $HealthLabel
 
 
 # Called when the node enters the scene tree for the first time.
@@ -21,6 +22,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
+func SetHealthDisplay(amount):
+	HealthLabel.text = "Health: "+str(amount)
 
 
 

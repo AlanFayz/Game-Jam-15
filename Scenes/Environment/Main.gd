@@ -121,7 +121,7 @@ func OnPurificationPoolPurifyArea(pos, radius):
 		get_tree().change_scene_to_packed(endScene)
 
 func OnEnemySpawnTimerTimeout():
-	for i in range(0, 10):
+	for i in range(0, 20):
 		SpawnEnemy()
 
 

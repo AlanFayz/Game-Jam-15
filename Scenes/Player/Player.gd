@@ -41,7 +41,7 @@ var SlowLevel: float = 0
 var Health: float = 100
 func SetHealth(value):
 	Health = value
-	print("Health = ", Health)
+	UI.SetHealthDisplay(Health)
 	CheckDeath()
 
 var IsImmune: bool = false
