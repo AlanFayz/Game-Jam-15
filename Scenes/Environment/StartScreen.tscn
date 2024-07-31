@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://c3nwrqcjxiao5"]
+[gd_scene load_steps=11 format=3 uid="uid://c3nwrqcjxiao5"]
 
 [ext_resource type="PackedScene" uid="uid://crvlq7eqk44r7" path="res://Scenes/Map/Map.tscn" id="1_3fpqi"]
 [ext_resource type="Script" path="res://Scenes/Environment/StartScreen.gd" id="1_jne0r"]
 [ext_resource type="PackedScene" uid="uid://blqrydku5rwj8" path="res://Scenes/Environment/StartMenu.tscn" id="2_ulrbv"]
 [ext_resource type="PackedScene" uid="uid://511hnn3t1ngu" path="res://Scenes/Environment/Settings.tscn" id="4_3p7gf"]
+[ext_resource type="AudioStream" uid="uid://dtl132xbjhubw" path="res://Assets/Audio/game-music-7408.mp3" id="5_d3nwm"]
+[ext_resource type="Script" path="res://Scenes/Environment/BackgroundMusic.gd" id="6_4q5rw"]
 
 [sub_resource type="Animation" id="Animation_fv42j"]
 resource_name = "OpenSettings"
@@ -154,6 +156,11 @@ libraries = {
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_rfqn0")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_d3nwm")
+autoplay = true
+script = ExtResource("6_4q5rw")
 
 [connection signal="ReturnToMenu" from="Settings" to="." method="OnSettingsReturnToMenu"]
 [connection signal="OpenSettings" from="StartMenu" to="." method="OnStartMenuOpenSettings"]
