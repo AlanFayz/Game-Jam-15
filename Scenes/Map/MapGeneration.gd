@@ -84,6 +84,7 @@ func ChangeTileToLight(tile: Vector2i):
 
 	var tileCoordinate = Vector2i(coords.x + xOffset, coords.y + yOffset)
 
+	Globals.LightedTiles += 1
 	$LightTileMap.set_cell(m_LightLayerIndex, tileCoordinate, biome.TileSetSourceIndex, atlasCoords);
 
 
@@ -102,7 +103,7 @@ func ChangeTilesToLight(tile: Vector2i, radius: float):
 		for x in range(minX, maxX):
 			var coordinate = Vector2(x, y)
 			
-			if coordinate.distance_to(floatTile) <= radius:
+			if coordinate.distance_to(floatTile) <= radius and $LightTileMap.get_cell_tile_data(0, Vector2i(x, y)) == null:
 				var integerCoordinate = Vector2i(x, y)
 				ChangeTileToLight(integerCoordinate)
 

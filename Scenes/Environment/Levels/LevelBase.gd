@@ -13,7 +13,6 @@ func OnPlayerPotionThrow(position: Vector2, direction: Vector2, speed: float, br
 	potion.Direction = direction
 	potion.PoolDamage = poolDamage
 	potion.BreakDamage = breakDamage
-	print($Projectiles)
 	$Projectiles.add_child(potion)
 	potion.connect("PotionBreak", OnPotionPotionBreak)
 

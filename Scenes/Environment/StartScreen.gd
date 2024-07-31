@@ -30,8 +30,6 @@ func OnStartMenuStartGame():
 	get_tree().change_scene_to_packed(GameScene)
 
 
-
-
 func OnStartMenuOpenSettings():
 	$AnimationPlayer.play("OpenSettings")
 

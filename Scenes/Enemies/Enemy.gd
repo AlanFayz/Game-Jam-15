@@ -16,7 +16,6 @@ class EnemyState:
 
 func SetHealth(value):
 	m_EnemyState.Health = value
-	print("Enemy Health = ", m_EnemyState.Health)
 	CheckHealth()
 
 class Nodes:
@@ -272,7 +271,6 @@ func OnPoisonTimeLeftTimeout():
 	IsPoisoned = false
 	PoisonWeaknessLevel = 0
 	PoisonTicks.stop()
-	print("Stopped Poison")
 
 
 func OnFireTicksTimeout():

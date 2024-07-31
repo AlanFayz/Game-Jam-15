@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://v6uofkjkad46"]
+[gd_scene load_steps=7 format=3 uid="uid://v6uofkjkad46"]
 
 [ext_resource type="Script" path="res://Scenes/Environment/EndScene.gd" id="1_ad341"]
 [ext_resource type="AudioStream" uid="uid://dtl132xbjhubw" path="res://Assets/Audio/game-music-7408.mp3" id="2_yvsiu"]
 [ext_resource type="Script" path="res://Scenes/Environment/BackgroundMusic.gd" id="3_hd84e"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_idqtq"]
+font_size = 38
+
+[sub_resource type="LabelSettings" id="LabelSettings_om8io"]
 font_size = 38
 
 [sub_resource type="Environment" id="Environment_dbxqd"]
@@ -50,6 +53,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Time Alive: "
 label_settings = SubResource("LabelSettings_idqtq")
+
+[node name="MapDeshadowed" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+label_settings = SubResource("LabelSettings_om8io")
 
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2

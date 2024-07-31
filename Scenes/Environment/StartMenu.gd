@@ -6,8 +6,6 @@ signal StartGame
 signal QuitGame
 signal OpenSettings
 
-
-
 func _ready():
 	pass
 
