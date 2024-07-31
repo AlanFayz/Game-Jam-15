@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://v6uofkjkad46"]
+
+[ext_resource type="Script" path="res://Scenes/Environment/EndScene.gd" id="1_ad341"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_idqtq"]
+font_size = 38
+
+[sub_resource type="Environment" id="Environment_dbxqd"]
+background_mode = 3
+tonemap_mode = 2
+tonemap_white = 16.0
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_levels/4 = 1.0
+glow_intensity = 0.6
+glow_bloom = 0.3
+glow_blend_mode = 1
+glow_hdr_scale = 3.0
+glow_hdr_luminance_cap = 64.0
+glow_map_strength = 1.0
+adjustment_enabled = true
+
+[node name="EndScene" type="Node2D"]
+script = ExtResource("1_ad341")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 11.0
+offset_top = -1.0
+offset_right = 1157.0
+offset_bottom = 654.0
+
+[node name="TimeAlive" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Time Alive: "
+label_settings = SubResource("LabelSettings_idqtq")
+
+[node name="EnemiesKilled" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Time Alive: "
+label_settings = SubResource("LabelSettings_idqtq")
+
+[node name="WinLose" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Time Alive: "
+label_settings = SubResource("LabelSettings_idqtq")
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Return To Menu"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dbxqd")
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="OnButtonPressed"]

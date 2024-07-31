@@ -2,10 +2,11 @@ extends Node
 
 class GameComponents:
 	var RandomNumbers: RandomNumberGenerator
-		
+	
 
 var m_GameComponents = null
 var m_SpawnZone = null
+
 
 @onready var MapNode = $Map
 @onready var PlayerNode = $Player
@@ -20,7 +21,6 @@ func _ready():
 	var mapPosition = MapNode.GetMapPositionInLocalSpace()
 	
 	m_SpawnZone = Rect2(mapPosition, mapSize)
-	
 	
 	SpawnEnemy()
 
@@ -66,7 +66,8 @@ func OnEnemyFireBolt(position, direction, speed, damage):
 	Projectiles.call_deferred("add_child", fireBolt)
 
 func OnPlayerPlayerDeath():
-	print("Player has died")
+	var EndScene = preload("res://Scenes/Environment/EndScene.tscn")
+	get_tree().change_scene_to_packed(EndScene)
 
 func OnEnemyDeath(pos):
 	var num = randi_range(1,5)
@@ -74,6 +75,8 @@ func OnEnemyDeath(pos):
 		var drop = preload("res://Scenes/Objects/ShadowDrop.tscn").instantiate()
 		drop.position = pos
 		call_deferred("add_child", drop)
+	
+	Globals.EnemiesKilled += 1
 
 func GetNextPosition() -> Vector2:
 	var start = m_SpawnZone.position;
@@ -85,7 +88,8 @@ func GetNextPosition() -> Vector2:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(delta):
+	Globals.TimeAlive += delta
 	pass
 
 
@@ -109,10 +113,15 @@ func OnPurificationPoolPurifyArea(pos, radius):
 	print("Is Purifying")
 	var TilePos = MapNode.GetPositionInTileSpace(pos)
 	MapNode.ChangeTilesToLight(TilePos, radius/16)
+	var win = MapNode.CheckWin()
 	
+	if win:
+		var endScene = preload("res://Scenes/Environment/EndScene.tscn")
+		Globals.Win = true
+		get_tree().change_scene_to_packed(endScene)
 
 func OnEnemySpawnTimerTimeout():
-	for i in range(10):
+	for i in range(0, 10):
 		SpawnEnemy()
 
 

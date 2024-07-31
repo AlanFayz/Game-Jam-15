@@ -51,14 +51,14 @@ func GetMapSize() -> Vector2i:
 	return m_MapData.MapSize
 
 func GetMapPositionInLocalSpace() -> Vector2:
-	return $DarkTileMap.map_to_local(GetMapPosition()) + $DarkTileMap.map_to_local(m_Offset)	
+	return $DarkTileMap.map_to_local(GetMapPosition())	
 
 func GetMapSizeInLocalSpace() -> Vector2:
 	return $DarkTileMap.map_to_local(GetMapSize())
 
 #position is in world space coordinates
 func GetPositionInTileSpace(_position: Vector2) -> Vector2i:
-	return $DarkTileMap.local_to_map(_position + m_Offset)
+	return $DarkTileMap.local_to_map(_position)
 	
 #in world space
 func GetTileFromWorldSpace(coordinates: Vector2) -> Cell:
@@ -169,6 +169,16 @@ func GetTile(tile: Vector2i) -> Cell:
 	var index = min(tileClamped.x + tileClamped.y * m_MapData.MapSize.x, m_MapData.Cells.size() - 1);
 
 	return m_MapData.Cells[index].CellType;
+	
+func CheckWin() -> bool: 
+	for y in range(0, m_MapData.MapSize.y):
+		for x in range(0, m_MapData.MapSize.x):
+			var coordinate = Vector2i(x - m_MapData.MapSize.x / 2, y - m_MapData.MapSize.y / 2)
+			
+			if $LightTileMap.get_cell_tile_data(0, coordinate) == null:
+				return false
+	
+	return true
 
 func _ready():
 	m_NoiseGeneration = NoiseGeneration.new()
@@ -177,8 +187,9 @@ func _ready():
 	m_NoiseGeneration.RandomNumbers = RandomNumberGenerator.new()
 	m_NoiseGeneration.NoiseGenerationAlgorithm = FastNoiseLite.new()
 	
+	m_NoiseGeneration.NoiseGenerationAlgorithm.fractal_octaves = 1
 	m_NoiseGeneration.NoiseGenerationAlgorithm.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
-	m_NoiseGeneration.NoiseGenerationAlgorithm.frequency = 0.0205
+	m_NoiseGeneration.NoiseGenerationAlgorithm.frequency = 0.0196
 	m_NoiseGeneration.NoiseGenerationAlgorithm.seed = m_NoiseGeneration.RandomNumbers.randi()
 
 	m_MapData.MapSize = MapSizeExport
@@ -200,7 +211,7 @@ func _ready():
 	GenerateWorld()
 	UpdateTileMap()
 
-	ChangeTilesToLight(Vector2i(0, 0), 25.0)
+	ChangeTilesToLight(Vector2i(0, 0), 10.0)
 
 
 func GenerateWorld():
@@ -214,7 +225,7 @@ func GenerateWorld():
 			var noiseValue = m_NoiseGeneration.NoiseGenerationAlgorithm.get_noise_2d(x, y)
 			noiseValue = noiseValue * 0.5 + 0.5
 
-			var cell = m_MapData.SparseSet[floori(noiseValue * m_MapData.SparseSet.size())]
+			var cell = m_MapData.SparseSet[floori(noiseValue * (m_MapData.SparseSet.size()))]
 			var biome = m_MapData.Biomes[cell]
 
 			m_MapData.Cells[index] = ConstructCellFromBiome(cell, x, y);

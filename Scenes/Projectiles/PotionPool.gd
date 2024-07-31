@@ -1,6 +1,5 @@
 extends Area2D
 
-
 var Damage = 0
 #PotionType structure = [protection, endurance, Freeze, burn, Poison]
 var PotionType = null
@@ -36,7 +35,7 @@ func SetVisualEffects():
 			particleTypeNum += 1
 			activeTypes.append(i)
 	@warning_ignore("integer_division")
-	var amountPerParticle = roundi(amount/particleTypeNum) 
+	var amountPerParticle = roundi(amount/max(particleTypeNum, 1)) 
 	SetParticleSettings(activeTypes, amountPerParticle)
 
 

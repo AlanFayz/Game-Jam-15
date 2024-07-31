@@ -69,9 +69,6 @@ func Kill():
 	$AnimationPlayer.play("Death")
 	Death.emit(global_position)
 
-func EndKill():
-	queue_free()
-
 func _ready():
 	m_Nodes = Nodes.new()
 	m_States = {}
