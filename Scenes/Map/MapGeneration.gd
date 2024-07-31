@@ -176,9 +176,10 @@ func _ready():
 
 	m_NoiseGeneration.RandomNumbers = RandomNumberGenerator.new()
 	m_NoiseGeneration.NoiseGenerationAlgorithm = FastNoiseLite.new()
-
+	
+	m_NoiseGeneration.NoiseGenerationAlgorithm.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	m_NoiseGeneration.NoiseGenerationAlgorithm.frequency = 0.0205
 	m_NoiseGeneration.NoiseGenerationAlgorithm.seed = m_NoiseGeneration.RandomNumbers.randi()
-	print("Seed: ", m_NoiseGeneration.NoiseGenerationAlgorithm.seed)
 
 	m_MapData.MapSize = MapSizeExport
 	m_MapData.Cells = Array()
