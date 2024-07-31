@@ -46,8 +46,8 @@ func SetParticleSettings(activeTypes, amount):
 				ProtectionParticles.emitting = true
 				ProtectionParticles.amount = amount
 			1:
-				pass
-				#As Endurance doesent have a particle emmitter, it is not needed
+				GlassParticles.emitting = true
+				GlassParticles.amount = amount
 			2:
 				FreezeParticles.emitting = true
 				FreezeParticles.amount = amount

@@ -50,14 +50,11 @@ var PoolDamage: float = 15
 #Potion's structure is [Protection, Endurance, Freeze, Burn, Poison]
 var PotionType = [0,0,0,0,0]
 
-
-
 var PurificationRadius: float = 150
-
 
 var SlashDistances = [15.0,30.0]
 var CanSlash = true
-var SlashDamage: float = 10
+var SlashDamage: float = 20
 var Slashes = ["res://Scenes/Melee/Slashes/Slash1.tscn", "res://Scenes/Melee/Slashes/Slash2.tscn"]
 
 var OldPosition: Vector2
