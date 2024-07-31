@@ -66,3 +66,4 @@ autoplay = true
 script = ExtResource("3_hd84e")
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="OnButtonPressed"]
+[connection signal="finished" from="BackgroundMusic" to="BackgroundMusic" method="OnFinished"]

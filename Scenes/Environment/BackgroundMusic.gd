@@ -10,3 +10,8 @@ func _process(delta):
 	var volume = float(Globals.MusicVolume) 
 	self.volume_db = volume - 70
 	pass
+
+
+func OnFinished():
+	play()
+	pass # Replace with function body.
