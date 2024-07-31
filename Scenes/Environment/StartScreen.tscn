@@ -166,3 +166,4 @@ script = ExtResource("6_4q5rw")
 [connection signal="OpenSettings" from="StartMenu" to="." method="OnStartMenuOpenSettings"]
 [connection signal="QuitGame" from="StartMenu" to="." method="OnStartMenuQuitGame"]
 [connection signal="StartGame" from="StartMenu" to="." method="OnStartMenuStartGame"]
+[connection signal="finished" from="BackgroundMusic" to="BackgroundMusic" method="OnFinished"]

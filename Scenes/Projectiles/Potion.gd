@@ -40,13 +40,11 @@ func _process(delta):
 func OnBreakTimerTimeout():
 	Break();
 
-
 func OnBodyEntered(body):
 	if "Hit" in body:
 		body.Hit(self, BreakDamage, [0, 0, 0])
 	
 	Break();
-
 
 func Break():
 	emit_signal(PotionBreak.get_name(), self.global_position, PoolDamage, PotionType);

@@ -4,6 +4,14 @@ extends Node2D
 func _ready():
 	$VBoxContainer/TimeAlive.text     = "Time Alive: "     + str(floori(Globals.TimeAlive))
 	$VBoxContainer/EnemiesKilled.text = "Enemies Killed: " + str(Globals.EnemiesKilled)
+	
+	var percentage: float = 0
+	if Globals.LightedTiles > 0:
+		percentage = float(Globals.LightedTiles) / float(Globals.TotalTiles)
+	
+	percentage *= 100
+	$VBoxContainer/MapDeshadowed.text = "Percentage of lighted tiles: " + str(percentage)
+	
 	if Globals.Win:
 		$VBoxContainer/WinLose.text = "You Won!"
 	else:

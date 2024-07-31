@@ -7,7 +7,6 @@ var GameScene = null
 func ReadyHook():
 	_ready()
 
-
 func _ready():
 	GameScene = preload("res://Scenes/Environment/Main.tscn")
 	SettingsMenu.Disable()
@@ -22,7 +21,6 @@ func StartModulate():
 
 func _Process(_delta):
 	print(SettingsMenu.modulate)
-	
 
 func OnStartMenuQuitGame():
 	get_tree().quit()
@@ -30,8 +28,6 @@ func OnStartMenuQuitGame():
 func OnStartMenuStartGame():
 	$StartMenu.Loading()
 	get_tree().change_scene_to_packed(GameScene)
-
-
 
 
 func OnStartMenuOpenSettings():

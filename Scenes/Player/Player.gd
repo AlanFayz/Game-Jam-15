@@ -12,11 +12,8 @@ var PlayerSpeed: float = 300
 var DashSpeed: float = 600
 var DashDir: Vector2
 
-
-
 #ResourcesOwned's structure = [Protection, Endurance, Freeze, Burn, Poison, Purifications]
 var ResourcesOwned = [0,0,0,0,0,0]
-
 
 var IsWalking: bool = true
 var IsDashing: bool = false
@@ -54,10 +51,7 @@ var PoolDamage: float = 15
 #Potion's structure is [Protection, Endurance, Freeze, Burn, Poison]
 var PotionType = [0,0,0,0,0]
 
-
-
 var PurificationRadius: float = 150
-
 
 var SlashDistances = [15.0,30.0]
 var CanSlash = true
@@ -153,7 +147,6 @@ func CollectStart():
 	CollectSignal.emit(global_position,40)
 
 func CollectEnd(flowers):
-	print(flowers)
 	for i in flowers:
 		match i:
 			0:
