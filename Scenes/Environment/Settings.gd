@@ -17,9 +17,10 @@ func _process(_delta):
 		ReturnToMenu.emit()
 
 func Disable():
-	MasterVolumeSlider.scrollable = false
-	SoundVolumeSlider.scrollable = false
-	MusicVolumeSlider.scrollable = false
+#	MasterVolumeSlider.scrollable = false
+#	SoundVolumeSlider.scrollable = false
+#	MusicVolumeSlider.scrollable = false
+	pass
 
 func Enable():
 	MasterVolumeSlider.scrollable = true

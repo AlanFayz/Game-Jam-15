@@ -4,12 +4,17 @@ var GameScene = null
 @onready var SettingsMenu = $Settings
 @onready var WelcomeMenu = $StartMenu
 
+func ReadyHook():
+	_ready()
+
+
 func _ready():
 	GameScene = preload("res://Scenes/Environment/Main.tscn")
 	SettingsMenu.Disable()
 	WelcomeMenu.Enable()
 	StartModulate()
 	print(WelcomeMenu.modulate)
+	print("Ready")
 
 func StartModulate():
 	SettingsMenu.modulate = Color(1,1,1,0)

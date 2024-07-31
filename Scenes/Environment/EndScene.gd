@@ -12,7 +12,6 @@ func _ready():
 	pass 
 
 func OnButtonPressed():
-	var scene = preload("res://Scenes/Environment/StartScreen.tscn")
-	get_tree().change_scene_to_packed(scene)
+	get_tree().quit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

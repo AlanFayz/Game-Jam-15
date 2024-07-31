@@ -6,12 +6,14 @@ signal StartGame
 signal QuitGame
 signal OpenSettings
 
+
+
 func _ready():
 	pass
 
 func OnStartButtonButtonUp():
 	print("StartButton")
-	emit_signal(StartGame.get_name())
+	StartGame.emit()
 	
 
 func OnSettingsButtonButtonUp():
