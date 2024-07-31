@@ -11,6 +11,7 @@ var Effects = [0, 0, 0]
 @onready var BurnParticles = $BurnParticles
 @onready var ProtectionParticles = $ProtectionParticles
 @onready var GlassParticles = $GlassParticles
+@onready var HealArea = $HealArea
 
 
 func _ready():
@@ -19,6 +20,10 @@ func _ready():
 		set_collision_layer_value(6, false)
 		set_collision_mask_value(1,  false)
 		Damage *= 0.7
+	if PotionType[0]>1:
+		HealArea.set_collision_layer_value(3, true)
+		HealArea.set_collision_mask_value(1,true)
+		
 	
 	$Timer.start(5+PotionType[1])
 	SetVisualEffects()
@@ -68,3 +73,8 @@ func OnBodyEntered(body):
 			body.Hit(self, Damage, Effects)
 		
 	
+
+
+func OnHealAreaBodyEntered(body):
+	if "Heal" in body:
+		body.Heal(20*PotionType[0])

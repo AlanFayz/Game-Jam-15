@@ -27,7 +27,8 @@ offset_right = 40.0
 offset_bottom = 23.0
 theme_override_fonts/font = ExtResource("1_e7c8v")
 theme_override_font_sizes/font_size = 25
-text = "Health = 100"
+text = "Health = 200
+"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1

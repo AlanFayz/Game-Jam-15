@@ -38,9 +38,10 @@ var PoisonDamage: float = 0
 var PoisonWeaknessLevel: float = 0
 var SlowLevel: float = 0
 
-var Health: float = 100
+var Health: float = 200
 func SetHealth(value):
 	Health = value
+	
 	UI.SetHealthDisplay(Health)
 	CheckDeath()
 
@@ -60,7 +61,7 @@ var PurificationRadius: float = 150
 
 var SlashDistances = [15.0,30.0]
 var CanSlash = true
-var SlashDamage: float = 10
+var SlashDamage: float = 20
 var Slashes = ["res://Scenes/Melee/Slashes/Slash1.tscn", "res://Scenes/Melee/Slashes/Slash2.tscn"]
 
 var OldPosition: Vector2
@@ -136,6 +137,9 @@ func _process(_delta):
 	if Input.is_action_just_pressed("collect_resources"):
 		CollectStart()
 	
+func Heal(amount):
+	print(amount)
+	SetHealth(Health + amount)
 
 func CollectStart():
 	var CollectionAreaReturn = CollectionArea.get_overlapping_areas()
