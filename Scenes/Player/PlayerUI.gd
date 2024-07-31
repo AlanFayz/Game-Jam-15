@@ -14,34 +14,25 @@ signal PoisonAmountChange(amount)
 @onready var ShadowLabel = $HBoxContainer/ShadowLabel
 @onready var HealthLabel = $HealthLabel
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass 
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
 func SetHealthDisplay(amount):
 	HealthLabel.text = "Health: "+str(amount)
 
-
-
 func OnProtectionButtonChangeAmount(amount):
 	ProtectionAmountChange.emit(amount)
-
 
 func OnEnduranceButtonChangeAmount(amount):
 	EnduranceAmountChange.emit(amount)
 
-
 func OnTundraButtonChangeAmount(amount):
 	FreezeAmountChange.emit(amount)
 
-
 func OnDesertButtonChangeAmount(amount):
 	FireAmountChange.emit(amount)
-
 
 func OnSwampButtonChangeAmount(amount):
 	PoisonAmountChange.emit(amount)

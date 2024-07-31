@@ -7,7 +7,6 @@ class GameComponents:
 var m_GameComponents = null
 var m_SpawnZone = null
 
-
 @onready var MapNode = $Map
 @onready var PlayerNode = $Player
 @onready var Projectiles = $Projectiles
@@ -90,6 +89,8 @@ func GetNextPosition() -> Vector2:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	Globals.TimeAlive += delta
+	
+	PlayerNode.global_position = ClampPosition(PlayerNode.global_position)
 	pass
 
 
@@ -127,3 +128,9 @@ func OnEnemySpawnTimerTimeout():
 
 func OnPlayerCollectSignal(pos, radius):
 	PlayerNode.CollectEnd(MapNode.CollectResources(MapNode.GetPositionInTileSpace(pos), int(radius/16)))
+
+func ClampPosition(pos: Vector2) -> Vector2:
+	var clampedX = clamp(pos.x, m_SpawnZone.position.x, m_SpawnZone.end.x)
+	var clampedY = clamp(pos.y, m_SpawnZone.position.y, m_SpawnZone.end.y)
+
+	return Vector2(clampedX, clampedY);
