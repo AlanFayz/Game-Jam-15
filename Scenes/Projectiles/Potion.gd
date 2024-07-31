@@ -30,7 +30,7 @@ func SetVisualEffects():
 		4:
 			PotionSprite.frame = 69
 		_:
-			PotionSprite.Frame = 66
+			PotionSprite.frame = 66
 
 
 func _process(delta):

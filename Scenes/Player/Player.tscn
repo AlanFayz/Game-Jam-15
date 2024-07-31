@@ -257,7 +257,6 @@ autoplay = "idle"
 [node name="Timers" type="Node2D" parent="."]
 
 [node name="ThrowCooldown" type="Timer" parent="Timers"]
-wait_time = 3.0
 one_shot = true
 
 [node name="SlashCooldown" type="Timer" parent="Timers"]
@@ -332,3 +331,8 @@ grow_vertical = 1
 [connection signal="timeout" from="Timers/FreezeImmunity" to="." method="OnFreezeImmunityTimeout"]
 [connection signal="timeout" from="Timers/DashCooldown" to="." method="OnDashCooldownTimeout"]
 [connection signal="timeout" from="Timers/ShortCooldown" to="." method="OnShortCooldownTimeout"]
+[connection signal="EnduranceAmountChange" from="PlayerUI" to="." method="OnPlayerUIEnduranceAmountChange"]
+[connection signal="FireAmountChange" from="PlayerUI" to="." method="OnPlayerUIFireAmountChange"]
+[connection signal="FreezeAmountChange" from="PlayerUI" to="." method="OnPlayerUIFreezeAmountChange"]
+[connection signal="PoisonAmountChange" from="PlayerUI" to="." method="OnPlayerUIPoisonAmountChange"]
+[connection signal="ProtectionAmountChange" from="PlayerUI" to="." method="OnPlayerUIProtectionAmountChange"]

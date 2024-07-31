@@ -15,7 +15,7 @@ var DashDir: Vector2
 
 
 #ResourcesOwned's structure = [Protection, Endurance, Freeze, Burn, Poison, Purifications]
-var ResourcesOwned = [10,10,10,10,10,10]
+var ResourcesOwned = [0,0,0,0,0,0]
 
 
 var IsWalking: bool = true
@@ -51,7 +51,7 @@ var ThrowSpeed: float = 400
 var BreakDamage: float = 5
 var PoolDamage: float = 15
 #Potion's structure is [Protection, Endurance, Freeze, Burn, Poison]
-var PotionType = [0,1,0,1,1]
+var PotionType = [0,0,0,0,0]
 
 
 
@@ -83,6 +83,8 @@ var OldPosition: Vector2
 @onready var SlashAudioPlayer = $SlashAudioPlayer
 @onready var WalkingAudioPlayer = $WalkingDirtAudioPlayer
 @onready var CollectionArea = $CollectionArea
+
+@onready var UI = $PlayerUI
 
 
 
@@ -133,7 +135,7 @@ func _process(_delta):
 		ThrowPurificationPotion()
 	if Input.is_action_just_pressed("collect_resources"):
 		CollectStart()
-#	print(ResourcesOwned)
+	
 
 func CollectStart():
 	var CollectionAreaReturn = CollectionArea.get_overlapping_areas()
@@ -160,7 +162,7 @@ func CollectEnd(flowers):
 				ResourcesOwned[3] += 1
 			4:
 				ResourcesOwned[4] += 1
-			
+	UI.ChangeResourceDisplay(ResourcesOwned)
 
 func DashStart(Dir):
 	CanDash = false
@@ -186,12 +188,14 @@ func ThrowPotion():
 						 PoolDamage,
 						 PotionType)
 		ResourcesOwned = newResourcesOwned
+		UI.ChangeResourceDisplay(ResourcesOwned)
 
 func ThrowPurificationPotion():
 	var newResourcesOwned = IntArraySubtraction(ResourcesOwned, [0,0,0,0,0,1])
 	if newResourcesOwned.min() >= 0:
 		PurificationPotionThrow.emit(global_position, get_local_mouse_position().normalized(), ThrowSpeed*GetPoisonWeakness(), PurificationRadius)
 		ResourcesOwned  = newResourcesOwned
+		UI.ChangeResourceDisplay(ResourcesOwned)
 	
 func Hit(_Origin, damage, Effects):
 	if IsImmune:
@@ -321,3 +325,23 @@ func IntArraySubtraction(array1, array2):
 
 func OnShortCooldownTimeout():
 	ShortReset = true
+
+
+func OnPlayerUIEnduranceAmountChange(amount):
+	PotionType[1] += amount
+
+
+func OnPlayerUIFireAmountChange(amount):
+	PotionType[3] += amount
+
+
+func OnPlayerUIFreezeAmountChange(amount):
+	PotionType[2] += amount
+
+
+func OnPlayerUIPoisonAmountChange(amount):
+	PotionType[4] += amount
+
+
+func OnPlayerUIProtectionAmountChange(amount):
+	PotionType[0] += amount
