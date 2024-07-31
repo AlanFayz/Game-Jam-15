@@ -112,7 +112,7 @@ func OnPurificationPoolPurifyArea(pos, radius):
 	
 
 func OnEnemySpawnTimerTimeout():
-	for i in range(0, 10):
+	for i in range(10):
 		SpawnEnemy()
 
 

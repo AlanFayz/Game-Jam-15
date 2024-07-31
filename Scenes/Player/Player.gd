@@ -175,20 +175,20 @@ func DashEnd():
 	DashCooldown.start()
 
 func ThrowPotion():
-	var newResourcesOwned = IntArraySubtraction(ResourcesOwned, PotionType+[0])
-	print(newResourcesOwned.min())
-	if newResourcesOwned.min() >= 0:
-		print("IsThrowing")
-		CanThrow = false
-		ThrowCooldown.start()
-		PotionThrow.emit(global_position, 
-						 get_local_mouse_position().normalized(), 
-						 ThrowSpeed * GetPoisonWeakness(), 
-						 BreakDamage * GetPoisonWeakness(), 
-						 PoolDamage,
-						 PotionType)
-		ResourcesOwned = newResourcesOwned
-		UI.ChangeResourceDisplay(ResourcesOwned)
+	if PotionType.max() > 0:
+		var newResourcesOwned = IntArraySubtraction(ResourcesOwned, PotionType+[0])
+		if newResourcesOwned.min() >= 0:
+			print("IsThrowing")
+			CanThrow = false
+			ThrowCooldown.start()
+			PotionThrow.emit(global_position, 
+							 get_local_mouse_position().normalized(), 
+							 ThrowSpeed * GetPoisonWeakness(), 
+							 BreakDamage * GetPoisonWeakness(), 
+							 PoolDamage,
+							 PotionType)
+			ResourcesOwned = newResourcesOwned
+			UI.ChangeResourceDisplay(ResourcesOwned)
 
 func ThrowPurificationPotion():
 	var newResourcesOwned = IntArraySubtraction(ResourcesOwned, [0,0,0,0,0,1])
