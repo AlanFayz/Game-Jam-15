@@ -8,9 +8,12 @@ func _ready():
 	GameScene = preload("res://Scenes/Environment/Main.tscn")
 	SettingsMenu.Disable()
 	WelcomeMenu.Enable()
+	StartModulate()
+	print(WelcomeMenu.modulate)
+
+func StartModulate():
 	SettingsMenu.modulate = Color(1,1,1,0)
 	WelcomeMenu.modulate = Color(1,1,1,1)
-	print(WelcomeMenu.modulate)
 
 func _Process(_delta):
 	print(SettingsMenu.modulate)
