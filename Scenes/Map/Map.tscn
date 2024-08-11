@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://crvlq7eqk44r7"]
 
-[ext_resource type="Script" path="res://Scenes/Map/MapGeneration.cs" id="1_0awnk"]
+[ext_resource type="Script" path="res://Scenes/Map/MapGeneration.gd" id="1_pu1yf"]
 [ext_resource type="Texture2D" uid="uid://2cv1bdkrgmq6" path="res://Assets/Images/Tilesets/fantasy/tundra_/tundra_.png" id="2_cklqu"]
 [ext_resource type="Texture2D" uid="uid://3ey0xbd00ebk" path="res://Assets/Images/Tilesets/fantasy/taiga_/taiga_.png" id="3_ldm2k"]
 [ext_resource type="Texture2D" uid="uid://cjeeumhd3ywc5" path="res://Assets/Images/Tilesets/fantasy/forest_/forest_.png" id="4_f81gm"]
@@ -11,134 +11,114 @@
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e5tm3"]
 texture = ExtResource("2_cklqu")
-9:1/0 = 0
 8:1/0 = 0
-16:1/size_in_atlas = Vector2i(3, 3)
-16:1/0 = 0
-1:5/size_in_atlas = Vector2i(3, 3)
-1:5/0 = 0
 10:1/0 = 0
 10:2/0 = 0
-10:3/0 = 0
-10:4/0 = 0
-11:4/0 = 0
 11:3/0 = 0
+12:1/0 = 0
+12:2/0 = 0
+12:3/0 = 0
+10:4/0 = 0
 11:2/0 = 0
-11:1/0 = 0
 8:2/0 = 0
 9:2/0 = 0
-4:7/0 = 0
-9:7/0 = 0
-14:7/0 = 0
-19:7/0 = 0
+9:1/0 = 0
+10:3/0 = 0
+11:4/0 = 0
+11:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3f4pt"]
 texture = ExtResource("3_ldm2k")
-8:1/0 = 0
-9:1/0 = 0
-16:1/size_in_atlas = Vector2i(3, 3)
-16:1/0 = 0
-8:2/0 = 0
-9:2/0 = 0
-1:5/size_in_atlas = Vector2i(3, 3)
-1:5/0 = 0
-4:7/0 = 0
-9:7/0 = 0
-14:7/0 = 0
-19:7/0 = 0
-10:1/0 = 0
-11:1/0 = 0
-10:2/0 = 0
+12:1/0 = 0
 11:2/0 = 0
-11:3/0 = 0
-10:3/0 = 0
+9:2/0 = 0
+9:1/0 = 0
 10:4/0 = 0
+12:2/0 = 0
+12:3/0 = 0
+11:3/0 = 0
+10:1/0 = 0
+10:2/0 = 0
 11:4/0 = 0
+10:3/0 = 0
+11:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eijr6"]
 texture = ExtResource("4_f81gm")
-8:1/0 = 0
-8:2/0 = 0
-9:2/0 = 0
-9:1/0 = 0
-10:1/0 = 0
-11:1/0 = 0
-11:2/0 = 0
-10:2/0 = 0
-10:3/0 = 0
-11:3/0 = 0
 11:4/0 = 0
 10:4/0 = 0
-1:5/size_in_atlas = Vector2i(3, 3)
-1:5/0 = 0
-4:7/0 = 0
-9:7/0 = 0
-14:7/0 = 0
-19:7/0 = 0
-16:1/size_in_atlas = Vector2i(3, 3)
-16:1/0 = 0
+12:1/0 = 0
+9:1/0 = 0
+11:2/0 = 0
+12:3/0 = 0
+12:2/0 = 0
+10:2/0 = 0
+10:1/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+11:1/0 = 0
+9:2/0 = 0
+8:2/0 = 0
+8:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xoxv3"]
 texture = ExtResource("5_o0f3b")
-8:1/0 = 0
 9:1/0 = 0
-10:1/0 = 0
-11:1/0 = 0
-16:1/size_in_atlas = Vector2i(3, 3)
-16:1/0 = 0
 8:2/0 = 0
-9:2/0 = 0
-10:2/0 = 0
 11:2/0 = 0
-10:3/0 = 0
-11:3/0 = 0
 10:4/0 = 0
+12:1/0 = 0
+12:2/0 = 0
+12:3/0 = 0
+11:1/0 = 0
+9:2/0 = 0
+8:1/0 = 0
+10:1/0 = 0
+10:2/0 = 0
+11:3/0 = 0
+10:3/0 = 0
 11:4/0 = 0
-1:5/size_in_atlas = Vector2i(3, 3)
-1:5/0 = 0
-4:7/0 = 0
-9:7/0 = 0
-14:7/0 = 0
-19:7/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tptsc"]
 texture = ExtResource("6_2bm76")
-16:1/size_in_atlas = Vector2i(3, 3)
-16:1/0 = 0
-10:3/0 = 0
-11:3/0 = 0
-10:4/0 = 0
-11:4/0 = 0
-1:5/size_in_atlas = Vector2i(3, 3)
-1:5/0 = 0
-4:7/0 = 0
-9:7/0 = 0
-14:7/0 = 0
-19:7/0 = 0
+12:1/0 = 0
 8:1/0 = 0
-9:1/0 = 0
-9:2/0 = 0
 8:2/0 = 0
+11:1/0 = 0
+4:7/0 = 0
+12:2/0 = 0
+12:3/0 = 0
+10:3/0 = 0
+11:4/0 = 0
+10:4/0 = 0
+11:3/0 = 0
+11:2/0 = 0
+10:2/0 = 0
+9:2/0 = 0
+9:1/0 = 0
+10:1/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_jf1s8"]
 sources/0 = SubResource("TileSetAtlasSource_e5tm3")
-sources/1 = SubResource("TileSetAtlasSource_3f4pt")
 sources/2 = SubResource("TileSetAtlasSource_eijr6")
 sources/3 = SubResource("TileSetAtlasSource_xoxv3")
 sources/4 = SubResource("TileSetAtlasSource_tptsc")
+sources/1 = SubResource("TileSetAtlasSource_3f4pt")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_drufn"]
 
 [node name="Map" type="Node2D"]
-script = ExtResource("1_0awnk")
+script = ExtResource("1_pu1yf")
+MapSizeExport = Vector2i(100, 100)
 
 [node name="LightTileMap" type="TileMap" parent="."]
+modulate = Color(0.5, 0.55, 0.5, 1)
 material = SubResource("CanvasItemMaterial_d46yj")
 tile_set = SubResource("TileSet_jf1s8")
 format = 2
 
 [node name="DarkTileMap" type="TileMap" parent="."]
-modulate = Color(0.588235, 0.588235, 0.588235, 1)
+modulate = Color(0.2, 0.2, 0.2, 1)
 material = SubResource("CanvasItemMaterial_drufn")
 tile_set = SubResource("TileSet_jf1s8")
 format = 2

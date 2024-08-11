@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cxno1pxe1mxqr"]
 
-[ext_resource type="Script" path="res://Scenes/Projectiles/Potion.cs" id="1_f2vdf"]
 [ext_resource type="Texture2D" uid="uid://bc2sixvewt0ja" path="res://Assets/Images/PotionsPack/PotionsPack1.png" id="1_flr0r"]
+[ext_resource type="Script" path="res://Scenes/Projectiles/Potion.gd" id="1_xvipa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xsolj"]
 radius = 8.06226
@@ -32,10 +32,10 @@ tracks/0/path = NodePath("SpinPivot:rotation")
 tracks/0/interp = 3
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [0.0, 0.523599, 1.0472, 1.5708, 2.0944, 2.61799, 3.14159, 3.66519, 4.18879, 4.71239, 5.23599, 5.75959]
+"values": [0.0, 0.523599, 1.0472, 1.5708, 2.0944, 2.61799, 3.14159, 3.66519, 4.18879, 4.71239, 5.23599, 5.75959, 6.28319]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r4ghe"]
@@ -47,7 +47,7 @@ _data = {
 [node name="Potion" type="Area2D"]
 collision_layer = 4
 collision_mask = 82
-script = ExtResource("1_f2vdf")
+script = ExtResource("1_xvipa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_xsolj")
@@ -60,7 +60,7 @@ position = Vector2(0, -2)
 texture = ExtResource("1_flr0r")
 hframes = 11
 vframes = 22
-frame = 66
+frame = 67
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

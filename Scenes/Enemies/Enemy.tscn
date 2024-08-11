@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3pisw0cqu0ag"]
+[gd_scene load_steps=11 format=3 uid="uid://b3pisw0cqu0ag"]
 
-[ext_resource type="Script" path="res://Scenes/Enemies/Enemy.cs" id="1_0dftj"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Enemy.gd" id="1_8yi65"]
 [ext_resource type="Texture2D" uid="uid://dqnoguj6bjtqn" path="res://Assets/Images/Enemies/Necromancer_creativekind-Sheet.png" id="2_5xpow"]
+[ext_resource type="AudioStream" uid="uid://nqkmqkn6tvt2" path="res://Assets/Audio/ghostly_laugh.mp3" id="3_52okq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k650b"]
 height = 40.0
@@ -50,6 +51,20 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [102, 103, 104, 105, 106, 107, 108, 109, 110, 111]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"EndKill"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_u81d3"]
@@ -113,7 +128,7 @@ _data = {
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 117
-script = ExtResource("1_0dftj")
+script = ExtResource("1_8yi65")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_k650b")
@@ -135,3 +150,41 @@ one_shot = true
 
 [node name="ShootPoint" type="Marker2D" parent="."]
 position = Vector2(17, -38)
+
+[node name="LaughAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_52okq")
+volume_db = -15.0
+
+[node name="LaughAudioTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="FireTimeLeft" type="Timer" parent="Timers"]
+wait_time = 2.0
+one_shot = true
+
+[node name="FreezeTimeLeft" type="Timer" parent="Timers"]
+wait_time = 0.75
+one_shot = true
+
+[node name="PoisonTimeLeft" type="Timer" parent="Timers"]
+wait_time = 5.0
+one_shot = true
+
+[node name="FireTicks" type="Timer" parent="Timers"]
+wait_time = 0.2
+
+[node name="PoisonTicks" type="Timer" parent="Timers"]
+wait_time = 0.5
+
+[node name="FreezeImmunity" type="Timer" parent="Timers"]
+one_shot = true
+
+[connection signal="timeout" from="Timers/FireTimeLeft" to="." method="OnFireTimeLeftTimeout"]
+[connection signal="timeout" from="Timers/FreezeTimeLeft" to="." method="OnFreezeTimeLeftTimeout"]
+[connection signal="timeout" from="Timers/PoisonTimeLeft" to="." method="OnPoisonTimeLeftTimeout"]
+[connection signal="timeout" from="Timers/FireTicks" to="." method="OnFireTicksTimeout"]
+[connection signal="timeout" from="Timers/PoisonTicks" to="." method="OnPoisonTicksTimeout"]
+[connection signal="timeout" from="Timers/FreezeImmunity" to="." method="OnFreezeImmunityTimeout"]

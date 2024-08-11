@@ -1,0 +1,71 @@
+[gd_scene load_steps=7 format=3 uid="uid://cvctsacgyehv8"]
+
+[ext_resource type="Script" path="res://Scenes/Projectiles/PurificationPotion.gd" id="1_juv3p"]
+[ext_resource type="Texture2D" uid="uid://bc2sixvewt0ja" path="res://Assets/Images/PotionsPack/PotionsPack1.png" id="1_vodsx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jblgb"]
+radius = 4.0
+height = 20.0
+
+[sub_resource type="Animation" id="Animation_77ueq"]
+resource_name = "Rotate"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.523599, 1.0472, 1.5708, 2.0944, 2.61799, 3.14159, 3.66519, 4.18879, 4.71239, 5.23599, 5.75959, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_qly1n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nh6lc"]
+_data = {
+"RESET": SubResource("Animation_qly1n"),
+"Rotate": SubResource("Animation_77ueq")
+}
+
+[node name="PurificationPotion" type="Area2D"]
+script = ExtResource("1_juv3p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_jblgb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_vodsx")
+hframes = 11
+vframes = 22
+frame = 93
+
+[node name="BreakTimer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nh6lc")
+}
+autoplay = "Rotate"
+
+[connection signal="timeout" from="BreakTimer" to="." method="OnBreakTimerTimeout"]

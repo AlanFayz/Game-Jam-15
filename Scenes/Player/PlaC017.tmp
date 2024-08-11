@@ -1,0 +1,115 @@
+[gd_scene load_steps=11 format=3 uid="uid://b6ykkbnjkhb7k"]
+
+[ext_resource type="Script" path="res://Scenes/Player/PlayerUI.gd" id="1_2aujg"]
+[ext_resource type="FontFile" uid="uid://dsqedp1xxenxf" path="res://Assets/Fonts/Capture it.ttf" id="1_e7c8v"]
+[ext_resource type="Texture2D" uid="uid://bl460oir4kmn3" path="res://Assets/Images/Flowers/IMG_0523.png" id="3_udhji"]
+[ext_resource type="PackedScene" uid="uid://by1idu56e3xvq" path="res://Scenes/Player/PlayerUIButton.tscn" id="4_52stp"]
+[ext_resource type="Texture2D" uid="uid://bg8xgkknwj7vg" path="res://Assets/Images/Flowers/IMG_0526.png" id="5_sei4u"]
+[ext_resource type="Texture2D" uid="uid://c1jo81iait83q" path="res://Assets/Images/Flowers/IMG_0540.png" id="6_pvmvg"]
+[ext_resource type="Texture2D" uid="uid://du3flrj7pfm1k" path="res://Assets/Images/Flowers/IMG_0542.png" id="7_1r1dq"]
+[ext_resource type="Texture2D" uid="uid://cmyqwjp21iqop" path="res://Assets/Images/Flowers/IMG_0527.png" id="8_jliqv"]
+[ext_resource type="Texture2D" uid="uid://dr3j7ngyb0867" path="res://Assets/Images/Flowers/Screenshot 2024-07-31 093754.png" id="9_eux2q"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_j45fq"]
+
+[node name="PlayerUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2aujg")
+
+[node name="HealthLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("1_e7c8v")
+theme_override_font_sizes/font_size = 25
+text = "Health = 100"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -68.0
+offset_right = 155.0
+grow_vertical = 0
+
+[node name="ProtectionPicture" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+texture = ExtResource("3_udhji")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ProtectionButton" parent="HBoxContainer" instance=ExtResource("4_52stp")]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+
+[node name="EndurancePicture" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+texture = ExtResource("5_sei4u")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EnduranceButton" parent="HBoxContainer" instance=ExtResource("4_52stp")]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+
+[node name="TundraPicture" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+texture = ExtResource("6_pvmvg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TundraButton" parent="HBoxContainer" instance=ExtResource("4_52stp")]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+
+[node name="DesertPicture" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+texture = ExtResource("7_1r1dq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DesertButton" parent="HBoxContainer" instance=ExtResource("4_52stp")]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+
+[node name="SwampPicture" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+texture = ExtResource("8_jliqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SwampButton" parent="HBoxContainer" instance=ExtResource("4_52stp")]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+
+[node name="ShadowPicture" type="TextureRect" parent="HBoxContainer"]
+material = SubResource("CanvasItemMaterial_j45fq")
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+texture = ExtResource("9_eux2q")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ShadowLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_e7c8v")
+theme_override_font_sizes/font_size = 26
+text = "0
+"
+
+[connection signal="ChangeAmount" from="HBoxContainer/ProtectionButton" to="." method="OnProtectionButtonChangeAmount"]
+[connection signal="ChangeAmount" from="HBoxContainer/EnduranceButton" to="." method="OnEnduranceButtonChangeAmount"]
+[connection signal="ChangeAmount" from="HBoxContainer/TundraButton" to="." method="OnTundraButtonChangeAmount"]
+[connection signal="ChangeAmount" from="HBoxContainer/DesertButton" to="." method="OnDesertButtonChangeAmount"]
+[connection signal="ChangeAmount" from="HBoxContainer/SwampButton" to="." method="OnSwampButtonChangeAmount"]

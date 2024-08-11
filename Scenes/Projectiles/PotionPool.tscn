@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://wi7gjjlvl56q"]
+[gd_scene load_steps=10 format=3 uid="uid://wi7gjjlvl56q"]
 
-[ext_resource type="Script" path="res://Scenes/Projectiles/PotionPool.cs" id="1_dhxmd"]
+[ext_resource type="Script" path="res://Scenes/Projectiles/PotionPool.gd" id="1_loup7"]
 [ext_resource type="Texture2D" uid="uid://b3jl5ojdnxjod" path="res://Assets/Images/PotionsPack/PotEffects.png" id="2_4owig"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gbo5r"]
@@ -19,23 +19,102 @@ emission_shape = 2
 emission_sphere_radius = 1.0
 gravity = Vector3(0, -10, 0)
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mvrjx"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(100, 100, 1)
+emission_shape = 2
+emission_sphere_radius = 1.0
+gravity = Vector3(0, -10, 0)
+anim_offset_min = 0.6966
+anim_offset_max = 0.6966
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_touet"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(100, 100, 1)
+emission_shape = 2
+emission_sphere_radius = 1.0
+gravity = Vector3(0, -10, 0)
+anim_offset_min = 0.5281
+anim_offset_max = 0.5281
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_edyap"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(100, 100, 1)
+emission_shape = 2
+emission_sphere_radius = 1.0
+gravity = Vector3(0, -10, 0)
+anim_offset_min = 0.3259
+anim_offset_max = 0.3259
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_auyq3"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 56.18
+initial_velocity_max = 89.89
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -55.06
+linear_accel_max = -32.59
+anim_offset_min = 1.0
+anim_offset_max = 1.0
+
 [node name="PotionPool" type="Area2D"]
 collision_layer = 32
 collision_mask = 67
-script = ExtResource("1_dhxmd")
+script = ExtResource("1_loup7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_gbo5r")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="PoisonParticles" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_5ehto")
-amount = 300
+emitting = false
+amount = 100
 process_material = SubResource("ParticleProcessMaterial_hpum8")
 texture = ExtResource("2_4owig")
+
+[node name="BurnParticles" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_5ehto")
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_mvrjx")
+texture = ExtResource("2_4owig")
+
+[node name="FreezeParticles" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_5ehto")
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_touet")
+texture = ExtResource("2_4owig")
+
+[node name="ProtectionParticles" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_5ehto")
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_edyap")
+texture = ExtResource("2_4owig")
+
+[node name="GlassParticles" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_5ehto")
+position = Vector2(-10, 10)
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_auyq3")
+texture = ExtResource("2_4owig")
+lifetime = 5.0
+one_shot = true
+explosiveness = 1.0
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 
+[node name="HealArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HealArea"]
+shape = SubResource("CircleShape2D_gbo5r")
+
 [connection signal="body_entered" from="." to="." method="OnBodyEntered"]
 [connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]
+[connection signal="body_entered" from="HealArea" to="." method="OnHealAreaBodyEntered"]

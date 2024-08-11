@@ -1,9 +1,133 @@
-[gd_scene format=3 uid="uid://511hnn3t1ngu"]
+[gd_scene load_steps=3 format=3 uid="uid://511hnn3t1ngu"]
+
+[ext_resource type="FontFile" uid="uid://dsqedp1xxenxf" path="res://Assets/Fonts/Capture it.ttf" id="1_aqf1p"]
+[ext_resource type="Script" path="res://Scenes/Environment/Settings.gd" id="1_eexlg"]
 
 [node name="Settings" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -254.016
+offset_right = 254.016
+offset_bottom = 262.44
 grow_horizontal = 2
-grow_vertical = 2
+script = ExtResource("1_eexlg")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -216.5
+offset_right = 216.5
+offset_bottom = 1150.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="SettingsLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_aqf1p")
+theme_override_font_sizes/font_size = 100
+text = "Settings
+"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 1000)
+layout_mode = 2
+size_flags_horizontal = 4
+follow_focus = true
+
+[node name="Audio" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="AudioLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Audio"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_aqf1p")
+theme_override_font_sizes/font_size = 75
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/ScrollContainer/Audio"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="MasterLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Audio"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_aqf1p")
+theme_override_font_sizes/font_size = 35
+text = "Master Volume"
+horizontal_alignment = 1
+
+[node name="MasterVolume" type="HSlider" parent="MarginContainer/VBoxContainer/ScrollContainer/Audio"]
+layout_mode = 2
+value = 50.0
+
+[node name="SoundLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Audio"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_aqf1p")
+theme_override_font_sizes/font_size = 35
+text = "Sound Volume"
+horizontal_alignment = 1
+
+[node name="SoundVolume" type="HSlider" parent="MarginContainer/VBoxContainer/ScrollContainer/Audio"]
+layout_mode = 2
+value = 50.0
+
+[node name="MusicLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Audio"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_aqf1p")
+theme_override_font_sizes/font_size = 35
+text = "Music Volume"
+horizontal_alignment = 1
+
+[node name="MusicVolume" type="HSlider" parent="MarginContainer/VBoxContainer/ScrollContainer/Audio"]
+layout_mode = 2
+value = 50.0
+rounded = true
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer/ScrollContainer/Audio"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="VisualLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Audio"]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_aqf1p")
+theme_override_font_sizes/font_size = 100
+text = "Visual"
+horizontal_alignment = 1
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer/ScrollContainer/Audio"]
+visible = false
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="FullScreenLabel" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/Audio"]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_aqf1p")
+theme_override_font_sizes/font_size = 35
+text = "Full Screen"
+horizontal_alignment = 1
+
+[node name="EscapeButton" type="Button" parent="."]
+layout_mode = 1
+offset_right = 49.0
+offset_bottom = 32.0
+theme_override_fonts/font = ExtResource("1_aqf1p")
+theme_override_font_sizes/font_size = 20
+text = "esc."
+
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/ScrollContainer/Audio/MasterVolume" to="." method="OnMasterVolumeValueChanged"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/ScrollContainer/Audio/SoundVolume" to="." method="OnSoundVolumeValueChanged"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/ScrollContainer/Audio/MusicVolume" to="." method="OnMusicVolumeValueChanged"]
+[connection signal="button_up" from="EscapeButton" to="." method="OnEscapeButtonButtonUp"]

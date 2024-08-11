@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://by1idu56e3xvq"]
+
+[ext_resource type="Script" path="res://Scenes/Player/PlayerUIButton.gd" id="1_13oh3"]
+[ext_resource type="FontFile" uid="uid://dsqedp1xxenxf" path="res://Assets/Fonts/Capture it.ttf" id="1_dnvas"]
+
+[node name="PlayerUIButton" type="Control"]
+layout_mode = 3
+anchor_right = 0.031
+anchor_bottom = 0.102
+offset_right = 0.287998
+offset_bottom = -0.0960007
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_13oh3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="TotalAmount" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_dnvas")
+theme_override_font_sizes/font_size = 26
+text = "0"
+
+[node name="SpendAmount" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_dnvas")
+theme_override_font_sizes/font_size = 26
+text = "0"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="UpButton" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "↑"
+
+[node name="DownButton" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "↓"
+
+[connection signal="button_up" from="HBoxContainer/VBoxContainer2/UpButton" to="." method="OnUpButtonButtonUp"]
+[connection signal="button_down" from="HBoxContainer/VBoxContainer2/DownButton" to="." method="OnDownButtonButtonUp"]

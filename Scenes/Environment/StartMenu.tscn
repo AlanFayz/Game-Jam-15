@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://blqrydku5rwj8"]
 
-[ext_resource type="Script" path="res://Scenes/Environment/StartMenu.cs" id="1_8cfvw"]
 [ext_resource type="FontFile" uid="uid://dsqedp1xxenxf" path="res://Assets/Fonts/Capture it.ttf" id="1_k02th"]
+[ext_resource type="Script" path="res://Scenes/Environment/StartMenu.gd" id="1_v25v2"]
 [ext_resource type="VideoStream" path="res://Assets/Images/Throbber/Filling broken wheel.ogv" id="3_qk2gv"]
 
 [node name="StartMenu" type="Control"]
@@ -11,7 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_8cfvw")
+script = ExtResource("1_v25v2")
 
 [node name="Welcome" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -55,6 +55,18 @@ theme_override_fonts/font = ExtResource("1_k02th")
 theme_override_font_sizes/font_size = 30
 text = "Quit Game
 "
+
+[node name="Label" type="Label" parent="Welcome"]
+layout_mode = 2
+text = "Controls: 
+- WASD for movement
+- E to collect flowers on the ground
+- R is for the purification potion
+- Click on arrows to change potion type
+- Right click to throw selected potion.
+- Left click to slash
+
+Deshadow the entire map, good luck!"
 
 [node name="Loading" type="VBoxContainer" parent="."]
 visible = false
